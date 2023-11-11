@@ -10,4 +10,4 @@ instance/
 .venv
 
 # Python stuff:
-backend\tweet-analysis\twitter_credentials.py
+backend\tweet-analysis\credentials.py
