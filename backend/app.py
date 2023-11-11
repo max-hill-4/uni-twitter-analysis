@@ -8,7 +8,11 @@ def index():
 
 @app.route('/search', methods=['GET'])
 def search():
-    return render_template('search.html')
+    # Get the query from the url
+
+    # Give data to the search.html template 
+    testdata = request.args.get('query')
+    return render_template('search.html', testdata=testdata)
 
 if __name__ == '__main__':
     app.run(debug=True)
