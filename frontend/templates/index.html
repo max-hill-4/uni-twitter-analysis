@@ -11,23 +11,17 @@
     <title></title>
 
     <!-- Link to your custom CSS file -->
-    <link rel="stylesheet" href="styles.css">
-
-    <!-- Add any additional head elements you need (e.g., favicons, meta tags) -->
+    <!-- <link rel="stylesheet" href="styles.css">-->
 
 </head>
 
 <body>
-    <div class="form-container">
-            <form class="form">
-                <input id="search" type="text" class="input" placeholder="search..."/>
-                <button id="searchButton">Search</button>
-            </form>
-
+    <div lass="form-container">
+        <form action="/search" method="get">
+            <input type="text" id="search" name="query" placeholder="Enter your search query">
+            <button type="searchButton">Search</button>
+        </form>
     </div>
-
-
-    <script src="../src/index.js"></script>
 
 </body>
 
