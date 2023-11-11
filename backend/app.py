@@ -1,17 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
-app = Flask(__name__)
-
+app = Flask(__name__, template_folder='../frontend/templates')
 @app.route('/')
 def index():
     return render_template('index.html')
-
-@app.route('/search', methods=['POST'])
-def search():
-    data = request.get_json()
-    search_query = data.get('query')
-
-    return jsonify({'results': 'Replace with actual search results'})
 
 if __name__ == '__main__':
     app.run(debug=True)
