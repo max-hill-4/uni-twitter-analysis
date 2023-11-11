@@ -9,6 +9,31 @@ Cloud Deployment
 Basic Layout Idea:
 
 
+|-- frontend/
+|   |-- static/
+|   |   |-- images.png
+|   |
+|   |-- templates/           
+|   |   |-- index.html       // Main HTML file for app
+|   |
+|   |-- src/                 
+|   |   |-- index.js         // Main JS
+|
+|-- backend/
+|   |-- app.py              // Flask code
+|   |-- requirements.txt    // Python dependencies
+|
+|-- python-analysis/       
+|   |-- analyze_tweets.py   // Script for analyzing tweets
+|   |-- requirements.txt    // Python dependencies
+|
+|-- config/                 
+|   |-- twitter_credentials.json // for Twitter API credentials
+|
+|-- README.md              // Project documentation
+|-- .gitignore             // Git ignore file
+
+
 
 
 Technologies
