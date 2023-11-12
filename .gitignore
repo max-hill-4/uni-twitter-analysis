@@ -10,4 +10,4 @@ instance/
 .venv
 
 # Python stuff:
-credentials.py
+test.py

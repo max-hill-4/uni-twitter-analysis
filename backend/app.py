@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template
+from tweet_analysis import analysis_tweets as ta
 
 app = Flask(__name__, template_folder='../frontend/templates')
 
@@ -8,11 +9,10 @@ def index():
 
 @app.route('/search', methods=['GET'])
 def search():
-    # Get the query from the url
 
-    # Give data to the search.html template 
-    testdata = request.args.get('query')
-    return render_template('search.html', testdata=testdata)
+    query = request.args.get('query')
+    data = ta.get_last_tweet(query)    
+    return render_template('search.html', query=data)
 
 if __name__ == '__main__':
     app.run(debug=True)
