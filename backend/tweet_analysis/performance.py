@@ -43,5 +43,5 @@ if __name__ == '__main__':
 
 
 # Selenium took 13.267854452133179 seconds
-# Playwright took 4.521850109100342 seconds
+# Playright took 4.521850109100342 seconds
 # Scrapy took 1.4669597148895264 seconds
