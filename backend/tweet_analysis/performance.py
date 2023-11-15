@@ -2,32 +2,34 @@
 
 # Selenium
 
-def selenium_test():
+def selenium_test(website):
     # Need to test different browsers
     from selenium import webdriver
     from selenium.webdriver.firefox.options import Options
-    driver = webdriver.Firefox()
-    get_1 = driver.get('https://example.com')
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Firefox(options=options)
+    get_1 = driver.get(website)
     driver.quit()
 
 # Playright 
 
-def playright_test():
+def playright_test(website):
     from playwright.sync_api import sync_playwright
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
-        page.goto("https://example.com")
+        page.goto(website)
         browser.close()
 
 # Scrapy
 
-def scrapy_test():
+def scrapy_test(website):
     import scrapy
     from scrapy.crawler import CrawlerProcess
     class TestSpider(scrapy.Spider):
         name = 'test'
-        start_urls = ['https://example.com']
+        start_urls = [website]
     process = CrawlerProcess()
     process.crawl(TestSpider)
     process.start()
@@ -35,12 +37,14 @@ def scrapy_test():
 if __name__ == '__main__':
     import time 
     test_methods = [selenium_test, playright_test, scrapy_test]
+    results = []
     for method in test_methods:
         start = time.time()
-        method()
+        method('https://twitter.com/taylorswift13')
         end = time.time()
-        print(f'{method.__name__} took {end - start} seconds')
-
+        results.append([method.__name__,end - start])
+        
+    print(results)
 
 # Selenium took 13.267854452133179 seconds
 # Playright took 4.521850109100342 seconds
