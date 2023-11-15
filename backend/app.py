@@ -1,6 +1,5 @@
 from flask import Flask, request, render_template
-from tweet_analysis import analysis_tweets as ta
-
+from tweet_analysis import analysis_tweets as at
 app = Flask(__name__, template_folder='../frontend/templates')
 
 @app.route('/')
@@ -11,7 +10,7 @@ def index():
 def search():
 
     query = request.args.get('query')
-    data = ta.get_last_tweet(query)    
+    data = at.analysis_tweet(query)
     return render_template('search.html', query=data)
 
 if __name__ == '__main__':
