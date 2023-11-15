@@ -34,20 +34,14 @@ def scrapy_test():
 
 if __name__ == '__main__':
     import time 
-    start = time.time()
-    selenium_test()
-    end = time.time()
-    print(f'Selenium took {end - start} seconds')
-    start = time.time()
-    playright_test()
-    end = time.time()
-    print(f'Playright took {end - start} seconds')
-    start = time.time()
-    scrapy_test()
-    end = time.time()
-    print(f'Scrapy took {end - start} seconds')
+    test_methods = [selenium_test, playright_test, scrapy_test]
+    for method in test_methods:
+        start = time.time()
+        method()
+        end = time.time()
+        print(f'{method.__name__} took {end - start} seconds')
 
 
 # Selenium took 13.267854452133179 seconds
-# Playright took 4.521850109100342 seconds
+# Playwright took 4.521850109100342 seconds
 # Scrapy took 1.4669597148895264 seconds
