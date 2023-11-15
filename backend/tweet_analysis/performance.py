@@ -31,3 +31,23 @@ def scrapy_test():
     process = CrawlerProcess()
     process.crawl(TestSpider)
     process.start()
+
+if __name__ == '__main__':
+    import time 
+    start = time.time()
+    selenium_test()
+    end = time.time()
+    print(f'Selenium took {end - start} seconds')
+    start = time.time()
+    playright_test()
+    end = time.time()
+    print(f'Playright took {end - start} seconds')
+    start = time.time()
+    scrapy_test()
+    end = time.time()
+    print(f'Scrapy took {end - start} seconds')
+
+
+# Selenium took 13.267854452133179 seconds
+# Playright took 4.521850109100342 seconds
+# Scrapy took 1.4669597148895264 seconds
