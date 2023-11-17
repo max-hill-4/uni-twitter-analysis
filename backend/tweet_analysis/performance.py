@@ -2,6 +2,19 @@
 
 # Selenium
 
+async def pyppeteer_test(website):
+    import asyncio
+    from pyppeteer import launch
+    browser = await launch()
+    page = await browser.newPage()
+    await page.goto(tweet)
+    xpath = ('//*[contains(@data-testid, "tweetTex")]')
+    await page.waitForXPath(xpath)
+    element = await page.xpath(xpath)
+    text_content = await page.evaluate('(element) => element.textContent', element[0])
+    await browser.close()
+    return text_content
+
 def selenium_test(website):
     # Need to test different browsers
     from selenium import webdriver
@@ -36,7 +49,7 @@ def scrapy_test(website):
 
 if __name__ == '__main__':
     import time 
-    test_methods = [selenium_test, playright_test, scrapy_test]
+    test_methods = [pyppeteer_test,selenium_test, playright_test, scrapy_test]
     results = []
     for method in test_methods:
         start = time.time()
