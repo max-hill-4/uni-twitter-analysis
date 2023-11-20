@@ -3,15 +3,21 @@
 # Selenium
 
 async def pyppeteer_test(website):
-    import asyncio
-    from pyppeteer import launch
-    browser = await launch()
+    browser = await launch(
+    handleSIGINT=False,
+    handleSIGTERM=False,
+    handleSIGHUP=False
+    )
     page = await browser.newPage()
     await page.goto(tweet)
+
     xpath = ('//*[contains(@data-testid, "tweetTex")]')
+
     await page.waitForXPath(xpath)
     element = await page.xpath(xpath)
+
     text_content = await page.evaluate('(element) => element.textContent', element[0])
+
     await browser.close()
     return text_content
 
@@ -47,9 +53,17 @@ def scrapy_test(website):
     process.crawl(TestSpider)
     process.start()
 
+def requests_test(website):
+    import requests
+    from bs4 import BeautifulSoup
+    r = requests.get(website)
+    r = r.json()['html']
+    soup = BeautifulSoup(r, 'html.parser')
+    print(soup.find('blockquote').find('p').get_text(strip=True))
+
 if __name__ == '__main__':
     import time 
-    test_methods = [pyppeteer_test,selenium_test, playright_test, scrapy_test]
+    test_methods = [selenium_test, playright_test, scrapy_test, requests_test]
     results = []
     for method in test_methods:
         start = time.time()

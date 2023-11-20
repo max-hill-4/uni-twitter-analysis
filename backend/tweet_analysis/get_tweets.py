@@ -1,27 +1,12 @@
 # Webscraping for tweets
 # Data cleaning
 
-import asyncio
-from pyppeteer import launch
+import requests
+from bs4 import BeautifulSoup
 
 async def get_tweet(tweet):
-    browser = await launch(
-    handleSIGINT=False,
-    handleSIGTERM=False,
-    handleSIGHUP=False
-    )
-    page = await browser.newPage()
-    await page.goto(tweet)
+    r = requests.get(f'https://publish.twitter.com/oembed?url={tweet}')
+    r = r.json()['html']
 
-    xpath = ('//*[contains(@data-testid, "tweetTex")]')
-
-    await page.waitForXPath(xpath)
-    element = await page.xpath(xpath)
-
-    text_content = await page.evaluate('(element) => element.textContent', element[0])
-
-    await browser.close()
-    return text_content
-
-
-
+    soup = BeautifulSoup(r, 'html.parser')
+    return (soup.find('blockquote').find('p').get_text(strip=True))
