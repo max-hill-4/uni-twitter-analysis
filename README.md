@@ -1,17 +1,3 @@
-# Team-Software-23-24
-
-Objectives:
-Grabbing data from Twitter
-Clean data + Sentiment Analysis 
-Web Application
-Cloud Deployment
-
-
-
-Version Control
-Git 
-Docker Hub? ( Could create compose file for deployment)
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
 
 [![Contributors][contributors-shield]][contributors-url]
@@ -69,10 +55,9 @@ Use the `BLANK_README.md` to get started.
 
 This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
-* [![Async.io][Next.js]][Next-url]
-* [![Twitter Publish][React.js]][React-url]
-* [![Flask][Vue.js]][Vue-url]
-* [![requests][Angular.io]][Angular-url]
+* [![Python][Python]][Python-url]
+* [![Javascript][Javascript]][Javascript-url]
+* [![Flask][Flask]][Flask-url]
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -90,8 +75,6 @@ To get a local copy up and running follow these simple example steps.
 
 _Below will be an example of how we want users to interact / begin using our project.
 
-
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -99,7 +82,7 @@ _Below will be an example of how we want users to interact / begin using our pro
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+Use this space to show useful examples of how a project can be used. 
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
@@ -118,7 +101,12 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-The Team - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Zak - 26577836
+Max - 26584263
+Jackson - 26580601
+Hubert - 26505141
+Alfie - 26584784
+Dan - 26569011
 
 Project Link: [https://github.com/max-hill-4/sentiment-tweet-analysis](https://github.com/max-hill-4/sentiment-tweet-analysis)
 
@@ -130,7 +118,7 @@ Project Link: [https://github.com/max-hill-4/sentiment-tweet-analysis](https://g
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
+[contributors-url]: https://github.com/max-hill-4/sentiment-tweet-analysis/graphs/contributors
 
 
 
@@ -140,11 +128,10 @@ Project Link: [https://github.com/max-hill-4/sentiment-tweet-analysis](https://g
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
 
-[Async.io]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Async.io]: https://nextjs.org/
-[Twitter Publish]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[Twitter Publish]: https://reactjs.org/
-[Flask]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Flask]: https://vuejs.org/
-[requests]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[requests]: https://angular.io/
+[Python]: https://miro.medium.com/v2/resize:fit:1358/0*F6dPDGP26YBuhWh4
+[Python-url]: https://nextjs.org/
+[Javascript]: https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black
+[Javascript-url]: https://www.javascript.com/
+[Flask]: https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white
+[Flask-url]: https://flask.palletsprojects.com/en/3.0.x/
+
