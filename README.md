@@ -10,7 +10,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="https://cdn.discordapp.com/attachments/615310886512492706/1183782261963894824/image.png?ex=65899624&is=65772124&hm=ca567283f8298578d5fa1e06007803d2015be8c212670f519a3a33657abae419&" alt="Logo" width="80" height="80">
+    <img src="https://seeklogo.com/images/T/twitter-icon-square-logo-108D17D373-seeklogo.com.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Best-README-Template</h3>
@@ -33,6 +33,8 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+
+* [![Project][Project]][Project-url]
 
 A web-accessible application, that allows users to query a tweet. The query will calculate a
 sentiment analysis for the data from our trained ML model and display it in an appropriate
@@ -118,7 +120,8 @@ Project Link: [https://github.com/max-hill-4/sentiment-tweet-analysis](https://g
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
 [contributors-url]: https://github.com/max-hill-4/sentiment-tweet-analysis/graphs/contributors
-
+[Project]: https://cdn.discordapp.com/attachments/615310886512492706/1183782261963894824/image.png?ex=65899624&is=65772124&hm=ca567283f8298578d5fa1e06007803d2015be8c212670f519a3a33657abae419&
+[Project-url]: http://teamsoftware.max-hill-4.xyz/
 
 
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
