@@ -10,7 +10,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://cdn.discordapp.com/attachments/615310886512492706/1183782261963894824/image.png?ex=65899624&is=65772124&hm=ca567283f8298578d5fa1e06007803d2015be8c212670f519a3a33657abae419&" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Best-README-Template</h3>
@@ -34,18 +34,17 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
-
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
+A web-accessible application, that allows users to query a tweet. The query will calculate a
+sentiment analysis for the data from our trained ML model and display it in an appropriate
+format. The sentiment analysis will be a score from 1-5 determining the emotion of the tweet.
+Extensions for the project could be:
+- Allowing user input on the sentiment to further train our ML model and comparing it to
+third-party ML models.
+- Adding the ability to analyse Twitter’s ‘Timelines’, trending Hashtags, individual users
+and comment threads.
+- Performance optimization, testing for latency and improvements.
+- Caching data/session handling with cookies
+- Allowing for personal profile analysis
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -128,7 +127,7 @@ Project Link: [https://github.com/max-hill-4/sentiment-tweet-analysis](https://g
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
 
-[Python]: https://miro.medium.com/v2/resize:fit:1358/0*F6dPDGP26YBuhWh4
+[Python]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
 [Python-url]: https://nextjs.org/
 [Javascript]: https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black
 [Javascript-url]: https://www.javascript.com/
