@@ -9,23 +9,23 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/max-hill-4/uni-twitter-analysis">
     <img src="https://seeklogo.com/images/T/twitter-icon-square-logo-108D17D373-seeklogo.com.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">2023 Team Software Project</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    A Twitter Sentiment Analysis website!
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/max-hill-4/uni-twitter-analysis"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="http://teamsoftware.max-hill-4.xyz/">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/max-hill-4/uni-twitter-analysis/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/max-hill-4/uni-twitter-analysis/issues">Request Feature</a>
   </p>
 </div>
 
@@ -34,7 +34,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-* [![Project][Project]][Project-url]
+[![Project][Project]][Project-url]
 
 A web-accessible application, that allows users to query a tweet. The query will calculate a
 sentiment analysis for the data from our trained ML model and display it in an appropriate
@@ -85,7 +85,7 @@ _Below will be an example of how we want users to interact / begin using our pro
 
 Use this space to show useful examples of how a project can be used. 
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+_For more examples, please refer to the [Documentation](https://github.com/max-hill-4/uni-twitter-analysis)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -109,7 +109,7 @@ Hubert - 26505141
 Alfie - 26584784
 Dan - 26569011
 
-Project Link: [https://github.com/max-hill-4/sentiment-tweet-analysis](https://github.com/max-hill-4/sentiment-tweet-analysis)
+Project Link: [Here](https://github.com/max-hill-4/sentiment-tweet-analysis)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
