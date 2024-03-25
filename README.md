@@ -131,7 +131,7 @@ Project Link: [Here](https://github.com/max-hill-4/sentiment-tweet-analysis)
 [product-screenshot]: images/screenshot.png
 
 [Python]: https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
-[Python-url]: https://nextjs.org/
+[Python-url]: https://www.python.org/
 [Javascript]: https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black
 [Javascript-url]: https://www.javascript.com/
 [Flask]: https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white
