@@ -1,6 +1,3 @@
-# Webscraping for tweets
-# Data cleaning
-
 import requests
 from bs4 import BeautifulSoup
 
