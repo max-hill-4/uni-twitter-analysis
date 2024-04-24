@@ -1,4 +1,4 @@
-from tweet_analysis import get_tweets as gt
+import get_tweets as gt
 
 # Sentiment analysis
 

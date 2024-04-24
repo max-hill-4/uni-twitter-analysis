@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from tweet_analysis import get_tweets as at
+from tweet_analysis import analysis_tweet as at
 import asyncio
 app = Flask(__name__, template_folder='../frontend/templates')
 
@@ -13,7 +13,7 @@ def search():
 
     query = request.args.get('query')
     loop = asyncio.new_event_loop()
-    data = loop.run_until_complete(at.get_tweet(query))
+    data = loop.run_until_complete(at(query))
     return render_template('search.html', query=data)
 
 if __name__ == '__main__':
