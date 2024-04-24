@@ -1,8 +1,8 @@
 from flask import Flask, request, render_template
-from tweet_analysis import analysis_tweets
-import asyncio
-app = Flask(__name__, template_folder='../frontend/templates')
+from analysis import analyze_tweet
+from asyncio import new_event_loop
 
+app = Flask(__name__, template_folder='../frontend/templates')
 
 @app.route('/')
 def index():
@@ -11,8 +11,8 @@ def index():
 @app.route('/search', methods=['GET'])
 def search():
     query = request.args.get('query')
-    loop = asyncio.new_event_loop()
-    data = loop.run_until_complete(analysis_tweets(query))
+    loop = new_event_loop()
+    data = loop.run_until_complete(analyze_tweet(query))
     return render_template('search.html', query=data)
 
 if __name__ == '__main__':
