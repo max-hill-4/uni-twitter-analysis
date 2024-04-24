@@ -9,6 +9,9 @@ async def get_tweet(tweet):
 
     r = requests.get("https://publish.twitter.com/oembed?url=%s" % tweet)
     r = r.json()['html']
-    
+
     soup = BeautifulSoup(r, 'html.parser')
     return (soup.find('blockquote').find('p').get_text(strip=True))
+
+# We would probably maybe have two gets, where one is ust for the embed code, 
+# and the other for sentiment data! we would pass both ytohugh to jinja!
