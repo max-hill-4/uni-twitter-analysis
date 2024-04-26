@@ -1,5 +1,5 @@
 import get_tweets
-
+import nltk
 
 # Not happy with double parsing of query
 def analyze_tweet(query):
