@@ -7,9 +7,20 @@ from nltk.corpus import twitter_samples
 #download('vader_lexicon')
 #download('twitter_samples')
 
-# Not happy with double parsing of query
+"""
+Designing my own model: 
 
+-> Tokenize all of the text
+-> Remove Stop Words ( I, Me, And )
+-> Lemmatization - ( Group words, run running)
+-> POS tagging improves Lemmatization alot, Nouns are not Sentiment!
+-> Choose important text and create numerical representation
+-> Run classification models
+
+"""
 async def analyze_tweet(query):
+    
+    # This is the built in vader ML model from nltk!
     data = await get_tweets.get_tweet(query)
     sia = SentimentIntensityAnalyzer()
     score = sia.polarity_scores(data)["compound"]
