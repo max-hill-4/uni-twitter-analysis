@@ -1,7 +1,7 @@
 import get_tweets
 from string import punctuation
 
-
+from nltk import pos_tag
 from nltk import TweetTokenizer
 from nltk import download
 from nltk.stem import WordNetLemmatizer
@@ -9,7 +9,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.corpus import stopwords
 from nltk.corpus import twitter_samples
 
-corpora = ['vader_lexicon', 'twitter_samples', 'stopwords', 'wordnet']
+corpora = ['vader_lexicon', 'twitter_samples', 'stopwords', 'wordnet', 'averaged_perceptron_tagger']
 # Need to find way to check if already installed
 for i in corpora:
      download(i)
@@ -38,7 +38,7 @@ https://necromuralist.github.io/Neurotic-Networking/posts/nlp/01-twitter-preproc
 
 class ProcessData:
 
-    def __init__(self, text):
+    def __init__(self, text: list):
         # Text is passed as unclean data.
         self.text = text
         self.tokens = []
@@ -48,17 +48,33 @@ class ProcessData:
                                         strip_handles=True,
                                         reduce_len=True)
 
-    def process_text(self) -> list[str]:
-        # tokenize the sentence
-        self.tokens = self.tokenizer.tokenize(self.text)
-        # remove stopwords
-        self.tokens = [token for token in self.tokens if token.isalpha() and token not in self.stopwords]
-        # lemmanize
-        self.tokens = [self.lemmatizer.lemmatize(token) for token in self.tokens]
+    def process_text(self) -> list[list[str]]:
+
+        for sentence in self.text:
+            data = []
+            # tokenize the sentence
+            data = self.tokenizer.tokenize(sentence)
+
+            # remove stopwords
+            data = [token for token in data if token.isalpha() and token[0] not in self.stopwords]
+            
+            # POS tagging
+            data = pos_tag(data)
+            
+            # lemmanize 
+            data = [(self.lemmatizer.lemmatize(token),pos) for token,pos in data]
+
+
+            self.tokens.append(data)
+        
         return self.tokens
     
+class TrainModel:
+    def __init__(self, text):
+        self.text = text
 
-tweet = twitter_samples.strings()[10]
+    
+tweet = twitter_samples.strings('positive_tweets.json')[:100]
 a = ProcessData(tweet)
 new_tokens = a.process_text()
 print(new_tokens)
