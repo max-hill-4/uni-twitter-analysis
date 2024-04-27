@@ -9,6 +9,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.corpus import stopwords
 from nltk.corpus import twitter_samples
 
+
 corpora = ['vader_lexicon', 'twitter_samples', 'stopwords', 'wordnet', 'averaged_perceptron_tagger']
 # Need to find way to check if already installed
 for i in corpora:
@@ -48,6 +49,11 @@ class ProcessData:
                                         strip_handles=True,
                                         reduce_len=True)
 
+    def tag(text):
+        data = pos_tag(data)
+        
+        
+        return data
     def process_text(self) -> list[list[str]]:
     # this is unigram analysis
         
@@ -59,16 +65,14 @@ class ProcessData:
             # remove stopwords
             data = [token for token in data if token.isalpha() and token[0] not in self.stopwords]
             
-            # POS tagging
+            # POS tagging - apparently sents is more efficiet? 
+            
+            # Honestly im too tired, but open a pull reuqest to add more maps for lemmization ?
             data = pos_tag(data)
-            # not sure whether to put nouns in? - needed for semantic analysis
-            TAGS = ['CC', 'CD', 'DT', 'EX', 'FW', 'IN', 'LS', 'MD', 'PDT', 
-            'POS', 'PRP', 'PRP$', 'RP', 'TO', 'UH', 'WDT', 'WP', 'WP$', 'WRB']
-
-            # lemmanize 
-            data = [(self.lemmatizer.lemmatize(token),pos) for token,pos in data if pos not in TAGS]
-
-
+            
+            # need to map pos tags to correct lemmatize tags!
+            data = [(self.lemmatizer.lemmatize(token), pos) for token, pos in data]
+            self.lemmatizer.lemmatize('engaged', pos = 'VERB')
             self.tokens.append(data)
         
         return self.tokens
@@ -78,8 +82,9 @@ class TrainModel:
         self.text = text
 
     
-tweet = twitter_samples.strings('positive_tweets.json')[:100]
-a = ProcessData(tweet)
+tweet = twitter_samples.strings('positive_tweets.json')[2]
+a = ProcessData([tweet])
+print(tweet)
 new_tokens = a.process_text()
 print(new_tokens)
 
