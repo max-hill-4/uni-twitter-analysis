@@ -1,12 +1,14 @@
 import get_tweets
+from string import punctuation
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk import corpus
 from nltk import TweetTokenizer
-# If not downloaded: 
 from nltk import download
-download('vader_lexicon')
-download('twitter_samples')
-download('stopwords')
+
+corpora = ['vader_lexicon', 'twitter_samples', 'stopwords']
+# Need to find way to check if already installed
+for i in corpora:
+     download(i)
 
 """
 Designing my own model: 
@@ -29,30 +31,30 @@ TD?
 
 https://necromuralist.github.io/Neurotic-Networking/posts/nlp/01-twitter-preprocessing-with-nltk/index.html
 """
-def train_model():
+def clean_tokens(tokens) -> list[str]:
 
-    words = corpus.twitter_samples.strings()
     stopwords = corpus.stopwords.words("english")
-    # remove alphas 
+    
+    clean_tokens = []
+    for token in tokens:
+        if token not in stopwords and token.isalpha():
+            clean_tokens.append(token)
+        
+    return clean_tokens
 
+def tokenize(tweet) -> list[str]:
+    
     tokenizer = TweetTokenizer(
-    preserve_case=False,
-    strip_handles=True,
-    reduce_len=True)
+        preserve_case=False,
+        strip_handles=True,
+        reduce_len=True)
 
-    tokens = tokenizer.tokenize(words)
+    return tokenizer.tokenize(tweet)
 
-    # possible to do it quicker in pandas!
-    for word in words:
-        if word in stopwords:
-            words.remove(word)
-        if word.isalpha():
-            words.remove(word)
+tweet = corpus.twitter_samples.strings()[10]
+tokens = tokenize(tweet)
+print(clean_tokens(tokens))
 
-    print(words[:20])
-
-
-train_model()
 
 
 
