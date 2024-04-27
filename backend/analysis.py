@@ -14,8 +14,17 @@ Designing my own model:
 -> Remove Stop Words ( I, Me, And )
 -> Lemmatization - ( Group words, run running)
 -> POS tagging improves Lemmatization alot, Nouns are not Sentiment!
--> Choose important text and create numerical representation
--> Run classification models
+-> Feature Selection
+    Tag the data with our 'feature data' - (Frequency, VADER score , etc.)
+    Tag the data with if it is meant to be positive or negative
+
+-> Train classification models
+
+-> Compare the classification models
+
+TD? 
+-> are we going to create an entire model everytime i load the program? 
+-> could i create the model and use an api to call to it? 
 
 """
 async def analyze_tweet(query):
