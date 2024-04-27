@@ -41,17 +41,20 @@ class ProcessData:
     def __init__(self, text):
         # Text is passed as unclean data.
         self.text = text
+        self.tokens = []
         self.lemmatizer = WordNetLemmatizer()
         self.stopwords = set(stopwords.words("english"))
-        self.tokens = []
         self.tokenizer = TweetTokenizer(preserve_case=False,
                                         strip_handles=True,
                                         reduce_len=True)
 
     def process_text(self) -> list[str]:
+        # tokenize the sentence
         self.tokens = self.tokenizer.tokenize(self.text)
-        self.tokens = [self.lemmatizer.lemmatize(token) for token in self.tokens]
+        # remove stopwords
         self.tokens = [token for token in self.tokens if token.isalpha() and token not in self.stopwords]
+        # lemmanize
+        self.tokens = [self.lemmatizer.lemmatize(token) for token in self.tokens]
         return self.tokens
     
 
