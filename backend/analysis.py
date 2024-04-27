@@ -51,7 +51,7 @@ class ProcessData:
 
     def tag(text):
         data = pos_tag(data)
-        
+        #add map here probably , and filtes!
         
         return data
     def process_text(self) -> list[list[str]]:
