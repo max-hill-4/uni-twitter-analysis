@@ -1,12 +1,13 @@
 import get_tweets
 from string import punctuation
 
-from nltk import corpus
+
 from nltk import TweetTokenizer
 from nltk import download
 from nltk.stem import WordNetLemmatizer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-
+from nltk.corpus import stopwords
+from nltk.corpus import twitter_samples
 
 corpora = ['vader_lexicon', 'twitter_samples', 'stopwords', 'wordnet']
 # Need to find way to check if already installed
@@ -35,42 +36,29 @@ TD?
 https://necromuralist.github.io/Neurotic-Networking/posts/nlp/01-twitter-preprocessing-with-nltk/index.html
 """
 
-class Anaylsis():
+class ProcessData:
 
-    def lemmenizer(self, tokens) -> list[str]:
-        l = WordNetLemmatizer()
-        new_tokens = []
+    def __init__(self, text):
+        # Text is passed as unclean data.
+        self.text = text
+        self.lemmatizer = WordNetLemmatizer()
+        self.stopwords = set(stopwords.words("english"))
+        self.tokens = []
+        self.tokenizer = TweetTokenizer(preserve_case=False,
+                                        strip_handles=True,
+                                        reduce_len=True)
 
-        for token in tokens:
-            new_tokens.append(l.lemmatize(token))
+    def process_text(self) -> list[str]:
+        self.tokens = self.tokenizer.tokenize(self.text)
+        self.tokens = [self.lemmatizer.lemmatize(token) for token in self.tokens]
+        self.tokens = [token for token in self.tokens if token.isalpha() and token not in self.stopwords]
+        return self.tokens
+    
 
-        return new_tokens
-
-    def clean_tokens(self, tokens) -> list[str]:
-
-        stopwords = corpus.stopwords.words("english")
-        
-        new_tokens = []
-        for token in tokens:
-            if token not in stopwords and token.isalpha():
-                new_tokens.append(token)
-            
-        return new_tokens
-
-    def tokenize(self, tweet) -> list[str]:
-        
-        tokenizer = TweetTokenizer(
-            preserve_case=False,
-            strip_handles=True,
-            reduce_len=True)
-
-        return tokenizer.tokenize(tweet)
-
-tweet = corpus.twitter_samples.strings()[10]
-a = Anaylsis()
-tokens = a.tokenize(tweet)
-tokens = a.clean_tokens(tokens)
-print(a.lemmenizer(tokens))
+tweet = twitter_samples.strings()[10]
+a = ProcessData(tweet)
+new_tokens = a.process_text()
+print(new_tokens)
 
 
 
