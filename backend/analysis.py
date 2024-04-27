@@ -49,7 +49,8 @@ class ProcessData:
                                         reduce_len=True)
 
     def process_text(self) -> list[list[str]]:
-
+    # this is unigram analysis
+        
         for sentence in self.text:
             data = []
             # tokenize the sentence
@@ -60,9 +61,12 @@ class ProcessData:
             
             # POS tagging
             data = pos_tag(data)
-            
+            # not sure whether to put nouns in? - needed for semantic analysis
+            TAGS = ['CC', 'CD', 'DT', 'EX', 'FW', 'IN', 'LS', 'MD', 'PDT', 
+            'POS', 'PRP', 'PRP$', 'RP', 'TO', 'UH', 'WDT', 'WP', 'WP$', 'WRB']
+
             # lemmanize 
-            data = [(self.lemmatizer.lemmatize(token),pos) for token,pos in data]
+            data = [(self.lemmatizer.lemmatize(token),pos) for token,pos in data if pos not in TAGS]
 
 
             self.tokens.append(data)
