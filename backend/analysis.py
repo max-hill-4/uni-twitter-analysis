@@ -103,9 +103,12 @@ class TrainModel:
             positive_scores.append(self.sia.polarity_scores(word)["pos"])
 
         # might need to add one to ensure pos scores
-        print(tweet)
+        
         features['mean_compound'] = mean(compound_scores) 
         features['mean_positive'] = mean(positive_scores)
+        if features['mean_compound'] == 0:
+            print(f'{tweet} has a compound of 0!')
+
         return features
 
     def create_features_list(self, text: list[list[str]], pos: bool):
@@ -119,9 +122,7 @@ class TrainModel:
 tweet = twitter_samples.strings('positive_tweets.json')
 data = ProcessData(tweet)
 cleaned_text = data.process_text()
-
 model = TrainModel(cleaned_text)
-
 
 print(model.create_features_list(cleaned_text,1))
 
@@ -135,7 +136,6 @@ async def analyze_tweet(query):
     get predicted score from classifier.
     """
     
-
     # This is the built in vader ML model from nltk!
     data = await get_tweets.get_tweet(query)
     sia = SentimentIntensityAnalyzer()
