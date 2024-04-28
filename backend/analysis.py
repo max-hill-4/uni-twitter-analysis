@@ -48,12 +48,16 @@ class ProcessData:
         self.tokenizer = TweetTokenizer(preserve_case=False,
                                         strip_handles=True,
                                         reduce_len=True)
+        self. TAGMAP = {'V' : 'v', 'J' : 'a', 'N' : 'n', 'R' : 'r' }
 
-    def tag(text):
-        data = pos_tag(data)
-        #add map here probably , and filtes!
+
+    def convert_pos(self,tag: list):
         
-        return data
+        # we could put a try except in here to else: noun#
+        
+        return self.TAGMAP.get(tag[0], 'n')
+        
+
     def process_text(self) -> list[list[str]]:
     # this is unigram analysis
         
@@ -61,18 +65,18 @@ class ProcessData:
             data = []
             # tokenize the sentence
             data = self.tokenizer.tokenize(sentence)
+            print(f'tokemns : {data}')
+
+
 
             # remove stopwords
-            data = [token for token in data if token.isalpha() and token[0] not in self.stopwords]
-            
-            # POS tagging - apparently sents is more efficiet? 
-            
-            # Honestly im too tired, but open a pull reuqest to add more maps for lemmization ?
+            data = [token for token in data if token.isalpha() and token not in self.stopwords]
+
+            # Pull request needed for pos tag -> lemmas tag!
             data = pos_tag(data)
-            
+        
             # need to map pos tags to correct lemmatize tags!
-            data = [(self.lemmatizer.lemmatize(token), pos) for token, pos in data]
-            self.lemmatizer.lemmatize('engaged', pos = 'VERB')
+            data = [self.lemmatizer.lemmatize(token, self.convert_pos(pos)) for token, pos in data]
             self.tokens.append(data)
         
         return self.tokens
