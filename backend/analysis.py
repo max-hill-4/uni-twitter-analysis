@@ -84,9 +84,9 @@ class TrainModel:
     returned by extract_features and whose second item is the predefined category for the text.
     After initially training the classifier with some data that has already been 
     categorized (such as the movie_reviews corpus), you’ll be able to classify new data.
+    args: text: str 
     """
-    def __init__(self, text):
-        self.text = text
+    def __init__(self):
         self.sia = SentimentIntensityAnalyzer()
     
     def extract_features(self, tweet: list[str]) -> dict:
@@ -106,25 +106,47 @@ class TrainModel:
         
         features['mean_compound'] = mean(compound_scores) 
         features['mean_positive'] = mean(positive_scores)
-        if features['mean_compound'] == 0:
-            print(f'{tweet} has a compound of 0!')
 
         return features
 
-    def create_features_list(self, text: list[list[str]], pos: bool):
+    def create_features_list(self, text: list[list[str]], pos: str):
         features = []
 
         for tweet in text:
-            features.append((self.extract_features(tweet), pos))
+            if tweet:
+                features.append((self.extract_features(tweet), pos))
         
         return features
     
-tweet = twitter_samples.strings('positive_tweets.json')
-data = ProcessData(tweet)
-cleaned_text = data.process_text()
-model = TrainModel(cleaned_text)
 
-print(model.create_features_list(cleaned_text,1))
+pos_tweet = twitter_samples.strings('positive_tweets.json')
+neg_tweet = twitter_samples.strings('negative_tweets.json')
+pos_data = ProcessData(pos_tweet).process_text()
+neg_data = ProcessData(neg_tweet).process_text()
+
+model = TrainModel()
+
+features = model.create_features_list(pos_data,'p')
+features += model.create_features_list(neg_data,'n')
+
+from random import shuffle
+from nltk import NaiveBayesClassifier
+from nltk import classify
+
+classifier = NaiveBayesClassifier.train(labeled_featuresets=features)
+#classifier.show_most_informative_features(10)
+
+#print(classify.accuracy(classifier, features[500:]))
+
+
+
+
+
+
+
+
+
+
 
 
 
