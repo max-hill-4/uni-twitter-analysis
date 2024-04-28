@@ -35,9 +35,9 @@
 </head>
 <body>
 <div class="container">
+    {{query|safe}}  
     <h1>Sentiment Analysis</h1>
     <blockquote class="twitter-tweet">
-        {{query|safe}}    
     <div class="sentiment">
         Sentiment: <span id="sentimentVariable">Positive</span> <!-- Example sentiment value -->
     </div>
