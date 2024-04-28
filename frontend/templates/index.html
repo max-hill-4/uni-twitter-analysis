@@ -7,64 +7,77 @@
     <meta name="description" content="This website was created for the Team Software Module 2024!">
     <meta name="author" content="Max, Zak, Jackson, Hubi, Alfie, Dan">
 
-
     <title>Team Software</title>
 
     <style>
         .title {
-        text-align: center;
-        font-family: 'Roboto Mono', monospace;
-        }
-        .body {
-        margin-top: 150px;
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        }
-        .form-property {
             text-align: center;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .body {
+            margin-top: 150px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container {
+            text-align: center;
+        }
+
+        .form-property {
             font-family: 'Roboto Mono', monospace;
             font-size: 17px;
         }
+
         .loadingSpinner {
-        caret-color: transparent;
-        border: 16px solid #f3f3f3; /* Light grey */
-        border-top: 16px solid #3498db; /* Blue */
-        border-radius: 50%;
-        margin-left: auto;
-        margin-right: auto;
-        width: 30px;
-        height: 30px;
-        animation: spin 2s linear infinite;
+            caret-color: transparent;
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
         }
 
         @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 
 </head>
 
 <body style="background-color:rgb(125, 191, 232);">
-    <div>
-        <h1 class = "title">Team Software</h1>
+    <div style="margin: 0 auto; max-width: 600px;">
+        <h1 class="title">Team Software</h1>
+        <div class="form-container">
+            <form action="/search" method="get">
+                <input type="text" id="search" name="query" class="form-property" placeholder="Paste tweet here" style="font-family: 'Roboto Mono', monospace; font-size: 17px;">
+                <button type="submit" class="form-property" onclick="showLoading()" style="font-family: 'Roboto Mono', monospace; font-size: 17px;">Search</button>
+                <select class="form-property" name="action" style="font-family: 'Roboto Mono', monospace; font-size: 17px;">
+                    <option value="user_timeline">User Timeline</option>
+                    <option value="individual_tweet">Individual Tweet</option>
+                </select>
+            </form>
+        </div>
+        <div id="spinner" class="loadingSpinner" style="margin: 0 auto; width: 30px; height: 30px;"></div>
+        {% if error_message %}
+        <div class="error-message" style="text-align: center;">
+            <p>{{ error_message }}</p>
+        </div>
+        {% endif %}
     </div>
-    <div lass="form-container" class="body">
-        <form action="/search" method="get">
-            <input type="text" id="search" name="query" class="form-property" placeholder="paste tweet here">
-            <button type="searchButton" class = "form-property" onclick="showLoading()">Search</button>
-        </form>
-    </div>
-    <div id="spinner" class="loadingSpinner"></div>
     <script>
-        
         window.addEventListener('pageshow', function(event) {
             var spinner = document.getElementById('spinner');
-                spinner.style.display = 'none';
+            spinner.style.display = 'none';
         });
-        
+
         function showLoading() {
             var spinner = document.getElementById('spinner');
             spinner.style.display = 'block';

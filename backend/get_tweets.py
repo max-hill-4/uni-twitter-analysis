@@ -1,16 +1,47 @@
+import sentiment
 import requests
 from bs4 import BeautifulSoup
 
+
 async def get_tweet(tweet):
     
-    tweet = "https://twitter.com/taylorswift13/status/1781397303380644232?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Etweet"
+    tweet_2 = (tweet + '&hide_media=true')
+
     r = requests.get("https://publish.twitter.com/oembed?url=%s" % tweet)
     r = r.json()['html']
 
+    r2 = requests.get("https://publish.twitter.com/oembed?url=%s" % tweet_2)
+    r2 = r.json()['html']
+
+    soup = BeautifulSoup(r2, 'html.parser')
+    query = soup.find('blockquote').find('p').get_text(strip=True)
+
+    sentiment_value = sentiment.Show_sentiment(query)
+    result = {
+    'html_content': r,
+    'sentiment_value': sentiment_value
+    }
+
+    return (result)
+
+
+async def get_timeline(tweet):
+
+    r = requests.get("https://publish.twitter.com/oembed?url=https://twitter.com/TwitterDev/lists/national-parks")
+    r = r.json()['html']
+
     soup = BeautifulSoup(r, 'html.parser')
+    query = soup.find('blockquote').find('p').get_text(strip=True)
+    sentiment_value = sentiment.Show_sentiment(query)
+    result = {
+    'html_content': r,
+    'sentiment_value': sentiment_value
+    }
+
     return (r)
 
-def get_users(query):
+
+def get_timelinesssss(tweets_profile):
     """
     This function constructs a Twitter search link from the user's input,
     retrieves and displays each user from that link.
@@ -20,7 +51,7 @@ def get_users(query):
     url_end = "https://twitter.com/taylorswift13/status/1781171613058097619"
     #query = query.replace(" ", "%20")
     tweet_link = url_start + url_end
-    r = requests.get(tweet_link)
+    r = requests.get("https://publish.twitter.com/oembed?url=%s" % tweets_profile)
     r = r.json()['html']
     soup = BeautifulSoup(r, 'html.parser')
     return (soup.find('blockquote').find('p').get_text(strip=True))

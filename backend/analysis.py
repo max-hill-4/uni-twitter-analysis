@@ -5,3 +5,7 @@ import nltk
 def analyze_tweet(query):
     data = get_tweets.get_tweet(query)
     return data
+
+def analyze_timeline(query):
+    data = get_tweets.get_timeline(query)
+    return data

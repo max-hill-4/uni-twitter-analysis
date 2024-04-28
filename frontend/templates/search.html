@@ -27,7 +27,16 @@
         max-width: 400px; /* Adjust maximum width for tweet widget */
         margin: 0 auto; /* Center tweet widget */
     }
-    .query, .sentiment {
+    .query-container {
+        width: 300px; /* Fixed width for the query container */
+        margin: 0 auto; /* Center the container */
+        margin-bottom: 20px; /* Add margin bottom */
+    }
+    .query {
+        font-size: 24px; /* Font size for the query */
+        /* Add any additional styling for the query */
+    }
+    .sentiment {
         font-size: 24px; /* Smaller font size for sections */
         margin-bottom: 20px; /* Reduce margin between sections */
     }
@@ -35,12 +44,13 @@
 </head>
 <body>
 <div class="container">
-        
-    {{query|safe}}  
     <h1>Sentiment Analysis</h1>
+    <div class="widget-container">
+        <div class="twitter_widget">{{twitter_widget|safe}}</div>
+    </div>
     <blockquote class="twitter-tweet">
     <div class="sentiment">
-        Sentiment: <span id="sentimentVariable">Positive</span> <!-- Example sentiment value -->
+        Sentiment: <span id="sentimentVariable">{{sentiment_value}}</span> <!-- Example sentiment value -->
     </div>
 </div>
 </body>
