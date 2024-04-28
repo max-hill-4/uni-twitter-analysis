@@ -1,3 +1,46 @@
-<html>
-{{query}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sentiment Analysis</title>
+<style>
+    body {
+        font-family: 'Roboto Mono', monospace;
+        background-color: rgb(125, 191, 232); /* Baby blue background */
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #333; /* Dark text color */
+    }
+    .container {
+        text-align: center;
+    }
+    h1 {
+        font-size: 36px; /* Increased font size for title */
+        margin-bottom: 20px; /* Increase margin for title */
+    }
+    .twitter-tweet {
+        max-width: 400px; /* Adjust maximum width for tweet widget */
+        margin: 0 auto; /* Center tweet widget */
+    }
+    .query, .sentiment {
+        font-size: 24px; /* Smaller font size for sections */
+        margin-bottom: 20px; /* Reduce margin between sections */
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Sentiment Analysis</h1>
+    <blockquote class="twitter-tweet">
+        {{query|safe}}    
+    <div class="sentiment">
+        Sentiment: <span id="sentimentVariable">Positive</span> <!-- Example sentiment value -->
+    </div>
+</div>
+</body>
 </html>
