@@ -9,6 +9,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.corpus import stopwords
 from nltk.corpus import twitter_samples
 
+from statistics import mean
 
 corpora = ['vader_lexicon', 'twitter_samples', 'stopwords', 'wordnet', 'averaged_perceptron_tagger']
 # Need to find way to check if already installed
@@ -52,22 +53,18 @@ class ProcessData:
 
 
     def convert_pos(self,tag: list):
-        
-        # we could put a try except in here to else: noun#
+                
+        # noun if not found as a tag.
         
         return self.TAGMAP.get(tag[0], 'n')
         
 
     def process_text(self) -> list[list[str]]:
-    # this is unigram analysis
         
         for sentence in self.text:
             data = []
             # tokenize the sentence
             data = self.tokenizer.tokenize(sentence)
-            print(f'tokemns : {data}')
-
-
 
             # remove stopwords
             data = [token for token in data if token.isalpha() and token not in self.stopwords]
@@ -82,15 +79,52 @@ class ProcessData:
         return self.tokens
     
 class TrainModel:
+    """
+    Each item in this list of features needs to be a tuple whose first item is the dictionary
+    returned by extract_features and whose second item is the predefined category for the text.
+    After initially training the classifier with some data that has already been 
+    categorized (such as the movie_reviews corpus), you’ll be able to classify new data.
+    """
     def __init__(self, text):
         self.text = text
-
+        self.sia = SentimentIntensityAnalyzer()
     
-tweet = twitter_samples.strings('positive_tweets.json')[2]
-a = ProcessData([tweet])
-print(tweet)
-new_tokens = a.process_text()
-print(new_tokens)
+    def extract_features(self, tweet: list[str]) -> dict:
+
+        if not tweet:
+            return False
+
+        features = {}
+        compound_scores = []
+        positive_scores = []
+
+        for word in tweet:
+            compound_scores.append(self.sia.polarity_scores(word)["compound"])
+            positive_scores.append(self.sia.polarity_scores(word)["pos"])
+
+        # might need to add one to ensure pos scores
+        print(tweet)
+        features['mean_compound'] = mean(compound_scores) 
+        features['mean_positive'] = mean(positive_scores)
+        return features
+
+    def create_features_list(self, text: list[list[str]], pos: bool):
+        features = []
+
+        for tweet in text:
+            features.append((self.extract_features(tweet), pos))
+        
+        return features
+    
+tweet = twitter_samples.strings('positive_tweets.json')
+data = ProcessData(tweet)
+cleaned_text = data.process_text()
+
+model = TrainModel(cleaned_text)
+
+
+print(model.create_features_list(cleaned_text,1))
+
 
 
 
