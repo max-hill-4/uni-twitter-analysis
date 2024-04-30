@@ -86,6 +86,7 @@ class TrainModel:
 
     def __init__(self, pos_text, neg_text):
         
+        # might have to move this later, becuase i of possible eval function.
         self.sia = SentimentIntensityAnalyzer()
         self._pos_text = pos_text
         self._neg_text = neg_text
