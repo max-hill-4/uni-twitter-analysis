@@ -22,23 +22,20 @@ for i in corpora:
      download(i)
 
 """
-Designing my own model: 
-
--> Tokenize all of the text
--> Remove Stop Words ( I, Me, And )
--> Lemmatization - ( Group words, run running)
--> POS tagging improves Lemmatization alot, Nouns are not Sentiment!
 -> Feature Selection
     Tag the data with our 'feature data' - (Frequency, VADER score , etc.)
     Tag the data with the positive or negative 'actual' data
 
--> Train classification models
-
--> Compare the classification models
-
 TD? 
 -> are we going to train a entire model using a classifier everytime I load the program? 
 -> could i create train model and use an api to call to it? 
+
+->  i iterate twice (data pp + model train)
+
+-> return important features (highlight?)
+
+
+
 
 https://necromuralist.github.io/Neurotic-Networking/posts/nlp/01-twitter-preprocessing-with-nltk/index.html
 """
@@ -59,7 +56,7 @@ class ProcessData:
         self.TAGMAP = {'V' : 'v', 'J' : 'a', 'N' : 'n', 'R' : 'r' }
 
 
-    def convert_pos(self,tag: list):
+    def map_pos(self,tag: list):
                 
         return self.TAGMAP.get(tag[0], 'n')
         
@@ -67,6 +64,7 @@ class ProcessData:
     def process_text(self) -> list[list[str]]:
         
         tokens = []
+        #should convert sentence -> tweet
         for sentence in self.text:
             data = []
             # tokenize the sentence
@@ -75,14 +73,19 @@ class ProcessData:
             # remove stopwords
             data = [token for token in data if token.isalpha() and token not in self.STOPWORDS]
 
+            # if data is empty, dont bother with rest of the loop.
+
             # Pull request needed for pos tag -> lemmas tag!
             data = pos_tag(data)
         
-            # need to map pos tags to correct lemmatize tags!
-            data = [self.lemmatizer.lemmatize(token, self.convert_pos(pos)) for token, pos in data]
+            data_copy = []
+            for token, pos in data:
+                data_copy.append(self.lemmatizer.lemmatize(token, self.map_pos(pos)))
+                                 
             
-            # this is maybe bad, becuase it means useless data is stored for unlabled data :(
+            data = [self.lemmatizer.lemmatize(token, self.map_pos(pos)) for token, pos in data]
             
+            # un categorised data using a 'None' tag. should be changed      
             if data:
                 tokens.append((data, self.label))
         
@@ -92,10 +95,10 @@ class TrainModel:
 
     def __init__(self):
         self.sia = SentimentIntensityAnalyzer()
+        self.unigram = set()
     
     def _calc_feature(self, tweet: list[str, str]) -> dict:
         
-        # tweet is currently being passed with its label, but we dont need it.
         features = {}
         compound_scores = []
         positive_scores = []
@@ -103,7 +106,7 @@ class TrainModel:
         for word in tweet[0]:
             compound_scores.append(self.sia.polarity_scores(word)["compound"])
             positive_scores.append(self.sia.polarity_scores(word)["pos"])
-        
+
         features['mean_compound'] = mean(compound_scores) 
         features['mean_positive'] = mean(positive_scores)
 
@@ -116,9 +119,13 @@ class TrainModel:
        
         for tweet in text:
             features.append((self._calc_feature(tweet), tweet[1]))
-
+       
+        shuffle(features)
+        
         classifier = NaiveBayesClassifier.train(labeled_featuresets=features)
         classifier.show_most_informative_features(5)
+        return classifier
+    
 
 pos_tweet = twitter_samples.strings('positive_tweets.json')
 neg_tweet = twitter_samples.strings('negative_tweets.json')
@@ -126,11 +133,7 @@ neg_tweet = twitter_samples.strings('negative_tweets.json')
 pos_data = ProcessData(pos_tweet, 'p').process_text()
 neg_data = ProcessData(neg_tweet, 'n').process_text()
 
-model = TrainModel().train(pos_data)
-
-
-
-
+model = TrainModel().train(pos_data + neg_data)
 
 
 
