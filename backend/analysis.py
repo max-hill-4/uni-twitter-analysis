@@ -1,9 +1,14 @@
 import get_tweets
+
 from string import punctuation
+from random import shuffle
 
 from nltk import pos_tag
 from nltk import TweetTokenizer
 from nltk import download
+from nltk import NaiveBayesClassifier
+from nltk import classify
+
 from nltk.stem import WordNetLemmatizer
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.corpus import stopwords
@@ -37,107 +42,91 @@ TD?
 
 https://necromuralist.github.io/Neurotic-Networking/posts/nlp/01-twitter-preprocessing-with-nltk/index.html
 """
-
+# we could make a cool plot to prove under fitting and over fitting
 class ProcessData:
-
-    def __init__(self, text: list):
+    # make functions priva using _
+    def __init__(self, text: list,  label: str = None):
         # Text is passed as unclean data.
+        self.label = label
         self.text = text
-        self.tokens = []
         self.lemmatizer = WordNetLemmatizer()
-        self.stopwords = set(stopwords.words("english"))
+        self.STOPWORDS = set(stopwords.words("english"))
+        
         self.tokenizer = TweetTokenizer(preserve_case=False,
                                         strip_handles=True,
                                         reduce_len=True)
-        self. TAGMAP = {'V' : 'v', 'J' : 'a', 'N' : 'n', 'R' : 'r' }
+        
+        self.TAGMAP = {'V' : 'v', 'J' : 'a', 'N' : 'n', 'R' : 'r' }
 
 
     def convert_pos(self,tag: list):
                 
-        # noun if not found as a tag.
-        
         return self.TAGMAP.get(tag[0], 'n')
         
 
     def process_text(self) -> list[list[str]]:
         
+        tokens = []
         for sentence in self.text:
             data = []
             # tokenize the sentence
             data = self.tokenizer.tokenize(sentence)
 
             # remove stopwords
-            data = [token for token in data if token.isalpha() and token not in self.stopwords]
+            data = [token for token in data if token.isalpha() and token not in self.STOPWORDS]
 
             # Pull request needed for pos tag -> lemmas tag!
             data = pos_tag(data)
         
             # need to map pos tags to correct lemmatize tags!
             data = [self.lemmatizer.lemmatize(token, self.convert_pos(pos)) for token, pos in data]
-            self.tokens.append(data)
+            
+            # this is maybe bad, becuase it means useless data is stored for unlabled data :(
+            
+            if data:
+                tokens.append((data, self.label))
         
-        return self.tokens
+        return tokens
     
 class TrainModel:
-    """
-    Each item in this list of features needs to be a tuple whose first item is the dictionary
-    returned by extract_features and whose second item is the predefined category for the text.
-    After initially training the classifier with some data that has already been 
-    categorized (such as the movie_reviews corpus), you’ll be able to classify new data.
-    args: text: str 
-    """
+
     def __init__(self):
         self.sia = SentimentIntensityAnalyzer()
     
-    def extract_features(self, tweet: list[str]) -> dict:
-
-        if not tweet:
-            return False
-
+    def _calc_feature(self, tweet: list[str, str]) -> dict:
+        
+        # tweet is currently being passed with its label, but we dont need it.
         features = {}
         compound_scores = []
         positive_scores = []
 
-        for word in tweet:
+        for word in tweet[0]:
             compound_scores.append(self.sia.polarity_scores(word)["compound"])
             positive_scores.append(self.sia.polarity_scores(word)["pos"])
-
-        # might need to add one to ensure pos scores
         
         features['mean_compound'] = mean(compound_scores) 
         features['mean_positive'] = mean(positive_scores)
 
         return features
 
-    def create_features_list(self, text: list[list[str]], pos: str):
-        features = []
 
+    def train(self, text):
+       
+        features = []
+       
         for tweet in text:
-            if tweet:
-                features.append((self.extract_features(tweet), pos))
-        
-        return features
-    
+            features.append((self._calc_feature(tweet), tweet[1]))
+
+        classifier = NaiveBayesClassifier.train(labeled_featuresets=features)
+        classifier.show_most_informative_features(5)
 
 pos_tweet = twitter_samples.strings('positive_tweets.json')
 neg_tweet = twitter_samples.strings('negative_tweets.json')
-pos_data = ProcessData(pos_tweet).process_text()
-neg_data = ProcessData(neg_tweet).process_text()
 
-model = TrainModel()
+pos_data = ProcessData(pos_tweet, 'p').process_text()
+neg_data = ProcessData(neg_tweet, 'n').process_text()
 
-features = model.create_features_list(pos_data,'p')
-features += model.create_features_list(neg_data,'n')
-
-from random import shuffle
-from nltk import NaiveBayesClassifier
-from nltk import classify
-
-classifier = NaiveBayesClassifier.train(labeled_featuresets=features)
-#classifier.show_most_informative_features(10)
-
-#print(classify.accuracy(classifier, features[500:]))
-
+model = TrainModel().train(pos_data)
 
 
 
