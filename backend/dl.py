@@ -39,7 +39,7 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 
 # Train the model
 model.fit(X_train, y_train, epochs=10, batch_size=16, validation_data=(X_test, y_test))
-
+ 
 # Evaluate the model
 loss, accuracy = model.evaluate(X_test, y_test)
 print("Test Accuracy:", accuracy)
