@@ -20,11 +20,25 @@ labels = np.concatenate([np.ones(len(positive_tweets)), np.zeros(len(negative_tw
 # Preprocess the data
 tokenizer = Tokenizer(num_words=5000, oov_token='<OOV>')
 tokenizer.fit_on_texts(tweets)
+"""
+fit_on_texts build a frequency vocab distribution so i will need to call this 
+anyways. Not sure if i can use this keras tokenizer instead of the nlp one.
+
+ we could manually create a dictionary (word_to_index)
+ to map each word in the tokenizer's vocabulary to an integer.
+  Then, for each tokenized tweet, we replace each token with its
+   corresponding integer using the dictionary. 
+"""
 sequences = tokenizer.texts_to_sequences(tweets)
 padded_sequences = pad_sequences(sequences, maxlen=100, truncating='post')
 
+# TD: need to convert our preproccecing data -> a tensor
+
+
 # Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(padded_sequences, labels, test_size=0.2, random_state=42)
+
+
 
 # Define the model
 model = tf.keras.Sequential([
@@ -38,7 +52,7 @@ model = tf.keras.Sequential([
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 # Train the model
-model.fit(X_train, y_train, epochs=10, batch_size=16, validation_data=(X_test, y_test))
+model.fit(X_train, y_train, epochs=5, batch_size=16, validation_data=(X_test, y_test))
  
 # Evaluate the model
 loss, accuracy = model.evaluate(X_test, y_test)
