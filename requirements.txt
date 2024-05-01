@@ -2,3 +2,5 @@ flask
 requests
 bs4
 nltk
+tensorflow
+scikit-learn
