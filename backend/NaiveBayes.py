@@ -1,4 +1,4 @@
-from Model import Model
+from analysis import Model
 
 from nltk import pos_tag
 from nltk import NaiveBayesClassifier
@@ -14,7 +14,7 @@ from statistics import mean
 
 class NaiveBayes(Model):
  
-    def _preprocess(self, text):
+    def _preprocess(self, tweet):
 
         lemmatizer = WordNetLemmatizer()
 
@@ -29,55 +29,58 @@ class NaiveBayes(Model):
         
         tokens = []
 
-        for tweet in text:
-            
-            data = tokenizer.tokenize(tweet)
-
-            data = [token for token in data if token.isalpha() and token not in STOPWORDS]
-
-            # (low) TD: Pull request pos tag (tagset) to work with lemmatize
-            data = pos_tag(data)
+    
         
-            # (low) TD: refact if data + lemmatize + pos_tag
-            
-            data = [lemmatizer.lemmatize(token, TAGMAP.get(pos, 'n')) for token, pos in data]
-            
-            if data:
-                tokens.append(data)
+        data = tokenizer.tokenize(tweet)
+
+        data = [token for token in data if token.isalpha() and token not in STOPWORDS]
+
+        # (low) TD: Pull request pos tag (tagset) to work with lemmatize
+        data = pos_tag(data)
+    
+        # (low) TD: refact if data + lemmatize + pos_tag
+        
+        data = [lemmatizer.lemmatize(token, TAGMAP.get(pos, 'n')) for token, pos in data]
+        
         return tokens
     
-    def trainmodel(self):
-        """
-        [({'value' : 1}, 'p'), ]
-        """
+    def _features(self, tweet):
 
-        # TD : get pre process to return a tuple.
-        pos_train = self._preprocess(self.pos_data)
-        neg_train = self._preprocess(self.neg_data)
-        
-        # TD: not that happy with label
-        label = 'p'
-        
-        features = []
+        data = self._preprocess(tweet)
+
+        features = {}
         sia = SentimentIntensityAnalyzer()
-        for categ in pos_train, neg_train:
-            for tweet in categ:
-                compound_scores = []
-                positive_scores = []
-                for token in tweet:
-                    compound_scores.append(sia.polarity_scores(token)["compound"])
-                    positive_scores.append(sia.polarity_scores(token)["pos"])
-                features.append(({'compound_score': mean(compound_scores),
-                                'positive_score': mean(positive_scores)}, label))
-            label = 'n'
+        compound_scores = []
+        positive_scores = []
+        
+        for tweet in data:
+            for word in tweet:
+                compound_scores.append(sia.polarity_scores(word)["compound"])
+                positive_scores.append(sia.polarity_scores(word)["pos"])
+        
+        features['pos_score'] = mean(positive_scores)
+        features['comp_score'] = mean(compound_scores)
+        
+        return features
+    
+    def trainmodel(self):
 
+        features = []
+
+        for tweet in self.pos_data:
+            features.append((self._features(tweet), 'p'))
+        
+        for tweet in self.neg_data:
+            features.append((self._features(tweet), 'n'))
+        
         shuffle(features)
         classifier = NaiveBayesClassifier.train(labeled_featuresets=features[:1500])
         classifier.show_most_informative_features(5)
         print(classify.accuracy(classifier, features[1500:]))
-        return classifier
+        return True
     
-
+    def classify(self):
+        pass
 if __name__ == "__main__": 
     from nltk.corpus import twitter_samples
     from nltk import download
@@ -87,4 +90,4 @@ if __name__ == "__main__":
     neg_tweet = twitter_samples.strings('negative_tweets.json')
 
     model = NaiveBayes(pos_tweet, neg_tweet)
-    model = model.trainmodel()
+    trained = model.trainmodel()
