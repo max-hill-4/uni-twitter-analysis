@@ -1,4 +1,4 @@
-import Model
+from Model import Model
 
 from nltk import pos_tag
 from nltk import NaiveBayesClassifier
@@ -29,7 +29,7 @@ class NaiveBayes(Model):
         
         tokens = []
 
-        for tweet in self.text:
+        for tweet in text:
             
             data = tokenizer.tokenize(tweet)
 
@@ -40,10 +40,10 @@ class NaiveBayes(Model):
         
             # (low) TD: refact if data + lemmatize + pos_tag
             
-            data = [lemmatizer.lemmatize(token, TAGMAP.get([pos], 'n')) for token, pos in data]
+            data = [lemmatizer.lemmatize(token, TAGMAP.get(pos, 'n')) for token, pos in data]
             
             if data:
-                self.tokens.append(data)
+                tokens.append(data)
         return tokens
     
     def trainmodel(self, pos_train, neg_train):
@@ -67,8 +67,8 @@ class NaiveBayes(Model):
                 for token in tweet:
                     compound_scores.append(sia.polarity_scores(token)["compound"])
                     positive_scores.append(sia.polarity_scores(token)["pos"])
-                features.append(({['comp']: mean(compound_scores),
-                                ['pos']: mean(positive_scores)}, label))
+                features.append(({'comp': mean(compound_scores),
+                                'pos': mean(positive_scores)}, label))
             label = 'n'
 
         shuffle(features)
@@ -76,3 +76,15 @@ class NaiveBayes(Model):
         classifier.show_most_informative_features(5)
         print(classify.accuracy(classifier, features[1500:]))
         return classifier
+    
+
+if __name__ == "__main__": 
+    from nltk.corpus import twitter_samples
+    from nltk import download
+
+    download(['vader_lexicon', 'twitter_samples', 'stopwords', 'wordnet', 'averaged_perceptron_tagger'])
+    pos_tweet = twitter_samples.strings('positive_tweets.json')
+    neg_tweet = twitter_samples.strings('negative_tweets.json')
+
+    model = NaiveBayes()
+    model = model.trainmodel(pos_tweet, neg_tweet)
