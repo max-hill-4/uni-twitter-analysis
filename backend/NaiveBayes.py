@@ -12,31 +12,47 @@ from nltk.corpus import stopwords
 from random import shuffle
 from statistics import mean
 
+
+"""
+i am actually quite unhappy with this, i liked how it was 
+a few iterations ago but need _features to be a seperate functiopn
+so for when i classify single tweet data.
+
+"""
+
+
 class NaiveBayes(Model):
- 
-    def _preprocess(self, tweet):
+    def __init__(self, pos_data, neg_data) -> None:
+        self.pos_data = pos_data
+        self.neg_data = neg_data
+        
+        self.sia = SentimentIntensityAnalyzer()
+        self.lemmatizer = WordNetLemmatizer()
 
-        lemmatizer = WordNetLemmatizer()
-
-
-        tokenizer = TweetTokenizer(preserve_case=False,
+        self.tokenizer = TweetTokenizer(preserve_case=False,
                                         strip_handles=True,
                                         reduce_len=True)
         
-        TAGMAP = {'V' : 'v', 'J' : 'a', 'N' : 'n', 'R' : 'r' }
+        self.TAGMAP = {'V' : 'v', 'J' : 'a', 'N' : 'n', 'R' : 'r' }
 
-        STOPWORDS = set(stopwords.words("english"))
+        self.STOPWORDS = set(stopwords.words("english"))
         
-        data = tokenizer.tokenize(tweet)
+        sia = SentimentIntensityAnalyzer()
+    
+    def _preprocess(self, tweet):
 
-        data = [token for token in data if token.isalpha() and token not in STOPWORDS]
+
+        
+        data = self.tokenizer.tokenize(tweet)
+
+        data = [token for token in data if token.isalpha() and token not in self.STOPWORDS]
 
         # (low) TD: Pull request pos tag (tagset) to work with lemmatize
         data = pos_tag(data)
     
         # (low) TD: refact if data + lemmatize + pos_tag
         
-        data = [lemmatizer.lemmatize(token, TAGMAP.get(pos, 'n')) for token, pos in data]
+        data = [self.lemmatizer.lemmatize(token, self.TAGMAP.get(pos, 'n')) for token, pos in data]
         
         return data
     
@@ -45,14 +61,14 @@ class NaiveBayes(Model):
         data = self._preprocess(tweet)
         if not data:
             return {}
-        sia = SentimentIntensityAnalyzer()
+
         features = {}
         positive_scores = []
         compound_scores = []
 
         for word in data:
-            positive_scores.append(sia.polarity_scores(word)["pos"])
-            compound_scores.append(sia.polarity_scores(word)["compound"])
+            positive_scores.append(self.sia.polarity_scores(word)["pos"])
+            compound_scores.append(self.sia.polarity_scores(word)["compound"])
         features['pos_score'] = mean(positive_scores)
         features['comp_score'] = mean(compound_scores)
         return features
