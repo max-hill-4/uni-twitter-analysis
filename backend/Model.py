@@ -1,22 +1,9 @@
-
-
 class Model:
-    def _preprocess(self):
-        print("It is some gangshit.")
+    def _preprocess(self, text):
         pass
-    def trainmodel(self):
-        self._preprocess()
+    def trainmodel(self, text):
         pass
-    def classify():
+    def classify(self):
         pass
 
-
-class NaiveBayes(Model):
-    pass
-
-class NeuralNetwork(Model):
-    pass
-
-model = NaiveBayes()
-
-model.trainmodel()
+ 
