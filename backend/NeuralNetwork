@@ -31,7 +31,7 @@ class NeuralNetwork(Model):
 
         X_train, X_test, y_train, y_test = self._preprocess()
 
-        model = tf.keras.Sequential([
+        self.model = tf.keras.Sequential([
             tf.keras.layers.Embedding(5000, 16, input_length=100),
             tf.keras.layers.GlobalAveragePooling1D(),
             tf.keras.layers.Dense(24, activation='relu'),
@@ -39,17 +39,17 @@ class NeuralNetwork(Model):
         ])
 
         # Compile the model
-        model.compile (loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+        self.model.compile (loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
         # Train the model
-        model.fit(X_train, y_train, epochs=5, batch_size=16, validation_data=(X_test, y_test))
+        self.model.fit(X_train, y_train, epochs=5, batch_size=16, validation_data=(X_test, y_test))
 
         # Evaluate the model
-        loss, accuracy = model.evaluate(X_test, y_test)
-        print("Test Accuracy:", accuracy)
+        #loss, accuracy = model.evaluate(X_test, y_test)
+        #print("Test Accuracy:", accuracy)
 
     def classify(self, text):
-        pass
+        print(self.model.predict(text))
 
 if __name__ == "__main__": 
     from nltk.corpus import twitter_samples
@@ -61,4 +61,6 @@ if __name__ == "__main__":
     negative_tweets = twitter_samples.strings('negative_tweets.json')
 
     model = NeuralNetwork(positive_tweets, negative_tweets)
-    model = model.trainmodel()
+    model.trainmodel()
+    # it hink i would also need to convert this into a frickin VECTOR MAN OKAY TOMMOROW JOB MAN GJ TODAY.
+    model.classify("good good good good")
