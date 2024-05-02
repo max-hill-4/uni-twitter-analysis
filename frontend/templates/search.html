@@ -19,7 +19,7 @@
         padding: 20px;
     }
     h1 {
-        font-size: 65px; /* Increased font size for title */
+        font-size: 36px; /* Increased font size for title */
         text-align: center; /* Center the title */
         margin-bottom: 20px; /* Add margin for title */
     }
@@ -41,7 +41,7 @@
         transition: width 0.5s; /* Smooth transition for width change */
     }
     .sentiment {
-        font-size: 40px; /* Font size for sentiment */
+        font-size: 24px; /* Font size for sentiment */
         font-weight: bold; /* Make sentiment text bold */
         margin-top: 10px; /* Add margin on top */
     }
@@ -66,20 +66,17 @@
         var elem = document.getElementById("myBar");
         var sentiment = document.getElementById("sentimentVariable");
         elem.style.width = progress + "%";
-        if (progress >= 50) {
+        if (progress > 50) {
             elem.style.backgroundColor = "#10a328"; // Green color
             sentiment.textContent = "Sentiment: Positive";
-        }if (progress = 50) {
-            elem.style.backgroundColor = "#f5d131"; // Green color
-            sentiment.textContent = "Sentiment: Neutral";
-        }else {
+        } else {
             elem.style.backgroundColor = "#c42121"; // Red color
             sentiment.textContent = "Sentiment: Negative";
         }
     }
 
     // Call the function with the value passed from the template
-    updateSentiment({{ sentiment_value|safe }});
+    updateSentiment(sentiment_value);
 </script>
 </body>
 </html>

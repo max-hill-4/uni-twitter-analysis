@@ -2,5 +2,8 @@
 
 def Show_sentiment(query):
     query = query
-    
-    return (50)
+    analysis = False
+    if analysis == True:
+        return(100)
+    else:
+        return(10)

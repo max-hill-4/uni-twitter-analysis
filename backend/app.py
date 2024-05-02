@@ -24,6 +24,7 @@ def search():
             
         elif action == 'individual_tweet':
             data = loop.run_until_complete(analysis.analyze_tweet(query))
+            print(data['sentiment_value'])
             return render_template('search.html', twitter_widget=data['html_content'], sentiment_value=data['sentiment_value'])
         else:
             raise ValueError("Invalid action")
