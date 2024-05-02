@@ -10,48 +10,76 @@
         background-color: rgb(125, 191, 232); /* Baby blue background */
         margin: 0;
         padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
         color: #333; /* Dark text color */
     }
     .container {
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Center items horizontally */
+        padding: 20px;
     }
     h1 {
-        font-size: 36px; /* Increased font size for title */
-        margin-bottom: 20px; /* Increase margin for title */
+        font-size: 65px; /* Increased font size for title */
+        text-align: center; /* Center the title */
+        margin-bottom: 20px; /* Add margin for title */
     }
-    .twitter-tweet {
+    .twitter-widget {
         max-width: 400px; /* Adjust maximum width for tweet widget */
-        margin: 0 auto; /* Center tweet widget */
+        margin-bottom: 20px; /* Add margin between title and widget */
     }
-    .query-container {
-        width: 300px; /* Fixed width for the query container */
-        margin: 0 auto; /* Center the container */
-        margin-bottom: 20px; /* Add margin bottom */
+    .progress-container {
+        width: 300px; /* Smaller width for progress container */
+        height: 24px; /* Set height for progress container */
+        background-color: #fff; /* White background */
+        border-radius: 10px; /* Add curved edges */
+        overflow: hidden; /* Hide overflow for curved edges */
     }
-    .query {
-        font-size: 24px; /* Font size for the query */
-        /* Add any additional styling for the query */
+    .progress-bar {
+        height: 100%; /* Set height to fill progress container */
+        background-color: #10a328; /* Green color */
+        width: 0%; /* Initially set to 0% */
+        transition: width 0.5s; /* Smooth transition for width change */
     }
     .sentiment {
-        font-size: 24px; /* Smaller font size for sections */
-        margin-bottom: 20px; /* Reduce margin between sections */
+        font-size: 40px; /* Font size for sentiment */
+        font-weight: bold; /* Make sentiment text bold */
+        margin-top: 10px; /* Add margin on top */
     }
 </style>
 </head>
 <body>
 <div class="container">
     <h1>Sentiment Analysis</h1>
-    <div class="widget-container">
-        <div class="twitter_widget">{{twitter_widget|safe}}</div>
+    <div class="twitter-widget">
+        <div class="widget-container">
+            <div class="twitter_widget">{{ twitter_widget|safe }}</div>
+        </div>
     </div>
-    <blockquote class="twitter-tweet">
-    <div class="sentiment">
-        Sentiment: <span id="sentimentVariable">{{sentiment_value}}</span> <!-- Example sentiment value -->
+    <div class="progress-container">
+        <div id="myBar" class="progress-bar"></div>
     </div>
+    <div class="sentiment" id="sentimentVariable"></div>
 </div>
+<script>
+    // Function to update the progress bar and sentiment
+    function updateSentiment(progress) {
+        var elem = document.getElementById("myBar");
+        var sentiment = document.getElementById("sentimentVariable");
+        elem.style.width = progress + "%";
+        if (progress >= 50) {
+            elem.style.backgroundColor = "#10a328"; // Green color
+            sentiment.textContent = "Sentiment: Positive";
+        }if (progress = 50) {
+            elem.style.backgroundColor = "#f5d131"; // Green color
+            sentiment.textContent = "Sentiment: Neutral";
+        }else {
+            elem.style.backgroundColor = "#c42121"; // Red color
+            sentiment.textContent = "Sentiment: Negative";
+        }
+    }
+
+    // Call the function with the value passed from the template
+    updateSentiment({{ sentiment_value|safe }});
+</script>
 </body>
 </html>

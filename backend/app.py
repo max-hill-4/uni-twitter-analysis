@@ -20,7 +20,7 @@ def search():
 
         if action == 'user_timeline':
             data = loop.run_until_complete(analysis.analyze_timeline(query))
-            return render_template('search.html', twitter_widget=data, sentiment_value='positive')
+            return render_template('search.html', twitter_widget=data, sentiment_value= 55)
             
         elif action == 'individual_tweet':
             data = loop.run_until_complete(analysis.analyze_tweet(query))

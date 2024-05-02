@@ -10,35 +10,60 @@
     <title>Team Software</title>
 
     <style>
-        .title {
-            text-align: center;
+        body {
+            background-color: rgb(125, 191, 232);
             font-family: 'Roboto Mono', monospace;
         }
 
-        .body {
-            margin-top: 150px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .container {
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 65px;
+            margin-bottom: 30px;
         }
 
         .form-container {
             text-align: center;
+            margin-bottom: 20px;
         }
 
         .form-property {
-            font-family: 'Roboto Mono', monospace;
-            font-size: 17px;
+            font-size: 30px;
+            padding: 10px;
+            border-radius: 30px;
+            border: none;
+            margin-right: 10px;
+        }
+
+        #search {
+            width: 100%;
+        }
+
+        #action {
+            width: 70%;
+            margin-top: 40px;
+        }
+
+        .button {
+            font-size: 30px;
+            padding: 10px 20px;
+            border-radius: 30px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
         }
 
         .loadingSpinner {
-            caret-color: transparent;
             border: 16px solid #f3f3f3; /* Light grey */
             border-top: 16px solid #3498db; /* Blue */
             border-radius: 50%;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto;
             width: 30px;
             height: 30px;
             animation: spin 2s linear infinite;
@@ -52,20 +77,20 @@
 
 </head>
 
-<body style="background-color:rgb(125, 191, 232);">
-    <div style="margin: 0 auto; max-width: 600px;">
+<body>
+    <div class="container">
         <h1 class="title">Team Software</h1>
         <div class="form-container">
             <form action="/search" method="get">
-                <input type="text" id="search" name="query" class="form-property" placeholder="Paste tweet here" style="font-family: 'Roboto Mono', monospace; font-size: 17px;">
-                <button type="submit" class="form-property" onclick="showLoading()" style="font-family: 'Roboto Mono', monospace; font-size: 17px;">Search</button>
-                <select class="form-property" name="action" style="font-family: 'Roboto Mono', monospace; font-size: 17px;">
-                    <option value="user_timeline">User Timeline</option>
+                <input type="text" id="search" name="query" class="form-property" placeholder="Paste tweet here">
+                <select id="action" name="action" class="form-property">
                     <option value="individual_tweet">Individual Tweet</option>
+                    <option value="user_timeline">User Timeline</option>
                 </select>
+                <button type="submit" class="button" onclick="showLoading()">Search</button>
             </form>
         </div>
-        <div id="spinner" class="loadingSpinner" style="margin: 0 auto; width: 30px; height: 30px;"></div>
+        <div id="spinner" class="loadingSpinner"></div>
         {% if error_message %}
         <div class="error-message" style="text-align: center;">
             <p>{{ error_message }}</p>

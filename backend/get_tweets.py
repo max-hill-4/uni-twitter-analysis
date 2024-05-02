@@ -5,15 +5,12 @@ from bs4 import BeautifulSoup
 
 async def get_tweet(tweet):
     
-    tweet_2 = (tweet + '&hide_media=true')
+
 
     r = requests.get("https://publish.twitter.com/oembed?url=%s" % tweet)
     r = r.json()['html']
 
-    r2 = requests.get("https://publish.twitter.com/oembed?url=%s" % tweet_2)
-    r2 = r.json()['html']
-
-    soup = BeautifulSoup(r2, 'html.parser')
+    soup = BeautifulSoup(r, 'html.parser')
     query = soup.find('blockquote').find('p').get_text(strip=True)
 
     sentiment_value = sentiment.Show_sentiment(query)
@@ -27,16 +24,17 @@ async def get_tweet(tweet):
 
 async def get_timeline(tweet):
 
-    r = requests.get("https://publish.twitter.com/oembed?url=https://twitter.com/TwitterDev/lists/national-parks")
+    oembed_url = f"https://publish.twitter.com/oembed?url={tweet}"
+    r = requests.get(oembed_url)
     r = r.json()['html']
 
     soup = BeautifulSoup(r, 'html.parser')
     query = soup.find('blockquote').find('p').get_text(strip=True)
     sentiment_value = sentiment.Show_sentiment(query)
-    result = {
-    'html_content': r,
-    'sentiment_value': sentiment_value
-    }
+    #result = {
+    #'html_content': r,
+    #'sentiment_value': sentiment_value
+    #}
 
     return (r)
 
