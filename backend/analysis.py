@@ -24,12 +24,21 @@ for i in corpora:
      download(i)
 
 """
+possible factory for sure!
+
+Model: -> virtual class
+	_preprocess(text: list[str]) -> list[list[str]]
+	trainmodel(text: list[list[str]) -> classifier
+	classify(text: str) -> bool
+
+NaiveBayes(Model):
+
+
+NeuralNetwork(Model):
+
+
+
 TD? 
-
--> use pandas for data - its getting confusing!
-
--> are we going to train a entire model using a classifier everytime I load the program? 
--> could i create train model and use an api to call to it? 
 
 ->  i iterate twice (data pp + model train)
 
@@ -39,7 +48,7 @@ TD?
 
 
 References: 
-real python
+Lots of RealPython.com
 https://necromuralist.github.io/Neurotic-Networking/posts/nlp/01-twitter-preprocessing-with-nltk/index.html
 """
 class ProcessData:
