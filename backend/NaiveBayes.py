@@ -74,9 +74,7 @@ class NaiveBayes(Model):
         return features
     
     def trainmodel(self):
-        # honestly it feels really slow 
-        # i suspect its becuase its doing somany method calls? 
-        # im guessing i also iterate over the data 1 million times tbh!
+
         features = []
 
         for tweet in self.pos_data:
@@ -86,13 +84,14 @@ class NaiveBayes(Model):
             features.append((self._features(tweet), 'n'))
 
         shuffle(features)
-        classifier = NaiveBayesClassifier.train(labeled_featuresets=features[:1500])
-        classifier.show_most_informative_features(5)
-        print(classify.accuracy(classifier, features[1500:]))
-        return True
+        self.classifier = NaiveBayesClassifier.train(labeled_featuresets=features[:1500])
+        self.classifier.show_most_informative_features(5)
+        self.accuracy = classify.accuracy(self.classifier, features[1500:])
     
-    def classify(self):
-        pass
+    def score(self, tweet):
+        result = self.classifier.classify(tweet)
+        return (f'I am {self.accuracy*100} sure it is {result} ')
+
 if __name__ == "__main__": 
     from nltk.corpus import twitter_samples
     from nltk import download
@@ -102,4 +101,7 @@ if __name__ == "__main__":
     neg_tweet = twitter_samples.strings('negative_tweets.json')
 
     model = NaiveBayes(pos_tweet, neg_tweet)
-    trained = model.trainmodel()
+    # I HATE THIS SO MUCH PLEASE TD: HIGH HIGH HIGH!
+    test_data = model._features("Hi i am good good test positive happy")
+    model.trainmodel()
+    print(model.score(test_data))
