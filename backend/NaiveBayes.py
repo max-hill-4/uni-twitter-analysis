@@ -27,10 +27,6 @@ class NaiveBayes(Model):
 
         STOPWORDS = set(stopwords.words("english"))
         
-        tokens = []
-
-    
-        
         data = tokenizer.tokenize(tweet)
 
         data = [token for token in data if token.isalpha() and token not in STOPWORDS]
@@ -42,37 +38,37 @@ class NaiveBayes(Model):
         
         data = [lemmatizer.lemmatize(token, TAGMAP.get(pos, 'n')) for token, pos in data]
         
-        return tokens
+        return data
     
     def _features(self, tweet):
 
         data = self._preprocess(tweet)
-
-        features = {}
+        if not data:
+            return {}
         sia = SentimentIntensityAnalyzer()
-        compound_scores = []
+        features = {}
         positive_scores = []
-        
-        for tweet in data:
-            for word in tweet:
-                compound_scores.append(sia.polarity_scores(word)["compound"])
-                positive_scores.append(sia.polarity_scores(word)["pos"])
-        
+        compound_scores = []
+
+        for word in data:
+            positive_scores.append(sia.polarity_scores(word)["pos"])
+            compound_scores.append(sia.polarity_scores(word)["compound"])
         features['pos_score'] = mean(positive_scores)
         features['comp_score'] = mean(compound_scores)
-        
         return features
     
     def trainmodel(self):
-
+        # honestly it feels really slow 
+        # i suspect its becuase its doing somany method calls? 
+        # im guessing i also iterate over the data 1 million times tbh!
         features = []
 
         for tweet in self.pos_data:
             features.append((self._features(tweet), 'p'))
-        
+
         for tweet in self.neg_data:
             features.append((self._features(tweet), 'n'))
-        
+
         shuffle(features)
         classifier = NaiveBayesClassifier.train(labeled_featuresets=features[:1500])
         classifier.show_most_informative_features(5)
