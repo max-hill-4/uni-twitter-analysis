@@ -46,14 +46,14 @@ class NaiveBayes(Model):
                 tokens.append(data)
         return tokens
     
-    def trainmodel(self, pos_train, neg_train):
+    def trainmodel(self):
         """
         [({'value' : 1}, 'p'), ]
         """
 
         # TD : get pre process to return a tuple.
-        pos_train = self._preprocess(pos_train)
-        neg_train = self._preprocess(neg_train)
+        pos_train = self._preprocess(self.pos_data)
+        neg_train = self._preprocess(self.neg_data)
         
         # TD: not that happy with label
         label = 'p'
@@ -67,8 +67,8 @@ class NaiveBayes(Model):
                 for token in tweet:
                     compound_scores.append(sia.polarity_scores(token)["compound"])
                     positive_scores.append(sia.polarity_scores(token)["pos"])
-                features.append(({'comp': mean(compound_scores),
-                                'pos': mean(positive_scores)}, label))
+                features.append(({'compound_score': mean(compound_scores),
+                                'positive_score': mean(positive_scores)}, label))
             label = 'n'
 
         shuffle(features)
@@ -86,5 +86,5 @@ if __name__ == "__main__":
     pos_tweet = twitter_samples.strings('positive_tweets.json')
     neg_tweet = twitter_samples.strings('negative_tweets.json')
 
-    model = NaiveBayes()
-    model = model.trainmodel(pos_tweet, neg_tweet)
+    model = NaiveBayes(pos_tweet, neg_tweet)
+    model = model.trainmodel()
