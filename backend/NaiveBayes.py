@@ -13,14 +13,6 @@ from random import shuffle
 from statistics import mean
 
 
-"""
-i am actually quite unhappy with this, i liked how it was 
-a few iterations ago but need _features to be a seperate functiopn
-so for when i classify single tweet data.
-
-"""
-
-
 class NaiveBayes(Model):
     def __init__(self, pos_data, neg_data) -> None:
         self.pos_data = pos_data
@@ -41,8 +33,6 @@ class NaiveBayes(Model):
     
     def _preprocess(self, tweet):
 
-
-        
         data = self.tokenizer.tokenize(tweet)
 
         data = [token for token in data if token.isalpha() and token not in self.STOPWORDS]
@@ -56,7 +46,7 @@ class NaiveBayes(Model):
         
         return data
     
-    def _features(self, tweet):
+    def features(self, tweet):
 
         data = self._preprocess(tweet)
         if not data:
@@ -78,10 +68,10 @@ class NaiveBayes(Model):
         features = []
 
         for tweet in self.pos_data:
-            features.append((self._features(tweet), 'p'))
+            features.append((self.features(tweet), 'p'))
 
         for tweet in self.neg_data:
-            features.append((self._features(tweet), 'n'))
+            features.append((self.features(tweet), 'n'))
 
         shuffle(features)
         self.classifier = NaiveBayesClassifier.train(labeled_featuresets=features[:1500])
@@ -102,6 +92,8 @@ if __name__ == "__main__":
 
     model = NaiveBayes(pos_tweet, neg_tweet)
     # I HATE THIS SO MUCH PLEASE TD: HIGH HIGH HIGH!
-    test_data = model._features("Hi i am good good test positive happy")
     model.trainmodel()
+    
+    test_data = model.features("Hi i am good good test positive happy")
+    
     print(model.score(test_data))
