@@ -78,7 +78,9 @@ class NaiveBayes(Model):
         self.classifier.show_most_informative_features(5)
         self.accuracy = classify.accuracy(self.classifier, features[1500:])
     
-    def score(self, tweet):
+    def predict(self, tweet):
+        # If model is not found trainmodel.
+        # if model found load it.
         result = self.classifier.classify(tweet)
         return (f'I am {self.accuracy*100} sure it is {result} ')
 
@@ -96,4 +98,4 @@ if __name__ == "__main__":
     
     test_data = model.features("Hi i am good good test positive happy")
     
-    print(model.score(test_data))
+    print(model.predict(test_data))

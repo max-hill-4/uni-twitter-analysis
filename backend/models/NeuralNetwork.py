@@ -47,12 +47,9 @@ class NeuralNetwork(Model):
         # Train the model
         self.model.fit(X_train, y_train, epochs=7, batch_size=16, validation_data=(X_test, y_test))
 
-        # Evaluate the model
-        #loss, accuracy = model.evaluate(X_test, y_test)
-        #print("Test Accuracy:", accuracy)
-
-    def classify(self, text):
-
+        tensorflow.model.save
+    def predict(self, text):
+        #cant call trainmodel wtihout the data!
         values = self.model.predict(text)
         avg = numpy.mean(values)
         return 'p' if avg > 0.5 else 'n'
@@ -69,4 +66,4 @@ if __name__ == "__main__":
     model = NeuralNetwork()
     model.trainmodel(positive_tweets, negative_tweets)
     a = model._preprocess(positive_tweets[1501])
-    print(model.classify(a))
+    print(model.predict(a))
