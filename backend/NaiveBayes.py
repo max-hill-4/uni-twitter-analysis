@@ -1,4 +1,4 @@
-from analysis import Model
+from model import Model
 
 from nltk import pos_tag
 from nltk import NaiveBayesClassifier

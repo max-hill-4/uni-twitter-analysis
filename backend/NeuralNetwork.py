@@ -1,4 +1,4 @@
-from analysis import Model
+from model import Model
 
 import numpy as np
 import tensorflow as tf
