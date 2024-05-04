@@ -17,3 +17,8 @@ def search():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
+@app.GET('/data')
+def test():
+    data = 'p'
+    return data

@@ -1,4 +1,4 @@
-from backend.ML.models.model import Model
+from model import Model
 
 import numpy as np
 import tensorflow as tf
@@ -12,22 +12,20 @@ from statistics import mean
 class NeuralNetwork(Model):
     def _preprocess(self, tweets):
         
-        # TD : This function is bad, becuase in NB we are doing single tweet items,
-        # should be standadized.
-        # wish i did a scikit learn.. >_>
-
+        # Build vocap map.
         tokenizer = Tokenizer(num_words=5000, oov_token='<OOV>')
-        tokenizer.fit_on_texts(tweets)
+        tokenizer.fit_on_texts(self.pos_data + self.neg_data)
 
-        #Vectorizes every tweet
+        #Vectorizes every tweet.
         sequences = tokenizer.texts_to_sequences(tweets)
 
+        # Pads every tweet.
         padded_sequences = pad_sequences(sequences, maxlen=100, truncating='post')
-
+        print(padded_sequences)
         return padded_sequences
         
     def _trainmodel(self):
-
+        
         padded_sequences = self._preprocess(self.pos_data + self.neg_data)
         labels = np.concatenate([np.ones(len(self.pos_data)), np.zeros(len(self.neg_data))])
 
@@ -35,7 +33,7 @@ class NeuralNetwork(Model):
         
         
 
-        self.model = tf.keras.Sequential([
+        model = tf.keras.Sequential([
             tf.keras.layers.Embedding(5000, 16, input_length=100),
             tf.keras.layers.GlobalAveragePooling1D(),
             tf.keras.layers.Dense(24, activation='relu'),
@@ -43,17 +41,23 @@ class NeuralNetwork(Model):
         ])
 
         # Compile the model
-        self.model.compile (loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+        model.compile (loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
         # Train the model
-        self.model.fit(X_train, y_train, epochs=7, batch_size=16, validation_data=(X_test, y_test))
-        
-        tf.saved_model.save(self.model, './models/')
+        model.fit(X_train, y_train, epochs=7, batch_size=16, validation_data=(X_test, y_test))
+        model.save(r'backend\ML\models\NeuralNetwork.keras')
+
     def predict(self, text):
-        # _train_model.
-        
-        values = .predict(text)
+        # need to load tokenizer somehow.
+        # model has to be trained for tokenizer to have data
+        # i probably need to store into a vocab file.
+        text = self._preprocess(text)
+        model = tf.keras.models.load_model(r'backend\ML\models\NeuralNetwork.keras')
+
+        values = model.predict(text)
+        print(values)
         avg = numpy.mean(values)
+        print(avg)
         return 'p' if avg > 0.5 else 'n'
 
 if __name__ == "__main__": 
@@ -65,6 +69,7 @@ if __name__ == "__main__":
     # Load Twitter data
     positive_tweets = twitter_samples.strings('positive_tweets.json')
     negative_tweets = twitter_samples.strings('negative_tweets.json')
-
+    print(positive_tweets[3])
     model = NeuralNetwork(positive_tweets, negative_tweets)
-    model.trainmodel()
+    #model._trainmodel()
+    print(model.predict(positive_tweets[3]))

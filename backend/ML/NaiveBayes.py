@@ -1,4 +1,4 @@
-from backend.ML.models.model import Model
+from model import Model
 
 from nltk import pos_tag
 from nltk import NaiveBayesClassifier
@@ -18,7 +18,7 @@ class NaiveBayes(Model):
     def __init__(self, pos_data, neg_data) -> None:
         self.pos_data = pos_data
         self.neg_data = neg_data
-        
+        # TD: should try to make stopwords static, and data needed for objects static also.
         self.sia = SentimentIntensityAnalyzer()
         self.lemmatizer = WordNetLemmatizer()
 
@@ -74,24 +74,20 @@ class NaiveBayes(Model):
             features.append((self._features(tweet), 'n'))
 
         shuffle(features)
-        self.classifier = NaiveBayesClassifier.train(labeled_featuresets=features[:1500])
-        self.classifier.show_most_informative_features(5)
-        self.accuracy = classify.accuracy(self.classifier, features[1500:])
-
-    def _save(self):
-        joblib.dump(self.classifier, './models/naive_bayes_model.pkl')
+        classifier = NaiveBayesClassifier.train(labeled_featuresets=features[:1500])
+        joblib.dump(classifier, r'backend\ML\models\NaiveBayes.pkl')
 
     def predict(self, tweet):
         tweet = self._features(tweet)
         # If pkl does not exist, i need to call _train_model. but where to get the data from?
-        result = joblib.load('./models/naive_bayes_model.pkl').classify(tweet)
+        result = joblib.load(r'./models/NaiveBayes.pkl').classify(tweet)
         return result
     
 if __name__ == "__main__": 
     from nltk.corpus import twitter_samples
     from nltk import download
 
-    download(['vader_lexicon', 'twitter_samples', 'stopwords', 'wordnet', 'averaged_perceptron_tagger'])
+    # download(['vader_lexicon', 'twitter_samples', 'stopwords', 'wordnet', 'averaged_perceptron_tagger'])
     pos_tweet = twitter_samples.strings('positive_tweets.json')
     neg_tweet = twitter_samples.strings('negative_tweets.json')
 

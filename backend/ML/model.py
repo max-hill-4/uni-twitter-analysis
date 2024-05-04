@@ -7,6 +7,7 @@ class Model:
     def _preprocess(self):
         pass
     def _trainmodel(self):
+        # data should be here, not in constructor.
         pass
     def _features(self):
         pass
