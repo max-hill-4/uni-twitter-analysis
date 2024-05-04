@@ -1,4 +1,4 @@
-from model import Model
+from backend.ML.models.model import Model
 
 import numpy as np
 import tensorflow as tf
@@ -12,7 +12,8 @@ from statistics import mean
 class NeuralNetwork(Model):
     def _preprocess(self, tweets):
         
-        # TD : simplify this function. Can be done without method calls.
+        # TD : This function is bad, becuase in NB we are doing single tweet items,
+        # should be standadized.
 
         tokenizer = Tokenizer(num_words=5000, oov_token='<OOV>')
         tokenizer.fit_on_texts(tweets)
@@ -24,10 +25,10 @@ class NeuralNetwork(Model):
 
         return padded_sequences
         
-    def trainmodel(self, pos_data, neg_data):
+    def trainmodel(self):
 
-        padded_sequences = self._preprocess(pos_data + neg_data)
-        labels = np.concatenate([np.ones(len(pos_data)), np.zeros(len(neg_data))])
+        padded_sequences = self._preprocess(self.pos_data + self.neg_data)
+        labels = np.concatenate([np.ones(len(self.pos_data)), np.zeros(len(self.neg_data))])
 
         X_train, X_test, y_train, y_test = train_test_split(padded_sequences, labels, test_size=0.2, random_state=42)
         
@@ -52,6 +53,7 @@ class NeuralNetwork(Model):
         values = self.model.predict(text)
         avg = numpy.mean(values)
         return 'p' if avg > 0.5 else 'n'
+
 if __name__ == "__main__": 
 
     from nltk.corpus import twitter_samples
@@ -62,7 +64,5 @@ if __name__ == "__main__":
     positive_tweets = twitter_samples.strings('positive_tweets.json')
     negative_tweets = twitter_samples.strings('negative_tweets.json')
 
-    model = NeuralNetwork()
-    model.trainmodel(positive_tweets, negative_tweets)
-    a = model._preprocess(positive_tweets[1501])
-    print(model.predict(a))
+    model = NeuralNetwork(positive_tweets, negative_tweets)
+    model.trainmodel()

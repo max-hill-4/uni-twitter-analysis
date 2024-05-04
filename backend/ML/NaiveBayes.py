@@ -1,4 +1,4 @@
-from model import Model
+from backend.ML.models.model import Model
 
 from nltk import pos_tag
 from nltk import NaiveBayesClassifier
@@ -79,13 +79,13 @@ class NaiveBayes(Model):
         self.accuracy = classify.accuracy(self.classifier, features[1500:])
 
     def _save(self):
-        joblib.dump(self.classifier, './naive_bayes_model.pkl')
+        joblib.dump(self.classifier, './models/naive_bayes_model.pkl')
 
 
     def predict(self, tweet):
         tweet = self._features(tweet)
         # TD: add try except here to _trainmodel if pkl doesnt exist.
-        result = joblib.load('naive_bayes_model.pkl').classify(tweet)
+        result = joblib.load('./models/naive_bayes_model.pkl').classify(tweet)
         return result
     
 if __name__ == "__main__": 
