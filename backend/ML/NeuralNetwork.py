@@ -22,7 +22,6 @@ class NeuralNetwork(Model):
 
         # Pads every tweet.
         padded_sequences = pad_sequences(sequences, maxlen=100, truncating='post')
-        print(padded_sequences)
         return padded_sequences
         
     def _trainmodel(self):
@@ -52,6 +51,5 @@ class NeuralNetwork(Model):
         model = tf.keras.models.load_model(r'backend\ML\models\NeuralNetwork.keras')
 
         values = model.predict(text)
-        print(values)
         avg = mean(values)
         return 'p' if avg > 0.5 else 'n'
