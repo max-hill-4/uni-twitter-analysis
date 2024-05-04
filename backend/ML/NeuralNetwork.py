@@ -1,14 +1,15 @@
 from .model import Model
+from os import environ
+environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
-import numpy as np
+from numpy import mean
 import tensorflow as tf
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from sklearn.model_selection import train_test_split
 from nltk.corpus import twitter_samples
-import numpy 
 
-from statistics import mean 
+
 class NeuralNetwork(Model):
     def _preprocess(self, tweets):
         
@@ -31,8 +32,6 @@ class NeuralNetwork(Model):
 
         X_train, X_test, y_train, y_test = train_test_split(padded_sequences, labels, test_size=0.2, random_state=42)
         
-        
-
         model = tf.keras.Sequential([
             tf.keras.layers.Embedding(5000, 16, input_length=100),
             tf.keras.layers.GlobalAveragePooling1D(),
@@ -54,20 +53,5 @@ class NeuralNetwork(Model):
 
         values = model.predict(text)
         print(values)
-        avg = numpy.mean(values)
-        print(avg)
+        avg = mean(values)
         return 'p' if avg > 0.5 else 'n'
-
-if __name__ == "__main__": 
-
-    from nltk.corpus import twitter_samples
-    from nltk import download
-    download('twitter_samples')
-
-    # Load Twitter data
-    positive_tweets = twitter_samples.strings('positive_tweets.json')
-    negative_tweets = twitter_samples.strings('negative_tweets.json')
-    print(positive_tweets[3])
-    model = NeuralNetwork(positive_tweets, negative_tweets)
-    #model._trainmodel()
-    print(model.predict(positive_tweets[3]))
