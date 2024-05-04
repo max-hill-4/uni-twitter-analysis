@@ -11,6 +11,3 @@ instance/
 
 # Python stuff:
 test.py
-
-# Webscraping stuff:
-geckodriver.log

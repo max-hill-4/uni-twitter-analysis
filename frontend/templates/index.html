@@ -69,6 +69,29 @@
             var spinner = document.getElementById('spinner');
             spinner.style.display = 'block';
         }
+        const fetchData = async () => {
+        const dataParam = 'exampleData'; // Replace 'exampleData' with the actual value you want to send
+
+        // Construct the URL with the data parameter
+        const url = `/neuralnetwork?data=${encodeURIComponent(dataParam)}`;
+
+        
+        // Send the GET request and wait for the response
+        const response = await fetch(url);
+
+        // Check if the response is successful
+        if (!response.ok) {
+        throw new Error('Network response was not ok');
+        }
+
+        // Parse the response data as JSON and log it
+        const json = await response.json();
+        console.log(json);
+        };
+
+        // Call the async function to fetch data
+        fetchData();        
+
     </script>
 </body>
 
