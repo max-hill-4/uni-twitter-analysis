@@ -12,7 +12,6 @@ from statistics import mean
 class NeuralNetwork(Model):
     def _preprocess(self, tweets):
         
-        #I would much prefer if both Models could inherit some data preprocessing.
         # TD : simplify this function. Can be done without method calls.
 
         tokenizer = Tokenizer(num_words=5000, oov_token='<OOV>')
@@ -46,8 +45,8 @@ class NeuralNetwork(Model):
 
         # Train the model
         self.model.fit(X_train, y_train, epochs=7, batch_size=16, validation_data=(X_test, y_test))
-
-        tensorflow.model.save
+        
+        tf.saved_model.save(self.model, './')
     def predict(self, text):
         #cant call trainmodel wtihout the data!
         values = self.model.predict(text)

@@ -12,6 +12,7 @@ from nltk.corpus import stopwords
 from random import shuffle
 from statistics import mean
 
+import joblib
 
 class NaiveBayes(Model):
     def __init__(self, pos_data, neg_data) -> None:
@@ -46,7 +47,7 @@ class NaiveBayes(Model):
         
         return data
     
-    def features(self, tweet):
+    def _features(self, tweet):
 
         data = self._preprocess(tweet)
         if not data:
@@ -63,27 +64,30 @@ class NaiveBayes(Model):
         features['comp_score'] = mean(compound_scores)
         return features
     
-    def trainmodel(self):
+    def _trainmodel(self):
 
         features = []
-
         for tweet in self.pos_data:
-            features.append((self.features(tweet), 'p'))
+            features.append((self._features(tweet), 'p'))
 
         for tweet in self.neg_data:
-            features.append((self.features(tweet), 'n'))
+            features.append((self._features(tweet), 'n'))
 
         shuffle(features)
         self.classifier = NaiveBayesClassifier.train(labeled_featuresets=features[:1500])
         self.classifier.show_most_informative_features(5)
         self.accuracy = classify.accuracy(self.classifier, features[1500:])
-    
-    def predict(self, tweet):
-        # If model is not found trainmodel.
-        # if model found load it.
-        result = self.classifier.classify(tweet)
-        return (f'I am {self.accuracy*100} sure it is {result} ')
 
+    def _save(self):
+        joblib.dump(self.classifier, './naive_bayes_model.pkl')
+
+
+    def predict(self, tweet):
+        tweet = self._features(tweet)
+        # TD: add try except here to _trainmodel if pkl doesnt exist.
+        result = joblib.load('naive_bayes_model.pkl').classify(tweet)
+        return result
+    
 if __name__ == "__main__": 
     from nltk.corpus import twitter_samples
     from nltk import download
@@ -93,9 +97,5 @@ if __name__ == "__main__":
     neg_tweet = twitter_samples.strings('negative_tweets.json')
 
     model = NaiveBayes(pos_tweet, neg_tweet)
-    # I HATE THIS SO MUCH PLEASE TD: HIGH HIGH HIGH!
-    model.trainmodel()
+    model._trainmodel()
     
-    test_data = model.features("Hi i am good good test positive happy")
-    
-    print(model.predict(test_data))
