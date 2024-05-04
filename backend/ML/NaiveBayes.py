@@ -81,10 +81,9 @@ class NaiveBayes(Model):
     def _save(self):
         joblib.dump(self.classifier, './models/naive_bayes_model.pkl')
 
-
     def predict(self, tweet):
         tweet = self._features(tweet)
-        # TD: add try except here to _trainmodel if pkl doesnt exist.
+        # If pkl does not exist, i need to call _train_model. but where to get the data from?
         result = joblib.load('./models/naive_bayes_model.pkl').classify(tweet)
         return result
     

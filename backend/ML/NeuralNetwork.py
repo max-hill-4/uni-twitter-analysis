@@ -14,6 +14,7 @@ class NeuralNetwork(Model):
         
         # TD : This function is bad, becuase in NB we are doing single tweet items,
         # should be standadized.
+        # wish i did a scikit learn.. >_>
 
         tokenizer = Tokenizer(num_words=5000, oov_token='<OOV>')
         tokenizer.fit_on_texts(tweets)
@@ -25,7 +26,7 @@ class NeuralNetwork(Model):
 
         return padded_sequences
         
-    def trainmodel(self):
+    def _trainmodel(self):
 
         padded_sequences = self._preprocess(self.pos_data + self.neg_data)
         labels = np.concatenate([np.ones(len(self.pos_data)), np.zeros(len(self.neg_data))])
@@ -47,10 +48,11 @@ class NeuralNetwork(Model):
         # Train the model
         self.model.fit(X_train, y_train, epochs=7, batch_size=16, validation_data=(X_test, y_test))
         
-        tf.saved_model.save(self.model, './')
+        tf.saved_model.save(self.model, './models/')
     def predict(self, text):
-        #cant call trainmodel wtihout the data!
-        values = self.model.predict(text)
+        # _train_model.
+        
+        values = .predict(text)
         avg = numpy.mean(values)
         return 'p' if avg > 0.5 else 'n'
 
