@@ -15,14 +15,15 @@ def search():
     data = loop.run_until_complete(get_tweet(query))
     return render_template('search.html', query=data)
 
-@app.route('/naivebayes/', methods=['GET'])
+@app.route('/naivebayes', methods=['GET'])
 def naivebayes(data:str):
     loop = new_event_loop()
     data = loop.run_until_complete(NaiveBayes.NaiveBayes().predict(data))
     return data
 
 @app.route('/neuralnetwork/', methods=['GET'])
-def neuralnetwork(data:str):
+def neuralnetwork():
+    data = request.args.get('data')
     loop = new_event_loop()
     data = loop.run_until_complete(NeuralNetwork.NeuralNetwork().predict(data))
     return data
