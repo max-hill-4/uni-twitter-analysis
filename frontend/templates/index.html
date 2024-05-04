@@ -69,7 +69,7 @@
             var spinner = document.getElementById('spinner');
             spinner.style.display = 'block';
         }
-        fetch("/data")
+        fetch("/neuralnetwork")
             .then((response) => response.json())
             .then((json) => console.log(json));
 

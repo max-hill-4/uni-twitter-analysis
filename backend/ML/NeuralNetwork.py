@@ -47,7 +47,7 @@ class NeuralNetwork(Model):
         model.fit(X_train, y_train, epochs=7, batch_size=16, validation_data=(X_test, y_test))
         model.save(r'backend\ML\models\NeuralNetwork.keras')
 
-    def predict(self, text):
+    async def predict(self, text):
 
         text = self._preprocess(text)
         model = tf.keras.models.load_model(r'backend\ML\models\NeuralNetwork.keras')

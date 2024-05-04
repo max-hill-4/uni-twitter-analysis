@@ -2,7 +2,7 @@ from flask import Flask, request, render_template
 from asyncio import new_event_loop
 from get_tweets import get_tweet
 app = Flask(__name__, template_folder='../frontend/templates')
-from ML import NaiveBayes
+from ML import NaiveBayes, NeuralNetwork
 
 @app.route('/')
 def index():
@@ -15,11 +15,16 @@ def search():
     data = loop.run_until_complete(get_tweet(query))
     return render_template('search.html', query=data)
 
-@app.route('/data', methods=['GET'])
-def test():
-    data = 'test'
+@app.route('/naivebayes/', methods=['GET'])
+def naivebayes(data:str):
     loop = new_event_loop()
     data = loop.run_until_complete(NaiveBayes.NaiveBayes().predict(data))
+    return data
+
+@app.route('/neuralnetwork/', methods=['GET'])
+def neuralnetwork(data:str):
+    loop = new_event_loop()
+    data = loop.run_until_complete(NeuralNetwork.NeuralNetwork().predict(data))
     return data
 
 if __name__ == '__main__':
