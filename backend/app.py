@@ -18,7 +18,7 @@ def search():
 def naivebayes(data:str):
     loop = new_event_loop()
     data = loop.run_until_complete(NaiveBayes.NaiveBayes().predict(data))
-    return data
+    return jsonify(data)
 
 @app.route('/neuralnetwork/', methods=['GET'])
 def neuralnetwork():
