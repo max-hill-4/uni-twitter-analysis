@@ -1,4 +1,4 @@
-from model import Model
+from .model import Model
 
 import numpy as np
 import tensorflow as tf
@@ -48,9 +48,7 @@ class NeuralNetwork(Model):
         model.save(r'backend\ML\models\NeuralNetwork.keras')
 
     def predict(self, text):
-        # need to load tokenizer somehow.
-        # model has to be trained for tokenizer to have data
-        # i probably need to store into a vocab file.
+
         text = self._preprocess(text)
         model = tf.keras.models.load_model(r'backend\ML\models\NeuralNetwork.keras')
 

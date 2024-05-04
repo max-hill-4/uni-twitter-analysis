@@ -1,4 +1,4 @@
-from model import Model
+from .model import Model
 
 from nltk import pos_tag
 from nltk import NaiveBayesClassifier
@@ -15,9 +15,8 @@ from statistics import mean
 import joblib
 
 class NaiveBayes(Model):
-    def __init__(self, pos_data, neg_data) -> None:
-        self.pos_data = pos_data
-        self.neg_data = neg_data
+    def __init__(self) -> None:
+        super().__init__()
         # TD: should try to make stopwords static, and data needed for objects static also.
         self.sia = SentimentIntensityAnalyzer()
         self.lemmatizer = WordNetLemmatizer()
@@ -77,10 +76,10 @@ class NaiveBayes(Model):
         classifier = NaiveBayesClassifier.train(labeled_featuresets=features[:1500])
         joblib.dump(classifier, r'backend\ML\models\NaiveBayes.pkl')
 
-    def predict(self, tweet):
+    async def predict(self, tweet):
         tweet = self._features(tweet)
         # If pkl does not exist, i need to call _train_model. but where to get the data from?
-        result = joblib.load(r'./models/NaiveBayes.pkl').classify(tweet)
+        result = joblib.load(r'backend\ML\models\NaiveBayes.pkl').classify(tweet)
         return result
     
 if __name__ == "__main__": 

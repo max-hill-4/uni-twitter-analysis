@@ -1,9 +1,10 @@
+from nltk.corpus import twitter_samples
 
 # Nah but if i get this to work im the goat dude.
 class Model:
-    def __init__(self, pos_data, neg_data):
-        self.pos_data = pos_data
-        self.neg_data = neg_data
+    def __init__(self):
+        self.pos_data = twitter_samples.strings('positive_tweets.json')
+        self.neg_data = twitter_samples.strings('negative_tweets.json')
     def _preprocess(self):
         pass
     def _trainmodel(self):

@@ -69,6 +69,10 @@
             var spinner = document.getElementById('spinner');
             spinner.style.display = 'block';
         }
+        fetch("/data")
+            .then((response) => response.json())
+            .then((json) => console.log(json));
+
     </script>
 </body>
 
