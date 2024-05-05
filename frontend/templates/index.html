@@ -6,44 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="This website was created for the Team Software Module 2024!">
     <meta name="author" content="Max, Zak, Jackson, Hubi, Alfie, Dan">
-
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 
     <title>Team Software</title>
 
-    <style>
-        .title {
-        text-align: center;
-        font-family: 'Roboto Mono', monospace;
-        }
-        .body {
-        margin-top: 150px;
-        margin-bottom: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        }
-        .form-property {
-            text-align: center;
-            font-family: 'Roboto Mono', monospace;
-            font-size: 17px;
-        }
-        .loadingSpinner {
-        caret-color: transparent;
-        border: 16px solid #f3f3f3; /* Light grey */
-        border-top: 16px solid #3498db; /* Blue */
-        border-radius: 50%;
-        margin-left: auto;
-        margin-right: auto;
-        width: 30px;
-        height: 30px;
-        animation: spin 2s linear infinite;
-        }
-
-        @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-        }
-    </style>
 
 </head>
 

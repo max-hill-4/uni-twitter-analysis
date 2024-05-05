@@ -34,10 +34,11 @@ function displayData(data) {
     console.log(data)
 }
 
-fetchTwitterEmbed(data)
+//fetchTwitterEmbed(data)
 var data2 = "hello please test me im happy!"
+var data3 = "i hate tory negative"
 fetchML('/neuralnetwork', data2);
-fetchML('/naivebayes', data2);
+fetchML('/naivebayes', data3);
 
 
 // Fetch tweet embed
