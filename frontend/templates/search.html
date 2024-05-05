@@ -1,7 +1,20 @@
 <!DOCTYPE html>
 <html>
-{{tweet | safe}}
-<script src="{{ url_for('static', filename='script.js') }}" ></script>
-<div id="nb"></div>
-<div id="nn"></div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="This website was created for the Team Software Module 2024!">
+        <meta name="author" content="Max, Zak, Jackson, Hubi, Alfie, Dan">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    
+        <title>Team Software</title>
+    
+    
+    </head>
+    <body style="background-color:rgb(125, 191, 232);">
+        {{tweet | safe}}
+        <script src="{{ url_for('static', filename='script.js') }}" ></script>
+        <div id="nb"></div>
+        <div id="nn"></div>
+    </body>
 </html>
