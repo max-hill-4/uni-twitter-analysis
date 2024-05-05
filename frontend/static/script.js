@@ -1,26 +1,8 @@
 
-function fetchTwitterEmbed(tweetURL) {
-    // URL of Twitter's oEmbed API
-    var oEmbedURL = 'https://publish.twitter.com/oembed?url=' + encodeURIComponent(tweetURL);
-
-    // Fetch the embed data from Twitter's oEmbed API
-    fetch(oEmbedURL)
-        .then(response => response.json())
-        .then(data => {
-            // Insert the HTML provided by Twitter into the specified element
-            document.getElementById('twitter-widget').innerHTML = data.html;
-        })
-        .catch(error => console.error('Error fetching Twitter embed:', error));
-}
-
-
-
-
-
-async function fetchML(endpoint, data) {
+async function fetchData(endpoint) {
     try {
         // Make an AJAX request to the specified endpoint with the provided data
-        const response = await fetch(`${endpoint}?data=${encodeURIComponent(data)}`);
+        const response = await fetch(`${endpoint}${location.search}`);
         const responseData = await response.json();
 
         // Work with the received data
@@ -28,18 +10,17 @@ async function fetchML(endpoint, data) {
     } catch (error) {
         console.error('Error fetching data:', error);
     }
-}
+};
 
 function displayData(data) { 
     console.log(data)
-}
+};
 
-fetchTwitterEmbed(data)
-console.log(data)
-var data2 = "hello please test me im happy!"
-var data3 = "i hate tory negative"
-fetchML('/neuralnetwork', data2);
-fetchML('/naivebayes', data3);
+const queryString = location.search;
+
+fetchData('/twitterembed');
+fetchData('/neuralnetwork');
+fetchData('/naivebayes');
 
 
 // Fetch tweet embed
