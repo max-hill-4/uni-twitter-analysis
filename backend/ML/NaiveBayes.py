@@ -1,4 +1,4 @@
-from .model import Model
+from model import Model
 
 from nltk import pos_tag
 from nltk import NaiveBayesClassifier
@@ -49,6 +49,7 @@ class NaiveBayes(Model):
     def _features(self, tweet):
 
         data = self._preprocess(tweet)
+        
         if not data:
             return {}
 
@@ -82,13 +83,5 @@ class NaiveBayes(Model):
         return result
     
 if __name__ == "__main__": 
-    from nltk.corpus import twitter_samples
     from nltk import download
-
-    # download(['vader_lexicon', 'twitter_samples', 'stopwords', 'wordnet', 'averaged_perceptron_tagger'])
-    pos_tweet = twitter_samples.strings('positive_tweets.json')
-    neg_tweet = twitter_samples.strings('negative_tweets.json')
-
-    model = NaiveBayes(pos_tweet, neg_tweet)
-    model._trainmodel()
-    
+    download(['wordnet'])

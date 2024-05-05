@@ -1,33 +1,8 @@
 <html>
    
 
-<script>
-    // Define an async function to fetch data
-    const fetchData = async () => {
-        try {
-            const dataParam = "{{ q }}";
+<script> var data = {{q | tojson }};</script>
+<script src="{{ url_for('static', filename='script.js') }}" ></script>
 
-            // Construct the URL with the data parameter
-            const url = `/neuralnetwork?data=${encodeURIComponent(dataParam)}`;
-
-            // Send the GET request and wait for the response
-            const response = await fetch(url);
-
-            // Check if the response is successful
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            // Parse the response data as JSON and log it
-            const json = await response.json();
-            console.log(json);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
-
-    // Call the async function to fetch data
-    fetchData(); 
-</script>
 
 </html>

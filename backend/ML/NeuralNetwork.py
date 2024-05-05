@@ -6,6 +6,7 @@ from numpy import mean
 import tensorflow as tf
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+# installing a whole module from req is NOT worth man 😭😭😭
 from sklearn.model_selection import train_test_split
 from nltk.corpus import twitter_samples
 

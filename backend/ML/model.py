@@ -2,9 +2,8 @@ from nltk.corpus import twitter_samples
 from nltk.data import path
 import os
 
-path.append(os.getcwd() + r".\backend\ML")
+path.append(os.getcwd() + r"\backend\ML\data")
 
-# Nah but if i get this to work im the goat dude.
 class Model:
     def __init__(self):
         self.pos_data = twitter_samples.strings('positive_tweets.json')
