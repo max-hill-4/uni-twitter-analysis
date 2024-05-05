@@ -13,7 +13,6 @@ def search():
     search_query = request.args.get('query')
     return render_template('search.html', q=search_query)
 
-# it might be possible to not need async? as js does the await? maybe im drunk tho.
 @app.route('/naivebayes', methods=['GET'])
 def naivebayes(data:str):
     loop = new_event_loop()

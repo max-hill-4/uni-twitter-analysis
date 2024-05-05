@@ -1,6 +1,8 @@
 from nltk.corpus import twitter_samples
 from nltk.data import path
-path.append("./corpus")
+import os
+
+path.append(os.getcwd() + r".\backend\ML")
 
 # Nah but if i get this to work im the goat dude.
 class Model:

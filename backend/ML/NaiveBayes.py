@@ -78,7 +78,6 @@ class NaiveBayes(Model):
 
     async def predict(self, tweet):
         tweet = self._features(tweet)
-        # If pkl does not exist, i need to call _train_model. but where to get the data from?
         result = joblib.load(r'backend\ML\models\NaiveBayes.pkl').classify(tweet)
         return result
     
