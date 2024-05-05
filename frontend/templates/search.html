@@ -2,7 +2,10 @@
 <html>
    
 
-<script> var data = {{q | tojson }};</script>
+<script> 
+    var data = {{q | tojson }}; // this is ugh.
+</script>
+
 <script src="{{ url_for('static', filename='script.js') }}" ></script>
 
 

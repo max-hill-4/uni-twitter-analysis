@@ -2,7 +2,7 @@ from nltk.corpus import twitter_samples
 from nltk.data import path
 import os
 
-path.append(os.getcwd() + r"\backend\ML\data")
+path.append(os.getcwd() + r"\backend\ML\trainingdata")
 
 class Model:
     def __init__(self):

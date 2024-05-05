@@ -34,7 +34,8 @@ function displayData(data) {
     console.log(data)
 }
 
-//fetchTwitterEmbed(data)
+fetchTwitterEmbed(data)
+console.log(data)
 var data2 = "hello please test me im happy!"
 var data3 = "i hate tory negative"
 fetchML('/neuralnetwork', data2);
