@@ -10,7 +10,10 @@ def index():
 
 @app.route('/search')
 def search():
-    return render_template('search.html')
+    q = request.args.get('query')
+    loop = new_event_loop()
+    tweet = loop.run_until_complete(get_tweet(q))
+    return render_template('search.html', tweet=tweet)
 
 @app.route('/naivebayes', methods=['GET'])
 def naivebayes():
@@ -24,13 +27,6 @@ def neuralnetwork():
     data = request.args.get('query')
     loop = new_event_loop()
     data = loop.run_until_complete(NeuralNetwork.NeuralNetwork().predict(data))
-    return jsonify(data)
-
-@app.route('/twitterembed')
-def twitterembed():
-    data = request.args.get('query')
-    loop = new_event_loop()
-    data = loop.run_until_complete(get_tweet(data))
     return jsonify(data)
 
 
