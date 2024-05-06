@@ -29,7 +29,6 @@ def neuralnetwork():
     data = loop.run_until_complete(NeuralNetwork.NeuralNetwork().predict(data))
     return jsonify(data)
 
-
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
 

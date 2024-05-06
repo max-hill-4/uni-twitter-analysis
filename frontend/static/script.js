@@ -1,17 +1,24 @@
 
-async function fetchData(endpoint, place) {
+async function fetchML(endpoint, place) {
     try {
-        const response = await fetch(`${endpoint}${location.search}`);
+        const response = await fetch(`${endpoint}?query=${queryString}`);
         const responseData = await response.json();
-        var displayDiv = document.getElementById(place);
-        displayDiv.innerHTML = responseData;
+        updateStatus(responseData, place)
         
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 };
 
-const queryString = location.search;
+function updateStatus(status, place) {
+    const statusBox = document.getElementById(place);
+    if (status === 'p') {
+        statusBox.style.backgroundColor = 'green';
+    } else {
+        statusBox.style.backgroundColor = 'red';
+    }
+  }
+const queryString = document.getElementById('tweet').textContent;
 
-fetchData('/neuralnetwork', 'nn');
-fetchData('/naivebayes', 'nb');
+fetchML('/neuralnetwork', 'nn');
+fetchML('/naivebayes', 'nb');

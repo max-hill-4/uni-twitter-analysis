@@ -46,11 +46,12 @@ class NeuralNetwork(Model):
         model.fit(X_train, y_train, epochs=7, batch_size=16, validation_data=(X_test, y_test))
         model.save(r'backend\ML\models\NeuralNetwork.keras')
 
-    async def predict(self, text):
+    async def predict(self, tweet):
+        print(f' predict is recieving: {tweet}')
 
-        text = self._preprocess(text)
+        tweet = self._preprocess(tweet)
         model = tf.keras.models.load_model(r'backend\ML\models\NeuralNetwork.keras')
 
-        values = model.predict(text)
+        values = model.predict(tweet)
         avg = mean(values)
         return 'p' if avg > 0.5 else 'n'

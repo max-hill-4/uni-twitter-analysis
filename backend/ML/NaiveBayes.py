@@ -78,6 +78,7 @@ class NaiveBayes(Model):
         joblib.dump(classifier, r'backend\ML\models\NaiveBayes.pkl')
 
     async def predict(self, tweet):
+        print(tweet)
         tweet = self._features(tweet)
         result = joblib.load(r'backend\ML\models\NaiveBayes.pkl').classify(tweet)
         return result
