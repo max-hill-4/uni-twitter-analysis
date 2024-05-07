@@ -5,3 +5,4 @@ nltk
 tensorflow
 scikit-learn
 numpy
+pdoc
