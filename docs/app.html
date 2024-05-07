@@ -76,31 +76,51 @@ app    </h1>
 </span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a>
 </span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">)</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/search&#39;</span><span class="p">)</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="k">def</span> <span class="nf">search</span><span class="p">():</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="n">q</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>    <span class="n">loop</span> <span class="o">=</span> <span class="n">new_event_loop</span><span class="p">()</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="n">tweet</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">get_tweet</span><span class="p">(</span><span class="n">q</span><span class="p">))</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;search.html&#39;</span><span class="p">,</span> <span class="n">tweet</span><span class="o">=</span><span class="n">tweet</span><span class="p">)</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/naivebayes&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="k">def</span> <span class="nf">naivebayes</span><span class="p">():</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">loop</span> <span class="o">=</span> <span class="n">new_event_loop</span><span class="p">()</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">NaiveBayes</span><span class="o">.</span><span class="n">NaiveBayes</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/neuralnetwork&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a><span class="k">def</span> <span class="nf">neuralnetwork</span><span class="p">():</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>    <span class="n">loop</span> <span class="o">=</span> <span class="n">new_event_loop</span><span class="p">()</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">NeuralNetwork</span><span class="o">.</span><span class="n">NeuralNetwork</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="sd">    Flask route to return the main search page.</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">)</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/search&#39;</span><span class="p">)</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="k">def</span> <span class="nf">search</span><span class="p">():</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="sd">    Search page that visualizes the sentiment data of the tweet.</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="n">q</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="n">loop</span> <span class="o">=</span> <span class="n">new_event_loop</span><span class="p">()</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">tweet</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">get_tweet</span><span class="p">(</span><span class="n">q</span><span class="p">))</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;search.html&#39;</span><span class="p">,</span> <span class="n">tweet</span><span class="o">=</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/naivebayes&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a><span class="k">def</span> <span class="nf">naivebayes</span><span class="p">():</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a><span class="sd">    Uses the ML NaiveBayes Module to perform sentiment analysis.</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a><span class="sd">    Args:</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a><span class="sd">        query (str) : The url of the tweet</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a><span class="sd">    Returns:</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a><span class="sd">        JSON: &#39;p&#39; or &#39;n&#39; value dictating sentiment.</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>    <span class="n">loop</span> <span class="o">=</span> <span class="n">new_event_loop</span><span class="p">()</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">NaiveBayes</span><span class="o">.</span><span class="n">NaiveBayes</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/neuralnetwork&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a><span class="k">def</span> <span class="nf">neuralnetwork</span><span class="p">():</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a><span class="sd">    Uses the ML Neural Netowrk Module to perform sentiment analysis.</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a><span class="sd">    Args:</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a><span class="sd">        query (str) : The url of the tweet</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a><span class="sd">    Returns:</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a><span class="sd">        JSON: &#39;p&#39; or &#39;n&#39; value dictating sentiment.</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>    <span class="n">loop</span> <span class="o">=</span> <span class="n">new_event_loop</span><span class="p">()</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">NeuralNetwork</span><span class="o">.</span><span class="n">NeuralNetwork</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -131,11 +151,16 @@ app    </h1>
     <a class="headerlink" href="#index"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="index-8"><a href="#index-8"><span class="linenos"> 8</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
 </span><span id="index-9"><a href="#index-9"><span class="linenos"> 9</span></a><span class="k">def</span> <span class="nf">index</span><span class="p">():</span>
-</span><span id="index-10"><a href="#index-10"><span class="linenos">10</span></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">)</span>
+</span><span id="index-10"><a href="#index-10"><span class="linenos">10</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="index-11"><a href="#index-11"><span class="linenos">11</span></a><span class="sd">    Flask route to return the main search page.</span>
+</span><span id="index-12"><a href="#index-12"><span class="linenos">12</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="index-13"><a href="#index-13"><span class="linenos">13</span></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;index.html&#39;</span><span class="p">)</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Flask route to return the main search page.</p>
+</div>
+
 
                 </section>
                 <section id="search">
@@ -150,16 +175,21 @@ app    </h1>
 
     </div>
     <a class="headerlink" href="#search"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="search-12"><a href="#search-12"><span class="linenos">12</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/search&#39;</span><span class="p">)</span>
-</span><span id="search-13"><a href="#search-13"><span class="linenos">13</span></a><span class="k">def</span> <span class="nf">search</span><span class="p">():</span>
-</span><span id="search-14"><a href="#search-14"><span class="linenos">14</span></a>    <span class="n">q</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
-</span><span id="search-15"><a href="#search-15"><span class="linenos">15</span></a>    <span class="n">loop</span> <span class="o">=</span> <span class="n">new_event_loop</span><span class="p">()</span>
-</span><span id="search-16"><a href="#search-16"><span class="linenos">16</span></a>    <span class="n">tweet</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">get_tweet</span><span class="p">(</span><span class="n">q</span><span class="p">))</span>
-</span><span id="search-17"><a href="#search-17"><span class="linenos">17</span></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;search.html&#39;</span><span class="p">,</span> <span class="n">tweet</span><span class="o">=</span><span class="n">tweet</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="search-15"><a href="#search-15"><span class="linenos">15</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/search&#39;</span><span class="p">)</span>
+</span><span id="search-16"><a href="#search-16"><span class="linenos">16</span></a><span class="k">def</span> <span class="nf">search</span><span class="p">():</span>
+</span><span id="search-17"><a href="#search-17"><span class="linenos">17</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="search-18"><a href="#search-18"><span class="linenos">18</span></a><span class="sd">    Search page that visualizes the sentiment data of the tweet.</span>
+</span><span id="search-19"><a href="#search-19"><span class="linenos">19</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="search-20"><a href="#search-20"><span class="linenos">20</span></a>    <span class="n">q</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
+</span><span id="search-21"><a href="#search-21"><span class="linenos">21</span></a>    <span class="n">loop</span> <span class="o">=</span> <span class="n">new_event_loop</span><span class="p">()</span>
+</span><span id="search-22"><a href="#search-22"><span class="linenos">22</span></a>    <span class="n">tweet</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">get_tweet</span><span class="p">(</span><span class="n">q</span><span class="p">))</span>
+</span><span id="search-23"><a href="#search-23"><span class="linenos">23</span></a>    <span class="k">return</span> <span class="n">render_template</span><span class="p">(</span><span class="s1">&#39;search.html&#39;</span><span class="p">,</span> <span class="n">tweet</span><span class="o">=</span><span class="n">tweet</span><span class="p">)</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Search page that visualizes the sentiment data of the tweet.</p>
+</div>
+
 
                 </section>
                 <section id="naivebayes">
@@ -174,16 +204,29 @@ app    </h1>
 
     </div>
     <a class="headerlink" href="#naivebayes"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="naivebayes-19"><a href="#naivebayes-19"><span class="linenos">19</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/naivebayes&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
-</span><span id="naivebayes-20"><a href="#naivebayes-20"><span class="linenos">20</span></a><span class="k">def</span> <span class="nf">naivebayes</span><span class="p">():</span>
-</span><span id="naivebayes-21"><a href="#naivebayes-21"><span class="linenos">21</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
-</span><span id="naivebayes-22"><a href="#naivebayes-22"><span class="linenos">22</span></a>    <span class="n">loop</span> <span class="o">=</span> <span class="n">new_event_loop</span><span class="p">()</span>
-</span><span id="naivebayes-23"><a href="#naivebayes-23"><span class="linenos">23</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">NaiveBayes</span><span class="o">.</span><span class="n">NaiveBayes</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-</span><span id="naivebayes-24"><a href="#naivebayes-24"><span class="linenos">24</span></a>    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="naivebayes-25"><a href="#naivebayes-25"><span class="linenos">25</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/naivebayes&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+</span><span id="naivebayes-26"><a href="#naivebayes-26"><span class="linenos">26</span></a><span class="k">def</span> <span class="nf">naivebayes</span><span class="p">():</span>
+</span><span id="naivebayes-27"><a href="#naivebayes-27"><span class="linenos">27</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="naivebayes-28"><a href="#naivebayes-28"><span class="linenos">28</span></a><span class="sd">    Uses the ML NaiveBayes Module to perform sentiment analysis.</span>
+</span><span id="naivebayes-29"><a href="#naivebayes-29"><span class="linenos">29</span></a><span class="sd">    Args:</span>
+</span><span id="naivebayes-30"><a href="#naivebayes-30"><span class="linenos">30</span></a><span class="sd">        query (str) : The url of the tweet</span>
+</span><span id="naivebayes-31"><a href="#naivebayes-31"><span class="linenos">31</span></a><span class="sd">    Returns:</span>
+</span><span id="naivebayes-32"><a href="#naivebayes-32"><span class="linenos">32</span></a><span class="sd">        JSON: &#39;p&#39; or &#39;n&#39; value dictating sentiment.</span>
+</span><span id="naivebayes-33"><a href="#naivebayes-33"><span class="linenos">33</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="naivebayes-34"><a href="#naivebayes-34"><span class="linenos">34</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
+</span><span id="naivebayes-35"><a href="#naivebayes-35"><span class="linenos">35</span></a>    <span class="n">loop</span> <span class="o">=</span> <span class="n">new_event_loop</span><span class="p">()</span>
+</span><span id="naivebayes-36"><a href="#naivebayes-36"><span class="linenos">36</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">NaiveBayes</span><span class="o">.</span><span class="n">NaiveBayes</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</span><span id="naivebayes-37"><a href="#naivebayes-37"><span class="linenos">37</span></a>    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Uses the ML NaiveBayes Module to perform sentiment analysis.
+Args:
+    query (str) : The url of the tweet
+Returns:
+    JSON: 'p' or 'n' value dictating sentiment.</p>
+</div>
+
 
                 </section>
                 <section id="neuralnetwork">
@@ -198,16 +241,29 @@ app    </h1>
 
     </div>
     <a class="headerlink" href="#neuralnetwork"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="neuralnetwork-26"><a href="#neuralnetwork-26"><span class="linenos">26</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/neuralnetwork&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
-</span><span id="neuralnetwork-27"><a href="#neuralnetwork-27"><span class="linenos">27</span></a><span class="k">def</span> <span class="nf">neuralnetwork</span><span class="p">():</span>
-</span><span id="neuralnetwork-28"><a href="#neuralnetwork-28"><span class="linenos">28</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
-</span><span id="neuralnetwork-29"><a href="#neuralnetwork-29"><span class="linenos">29</span></a>    <span class="n">loop</span> <span class="o">=</span> <span class="n">new_event_loop</span><span class="p">()</span>
-</span><span id="neuralnetwork-30"><a href="#neuralnetwork-30"><span class="linenos">30</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">NeuralNetwork</span><span class="o">.</span><span class="n">NeuralNetwork</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-</span><span id="neuralnetwork-31"><a href="#neuralnetwork-31"><span class="linenos">31</span></a>    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="neuralnetwork-39"><a href="#neuralnetwork-39"><span class="linenos">39</span></a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/neuralnetwork&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+</span><span id="neuralnetwork-40"><a href="#neuralnetwork-40"><span class="linenos">40</span></a><span class="k">def</span> <span class="nf">neuralnetwork</span><span class="p">():</span>
+</span><span id="neuralnetwork-41"><a href="#neuralnetwork-41"><span class="linenos">41</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="neuralnetwork-42"><a href="#neuralnetwork-42"><span class="linenos">42</span></a><span class="sd">    Uses the ML Neural Netowrk Module to perform sentiment analysis.</span>
+</span><span id="neuralnetwork-43"><a href="#neuralnetwork-43"><span class="linenos">43</span></a><span class="sd">    Args:</span>
+</span><span id="neuralnetwork-44"><a href="#neuralnetwork-44"><span class="linenos">44</span></a><span class="sd">        query (str) : The url of the tweet</span>
+</span><span id="neuralnetwork-45"><a href="#neuralnetwork-45"><span class="linenos">45</span></a><span class="sd">    Returns:</span>
+</span><span id="neuralnetwork-46"><a href="#neuralnetwork-46"><span class="linenos">46</span></a><span class="sd">        JSON: &#39;p&#39; or &#39;n&#39; value dictating sentiment.</span>
+</span><span id="neuralnetwork-47"><a href="#neuralnetwork-47"><span class="linenos">47</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="neuralnetwork-48"><a href="#neuralnetwork-48"><span class="linenos">48</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">)</span>
+</span><span id="neuralnetwork-49"><a href="#neuralnetwork-49"><span class="linenos">49</span></a>    <span class="n">loop</span> <span class="o">=</span> <span class="n">new_event_loop</span><span class="p">()</span>
+</span><span id="neuralnetwork-50"><a href="#neuralnetwork-50"><span class="linenos">50</span></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">run_until_complete</span><span class="p">(</span><span class="n">NeuralNetwork</span><span class="o">.</span><span class="n">NeuralNetwork</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</span><span id="neuralnetwork-51"><a href="#neuralnetwork-51"><span class="linenos">51</span></a>    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Uses the ML Neural Netowrk Module to perform sentiment analysis.
+Args:
+    query (str) : The url of the tweet
+Returns:
+    JSON: 'p' or 'n' value dictating sentiment.</p>
+</div>
+
 
                 </section>
     </main>
