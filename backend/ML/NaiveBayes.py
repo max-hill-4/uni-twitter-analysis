@@ -1,10 +1,9 @@
-from .model import Model
+from model import Model
 
 from nltk import pos_tag
 from nltk import NaiveBayesClassifier
 from nltk import classify
 from nltk import TweetTokenizer
-
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
@@ -77,7 +76,7 @@ class NaiveBayes(Model):
         features['comp_score'] = mean(compound_scores)
         return features
     
-    def _trainmodel(self):
+    def _trainmodel(self, ratio: int = 0.15 ):
         """
         Using NLP's NaiveBayes probablity classifier, use labeled data to build 
         a pkl file.
@@ -90,8 +89,11 @@ class NaiveBayes(Model):
             features.append((self._features(tweet), 'n'))
 
         shuffle(features)
-        classifier = NaiveBayesClassifier.train(labeled_featuresets=features[:1500])
+        index = int(ratio * len(features))
+        classifier = NaiveBayesClassifier.train(labeled_featuresets=features[:index])
         joblib.dump(classifier, r'backend\ML\models\NaiveBayes.pkl')
+
+        return classify.accuracy(classifier, features[index:])
 
     async def predict(self, tweet):
         """
@@ -105,7 +107,4 @@ class NaiveBayes(Model):
         tweet = self._features(tweet)
         result = joblib.load(r'backend\ML\models\NaiveBayes.pkl').classify(tweet)
         return result
-    
-if __name__ == "__main__": 
-    from nltk import download
-    download(['wordnet'])
+
