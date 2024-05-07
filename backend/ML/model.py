@@ -6,5 +6,8 @@ path.append(os.getcwd() + r"\backend\ML\trainingdata")
 
 class Model:
     def __init__(self):
+        """
+        set pos_data and neg_data for training data.
+        """
         self.pos_data = twitter_samples.strings('positive_tweets.json')
         self.neg_data = twitter_samples.strings('negative_tweets.json')

@@ -8,12 +8,17 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 # installing a whole module from req is NOT worth man 😭😭😭
 from sklearn.model_selection import train_test_split
-from nltk.corpus import twitter_samples
-
+import numpy as np
 
 class NeuralNetwork(Model):
     def _preprocess(self, tweets):
-        
+        """
+        Builds a vocab map from vectorising every tweet in the test data.
+        Args:
+            tweets (list(str)): The list of tweets that need vectorising
+        Returns:
+            padded_sequences(list(int)) : Every tweet vectorised and standadized length
+        """
         # Build vocap map.
         tokenizer = Tokenizer(num_words=5000, oov_token='<OOV>')
         tokenizer.fit_on_texts(self.pos_data + self.neg_data)
@@ -26,7 +31,11 @@ class NeuralNetwork(Model):
         return padded_sequences
         
     def _trainmodel(self):
-        
+        """
+        Using tensowflows keras model, using two dense ReLU activation functions, and
+        a sigmoid output layer.
+        Returns a model as NeuralNetwork.keras
+        """
         padded_sequences = self._preprocess(self.pos_data + self.neg_data)
         labels = np.concatenate([np.ones(len(self.pos_data)), np.zeros(len(self.neg_data))])
 
@@ -47,6 +56,13 @@ class NeuralNetwork(Model):
         model.save(r'backend\ML\models\NeuralNetwork.keras')
 
     async def predict(self, tweet):
+        """
+        By using the trained keras file in models, classify a single tweet
+        Args:
+            tweet (str) : text data inside of tweet.
+        Returns:
+            'p' to indicate positive and 'n' to indicate negative
+        """
         print(f' predict is recieving: {tweet}')
 
         tweet = self._preprocess(tweet)
