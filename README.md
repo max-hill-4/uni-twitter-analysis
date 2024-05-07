@@ -18,7 +18,7 @@
   <p align="center">
     A Twitter Sentiment Analysis website!
     <br />
-    <a href="https://github.com/max-hill-4/uni-twitter-analysis/docs"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/max-hill-4/uni-twitter-analysis/tree/main/docs"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="http://teamsoftware.max-hill-4.xyz/">View Demo</a>
