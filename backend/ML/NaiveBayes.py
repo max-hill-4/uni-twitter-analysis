@@ -21,19 +21,17 @@ class NaiveBayes(Model):
         """
         super().__init__()
         # TD: should try to make stopwords static, and data needed for objects static also.
-        self.sia = SentimentIntensityAnalyzer()
-        self.lemmatizer = WordNetLemmatizer()
+        self._sia = SentimentIntensityAnalyzer()
+        self._lemmatizer = WordNetLemmatizer()
 
-        self.tokenizer = TweetTokenizer(preserve_case=False,
+        self._tokenizer = TweetTokenizer(preserve_case=False,
                                         strip_handles=True,
                                         reduce_len=True)
         
-        self.TAGMAP = {'V' : 'v', 'J' : 'a', 'N' : 'n', 'R' : 'r' }
+        self._TAGMAP = {'V' : 'v', 'J' : 'a', 'N' : 'n', 'R' : 'r' }
 
-        self.STOPWORDS = set(stopwords.words("english"))
-        
-        sia = SentimentIntensityAnalyzer()
-    
+        self._STOPWORDS = set(stopwords.words("english"))
+            
     def _preprocess(self, tweet):
         """
         Cleans data before sentiment analysis, including removing stopwords and alphas.
@@ -42,16 +40,16 @@ class NaiveBayes(Model):
         Returns:
             data (list(str)): data that is vectorised and cleaned
         """
-        data = self.tokenizer.tokenize(tweet)
+        data = self._tokenizer.tokenize(tweet)
 
-        data = [token for token in data if token.isalpha() and token not in self.STOPWORDS]
+        data = [token for token in data if token.isalpha() and token not in self._STOPWORDS]
 
         # (low) TD: Pull request pos tag (tagset) to work with lemmatize
         data = pos_tag(data)
     
         # (low) TD: refact if data + lemmatize + pos_tag
         
-        data = [self.lemmatizer.lemmatize(token, self.TAGMAP.get(pos, 'n')) for token, pos in data]
+        data = [self._lemmatizer.lemmatize(token, self._TAGMAP.get(pos, 'n')) for token, pos in data]
         
         return data
     
@@ -73,8 +71,8 @@ class NaiveBayes(Model):
         compound_scores = []
 
         for word in data:
-            positive_scores.append(self.sia.polarity_scores(word)["pos"])
-            compound_scores.append(self.sia.polarity_scores(word)["compound"])
+            positive_scores.append(self._sia.polarity_scores(word)["pos"])
+            compound_scores.append(self._sia.polarity_scores(word)["compound"])
         features['pos_score'] = mean(positive_scores)
         features['comp_score'] = mean(compound_scores)
         return features

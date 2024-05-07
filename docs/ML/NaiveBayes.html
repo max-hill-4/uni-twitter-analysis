@@ -39,21 +39,6 @@
                                 <a class="function" href="#NaiveBayes.__init__">NaiveBayes</a>
                         </li>
                         <li>
-                                <a class="variable" href="#NaiveBayes.sia">sia</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#NaiveBayes.lemmatizer">lemmatizer</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#NaiveBayes.tokenizer">tokenizer</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#NaiveBayes.TAGMAP">TAGMAP</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#NaiveBayes.STOPWORDS">STOPWORDS</a>
-                        </li>
-                        <li>
                                 <a class="function" href="#NaiveBayes.predict">predict</a>
                         </li>
                 </ul>
@@ -103,96 +88,94 @@ ML<wbr>.NaiveBayes    </h1>
 </span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 </span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a>        <span class="c1"># TD: should try to make stopwords static, and data needed for objects static also.</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sia</span> <span class="o">=</span> <span class="n">SentimentIntensityAnalyzer</span><span class="p">()</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_sia</span> <span class="o">=</span> <span class="n">SentimentIntensityAnalyzer</span><span class="p">()</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_lemmatizer</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
 </span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a>
-</span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">TweetTokenizer</span><span class="p">(</span><span class="n">preserve_case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_tokenizer</span> <span class="o">=</span> <span class="n">TweetTokenizer</span><span class="p">(</span><span class="n">preserve_case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a>                                        <span class="n">strip_handles</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span><span id="L-29"><a href="#L-29"><span class="linenos"> 29</span></a>                                        <span class="n">reduce_len</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span id="L-30"><a href="#L-30"><span class="linenos"> 30</span></a>        
-</span><span id="L-31"><a href="#L-31"><span class="linenos"> 31</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">TAGMAP</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;V&#39;</span> <span class="p">:</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;J&#39;</span> <span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span> <span class="p">:</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span> <span class="p">:</span> <span class="s1">&#39;r&#39;</span> <span class="p">}</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos"> 31</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_TAGMAP</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;V&#39;</span> <span class="p">:</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;J&#39;</span> <span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span> <span class="p">:</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span> <span class="p">:</span> <span class="s1">&#39;r&#39;</span> <span class="p">}</span>
 </span><span id="L-32"><a href="#L-32"><span class="linenos"> 32</span></a>
-</span><span id="L-33"><a href="#L-33"><span class="linenos"> 33</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">STOPWORDS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s2">&quot;english&quot;</span><span class="p">))</span>
-</span><span id="L-34"><a href="#L-34"><span class="linenos"> 34</span></a>        
-</span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a>        <span class="n">sia</span> <span class="o">=</span> <span class="n">SentimentIntensityAnalyzer</span><span class="p">()</span>
-</span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a>    
-</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a>    <span class="k">def</span> <span class="nf">_preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a><span class="sd">        Cleans data before sentiment analysis, including removing stopwords and alphas.</span>
-</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a><span class="sd">        Args:</span>
-</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a><span class="sd">            tweet(str): tweet data of string</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a><span class="sd">        Returns:</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="sd">            data (list(str)): data that is vectorised and cleaned</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos"> 33</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_STOPWORDS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s2">&quot;english&quot;</span><span class="p">))</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos"> 34</span></a>            
+</span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a>    <span class="k">def</span> <span class="nf">_preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="sd">        Cleans data before sentiment analysis, including removing stopwords and alphas.</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="sd">        Args:</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a><span class="sd">            tweet(str): tweet data of string</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a><span class="sd">        Returns:</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a><span class="sd">            data (list(str)): data that is vectorised and cleaned</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>
+</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="ow">and</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_STOPWORDS</span><span class="p">]</span>
 </span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a>
-</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="ow">and</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">STOPWORDS</span><span class="p">]</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>
-</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a>        <span class="c1"># (low) TD: Pull request pos tag (tagset) to work with lemmatize</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">pos_tag</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a>    
-</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>        <span class="c1"># (low) TD: refact if data + lemmatize + pos_tag</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a>        <span class="c1"># (low) TD: Pull request pos tag (tagset) to work with lemmatize</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">pos_tag</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a>    
+</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>        <span class="c1"># (low) TD: refact if data + lemmatize + pos_tag</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a>        
+</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_TAGMAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
 </span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a>        
-</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TAGMAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>        
-</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>        <span class="k">return</span> <span class="n">data</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a>    
-</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a>    <span class="k">def</span> <span class="nf">_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a><span class="sd">        Calcs the VADER score (from lexicon data)</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="sd">        Args:</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a><span class="sd">            tweet(str): tweet data of string</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a><span class="sd">        Returns:</span>
-</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a><span class="sd">            features(dict): dictionary of pos and comp score as keys, to 0-1 float.</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>        
-</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>            <span class="k">return</span> <span class="p">{}</span>
-</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>
-</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>        <span class="n">features</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>        <span class="n">positive_scores</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>        <span class="n">compound_scores</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>
-</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>            <span class="n">positive_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sia</span><span class="o">.</span><span class="n">polarity_scores</span><span class="p">(</span><span class="n">word</span><span class="p">)[</span><span class="s2">&quot;pos&quot;</span><span class="p">])</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>            <span class="n">compound_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sia</span><span class="o">.</span><span class="n">polarity_scores</span><span class="p">(</span><span class="n">word</span><span class="p">)[</span><span class="s2">&quot;compound&quot;</span><span class="p">])</span>
-</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;pos_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">positive_scores</span><span class="p">)</span>
-</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;comp_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">compound_scores</span><span class="p">)</span>
-</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>        <span class="k">return</span> <span class="n">features</span>
-</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>    
-</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a>    <span class="k">def</span> <span class="nf">_trainmodel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="sd">        Using NLP&#39;s NaiveBayes probablity classifier, use labeled data to build </span>
-</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a><span class="sd">        a pkl file.</span>
-</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>        <span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>        <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_data</span><span class="p">:</span>
-</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>            <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">(</span><span class="n">tweet</span><span class="p">),</span> <span class="s1">&#39;p&#39;</span><span class="p">))</span>
-</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>
-</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>        <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">neg_data</span><span class="p">:</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>            <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">(</span><span class="n">tweet</span><span class="p">),</span> <span class="s1">&#39;n&#39;</span><span class="p">))</span>
-</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>
-</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>        <span class="n">shuffle</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
-</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>        <span class="n">classifier</span> <span class="o">=</span> <span class="n">NaiveBayesClassifier</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">labeled_featuresets</span><span class="o">=</span><span class="n">features</span><span class="p">[:</span><span class="mi">1500</span><span class="p">])</span>
-</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>        <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;backend\ML\models\NaiveBayes.pkl&#39;</span><span class="p">)</span>
-</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>
-</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
-</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a><span class="sd">        By using the trained pkl file in models, classify a single tweet</span>
-</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a><span class="sd">        Args:</span>
-</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a><span class="sd">            tweet (str) : text data inside of tweet.</span>
-</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a><span class="sd">        Returns:</span>
-</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a><span class="sd">            &#39;p&#39; to indicate positive and &#39;n&#39; to indicate negative</span>
-</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>        <span class="nb">print</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
-</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>        <span class="n">tweet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
-</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;backend\ML\models\NaiveBayes.pkl&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
-</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>        <span class="k">return</span> <span class="n">result</span>
-</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>    
-</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span> 
-</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>    <span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">download</span>
-</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>    <span class="n">download</span><span class="p">([</span><span class="s1">&#39;wordnet&#39;</span><span class="p">])</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>        <span class="k">return</span> <span class="n">data</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>    
+</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>    <span class="k">def</span> <span class="nf">_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="sd">        Calcs the VADER score (from lexicon data)</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a><span class="sd">        Args:</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a><span class="sd">            tweet(str): tweet data of string</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="sd">        Returns:</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a><span class="sd">            features(dict): dictionary of pos and comp score as keys, to 0-1 float.</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a>        
+</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>            <span class="k">return</span> <span class="p">{}</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>
+</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>        <span class="n">features</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>        <span class="n">positive_scores</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>        <span class="n">compound_scores</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>
+</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>            <span class="n">positive_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sia</span><span class="o">.</span><span class="n">polarity_scores</span><span class="p">(</span><span class="n">word</span><span class="p">)[</span><span class="s2">&quot;pos&quot;</span><span class="p">])</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>            <span class="n">compound_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sia</span><span class="o">.</span><span class="n">polarity_scores</span><span class="p">(</span><span class="n">word</span><span class="p">)[</span><span class="s2">&quot;compound&quot;</span><span class="p">])</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;pos_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">positive_scores</span><span class="p">)</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;comp_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">compound_scores</span><span class="p">)</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>        <span class="k">return</span> <span class="n">features</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>    
+</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>    <span class="k">def</span> <span class="nf">_trainmodel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a><span class="sd">        Using NLP&#39;s NaiveBayes probablity classifier, use labeled data to build </span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="sd">        a pkl file.</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>        <span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a>        <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_data</span><span class="p">:</span>
+</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>            <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">(</span><span class="n">tweet</span><span class="p">),</span> <span class="s1">&#39;p&#39;</span><span class="p">))</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>
+</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>        <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">neg_data</span><span class="p">:</span>
+</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>            <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">(</span><span class="n">tweet</span><span class="p">),</span> <span class="s1">&#39;n&#39;</span><span class="p">))</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>        <span class="n">shuffle</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>        <span class="n">classifier</span> <span class="o">=</span> <span class="n">NaiveBayesClassifier</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">labeled_featuresets</span><span class="o">=</span><span class="n">features</span><span class="p">[:</span><span class="mi">1500</span><span class="p">])</span>
+</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>        <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;backend\ML\models\NaiveBayes.pkl&#39;</span><span class="p">)</span>
+</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>
+</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
+</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="sd">        By using the trained pkl file in models, classify a single tweet</span>
+</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="sd">        Args:</span>
+</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a><span class="sd">            tweet (str) : text data inside of tweet.</span>
+</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a><span class="sd">        Returns:</span>
+</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a><span class="sd">            &#39;p&#39; to indicate positive and &#39;n&#39; to indicate negative</span>
+</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>        <span class="nb">print</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>        <span class="n">tweet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;backend\ML\models\NaiveBayes.pkl&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>        <span class="k">return</span> <span class="n">result</span>
+</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>    
+</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span> 
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>    <span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">download</span>
+</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>    <span class="n">download</span><span class="p">([</span><span class="s1">&#39;wordnet&#39;</span><span class="p">])</span>
 </span></pre></div>
 
 
@@ -215,92 +198,90 @@ ML<wbr>.NaiveBayes    </h1>
 </span><span id="NaiveBayes-22"><a href="#NaiveBayes-22"><span class="linenos"> 22</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="NaiveBayes-23"><a href="#NaiveBayes-23"><span class="linenos"> 23</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 </span><span id="NaiveBayes-24"><a href="#NaiveBayes-24"><span class="linenos"> 24</span></a>        <span class="c1"># TD: should try to make stopwords static, and data needed for objects static also.</span>
-</span><span id="NaiveBayes-25"><a href="#NaiveBayes-25"><span class="linenos"> 25</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sia</span> <span class="o">=</span> <span class="n">SentimentIntensityAnalyzer</span><span class="p">()</span>
-</span><span id="NaiveBayes-26"><a href="#NaiveBayes-26"><span class="linenos"> 26</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
+</span><span id="NaiveBayes-25"><a href="#NaiveBayes-25"><span class="linenos"> 25</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_sia</span> <span class="o">=</span> <span class="n">SentimentIntensityAnalyzer</span><span class="p">()</span>
+</span><span id="NaiveBayes-26"><a href="#NaiveBayes-26"><span class="linenos"> 26</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_lemmatizer</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
 </span><span id="NaiveBayes-27"><a href="#NaiveBayes-27"><span class="linenos"> 27</span></a>
-</span><span id="NaiveBayes-28"><a href="#NaiveBayes-28"><span class="linenos"> 28</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">TweetTokenizer</span><span class="p">(</span><span class="n">preserve_case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="NaiveBayes-28"><a href="#NaiveBayes-28"><span class="linenos"> 28</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_tokenizer</span> <span class="o">=</span> <span class="n">TweetTokenizer</span><span class="p">(</span><span class="n">preserve_case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span><span id="NaiveBayes-29"><a href="#NaiveBayes-29"><span class="linenos"> 29</span></a>                                        <span class="n">strip_handles</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span><span id="NaiveBayes-30"><a href="#NaiveBayes-30"><span class="linenos"> 30</span></a>                                        <span class="n">reduce_len</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span id="NaiveBayes-31"><a href="#NaiveBayes-31"><span class="linenos"> 31</span></a>        
-</span><span id="NaiveBayes-32"><a href="#NaiveBayes-32"><span class="linenos"> 32</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">TAGMAP</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;V&#39;</span> <span class="p">:</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;J&#39;</span> <span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span> <span class="p">:</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span> <span class="p">:</span> <span class="s1">&#39;r&#39;</span> <span class="p">}</span>
+</span><span id="NaiveBayes-32"><a href="#NaiveBayes-32"><span class="linenos"> 32</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_TAGMAP</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;V&#39;</span> <span class="p">:</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;J&#39;</span> <span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span> <span class="p">:</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span> <span class="p">:</span> <span class="s1">&#39;r&#39;</span> <span class="p">}</span>
 </span><span id="NaiveBayes-33"><a href="#NaiveBayes-33"><span class="linenos"> 33</span></a>
-</span><span id="NaiveBayes-34"><a href="#NaiveBayes-34"><span class="linenos"> 34</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">STOPWORDS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s2">&quot;english&quot;</span><span class="p">))</span>
-</span><span id="NaiveBayes-35"><a href="#NaiveBayes-35"><span class="linenos"> 35</span></a>        
-</span><span id="NaiveBayes-36"><a href="#NaiveBayes-36"><span class="linenos"> 36</span></a>        <span class="n">sia</span> <span class="o">=</span> <span class="n">SentimentIntensityAnalyzer</span><span class="p">()</span>
-</span><span id="NaiveBayes-37"><a href="#NaiveBayes-37"><span class="linenos"> 37</span></a>    
-</span><span id="NaiveBayes-38"><a href="#NaiveBayes-38"><span class="linenos"> 38</span></a>    <span class="k">def</span> <span class="nf">_preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
-</span><span id="NaiveBayes-39"><a href="#NaiveBayes-39"><span class="linenos"> 39</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="NaiveBayes-40"><a href="#NaiveBayes-40"><span class="linenos"> 40</span></a><span class="sd">        Cleans data before sentiment analysis, including removing stopwords and alphas.</span>
-</span><span id="NaiveBayes-41"><a href="#NaiveBayes-41"><span class="linenos"> 41</span></a><span class="sd">        Args:</span>
-</span><span id="NaiveBayes-42"><a href="#NaiveBayes-42"><span class="linenos"> 42</span></a><span class="sd">            tweet(str): tweet data of string</span>
-</span><span id="NaiveBayes-43"><a href="#NaiveBayes-43"><span class="linenos"> 43</span></a><span class="sd">        Returns:</span>
-</span><span id="NaiveBayes-44"><a href="#NaiveBayes-44"><span class="linenos"> 44</span></a><span class="sd">            data (list(str)): data that is vectorised and cleaned</span>
-</span><span id="NaiveBayes-45"><a href="#NaiveBayes-45"><span class="linenos"> 45</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="NaiveBayes-46"><a href="#NaiveBayes-46"><span class="linenos"> 46</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="NaiveBayes-34"><a href="#NaiveBayes-34"><span class="linenos"> 34</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_STOPWORDS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s2">&quot;english&quot;</span><span class="p">))</span>
+</span><span id="NaiveBayes-35"><a href="#NaiveBayes-35"><span class="linenos"> 35</span></a>            
+</span><span id="NaiveBayes-36"><a href="#NaiveBayes-36"><span class="linenos"> 36</span></a>    <span class="k">def</span> <span class="nf">_preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
+</span><span id="NaiveBayes-37"><a href="#NaiveBayes-37"><span class="linenos"> 37</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="NaiveBayes-38"><a href="#NaiveBayes-38"><span class="linenos"> 38</span></a><span class="sd">        Cleans data before sentiment analysis, including removing stopwords and alphas.</span>
+</span><span id="NaiveBayes-39"><a href="#NaiveBayes-39"><span class="linenos"> 39</span></a><span class="sd">        Args:</span>
+</span><span id="NaiveBayes-40"><a href="#NaiveBayes-40"><span class="linenos"> 40</span></a><span class="sd">            tweet(str): tweet data of string</span>
+</span><span id="NaiveBayes-41"><a href="#NaiveBayes-41"><span class="linenos"> 41</span></a><span class="sd">        Returns:</span>
+</span><span id="NaiveBayes-42"><a href="#NaiveBayes-42"><span class="linenos"> 42</span></a><span class="sd">            data (list(str)): data that is vectorised and cleaned</span>
+</span><span id="NaiveBayes-43"><a href="#NaiveBayes-43"><span class="linenos"> 43</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="NaiveBayes-44"><a href="#NaiveBayes-44"><span class="linenos"> 44</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tokenizer</span><span class="o">.</span><span class="n">tokenize</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="NaiveBayes-45"><a href="#NaiveBayes-45"><span class="linenos"> 45</span></a>
+</span><span id="NaiveBayes-46"><a href="#NaiveBayes-46"><span class="linenos"> 46</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="ow">and</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_STOPWORDS</span><span class="p">]</span>
 </span><span id="NaiveBayes-47"><a href="#NaiveBayes-47"><span class="linenos"> 47</span></a>
-</span><span id="NaiveBayes-48"><a href="#NaiveBayes-48"><span class="linenos"> 48</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">token</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">data</span> <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="ow">and</span> <span class="n">token</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">STOPWORDS</span><span class="p">]</span>
-</span><span id="NaiveBayes-49"><a href="#NaiveBayes-49"><span class="linenos"> 49</span></a>
-</span><span id="NaiveBayes-50"><a href="#NaiveBayes-50"><span class="linenos"> 50</span></a>        <span class="c1"># (low) TD: Pull request pos tag (tagset) to work with lemmatize</span>
-</span><span id="NaiveBayes-51"><a href="#NaiveBayes-51"><span class="linenos"> 51</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">pos_tag</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</span><span id="NaiveBayes-52"><a href="#NaiveBayes-52"><span class="linenos"> 52</span></a>    
-</span><span id="NaiveBayes-53"><a href="#NaiveBayes-53"><span class="linenos"> 53</span></a>        <span class="c1"># (low) TD: refact if data + lemmatize + pos_tag</span>
+</span><span id="NaiveBayes-48"><a href="#NaiveBayes-48"><span class="linenos"> 48</span></a>        <span class="c1"># (low) TD: Pull request pos tag (tagset) to work with lemmatize</span>
+</span><span id="NaiveBayes-49"><a href="#NaiveBayes-49"><span class="linenos"> 49</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">pos_tag</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span id="NaiveBayes-50"><a href="#NaiveBayes-50"><span class="linenos"> 50</span></a>    
+</span><span id="NaiveBayes-51"><a href="#NaiveBayes-51"><span class="linenos"> 51</span></a>        <span class="c1"># (low) TD: refact if data + lemmatize + pos_tag</span>
+</span><span id="NaiveBayes-52"><a href="#NaiveBayes-52"><span class="linenos"> 52</span></a>        
+</span><span id="NaiveBayes-53"><a href="#NaiveBayes-53"><span class="linenos"> 53</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_TAGMAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
 </span><span id="NaiveBayes-54"><a href="#NaiveBayes-54"><span class="linenos"> 54</span></a>        
-</span><span id="NaiveBayes-55"><a href="#NaiveBayes-55"><span class="linenos"> 55</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">TAGMAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">token</span><span class="p">,</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
-</span><span id="NaiveBayes-56"><a href="#NaiveBayes-56"><span class="linenos"> 56</span></a>        
-</span><span id="NaiveBayes-57"><a href="#NaiveBayes-57"><span class="linenos"> 57</span></a>        <span class="k">return</span> <span class="n">data</span>
-</span><span id="NaiveBayes-58"><a href="#NaiveBayes-58"><span class="linenos"> 58</span></a>    
-</span><span id="NaiveBayes-59"><a href="#NaiveBayes-59"><span class="linenos"> 59</span></a>    <span class="k">def</span> <span class="nf">_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
-</span><span id="NaiveBayes-60"><a href="#NaiveBayes-60"><span class="linenos"> 60</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="NaiveBayes-61"><a href="#NaiveBayes-61"><span class="linenos"> 61</span></a><span class="sd">        Calcs the VADER score (from lexicon data)</span>
-</span><span id="NaiveBayes-62"><a href="#NaiveBayes-62"><span class="linenos"> 62</span></a><span class="sd">        Args:</span>
-</span><span id="NaiveBayes-63"><a href="#NaiveBayes-63"><span class="linenos"> 63</span></a><span class="sd">            tweet(str): tweet data of string</span>
-</span><span id="NaiveBayes-64"><a href="#NaiveBayes-64"><span class="linenos"> 64</span></a><span class="sd">        Returns:</span>
-</span><span id="NaiveBayes-65"><a href="#NaiveBayes-65"><span class="linenos"> 65</span></a><span class="sd">            features(dict): dictionary of pos and comp score as keys, to 0-1 float.</span>
-</span><span id="NaiveBayes-66"><a href="#NaiveBayes-66"><span class="linenos"> 66</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="NaiveBayes-67"><a href="#NaiveBayes-67"><span class="linenos"> 67</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
-</span><span id="NaiveBayes-68"><a href="#NaiveBayes-68"><span class="linenos"> 68</span></a>        
-</span><span id="NaiveBayes-69"><a href="#NaiveBayes-69"><span class="linenos"> 69</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-</span><span id="NaiveBayes-70"><a href="#NaiveBayes-70"><span class="linenos"> 70</span></a>            <span class="k">return</span> <span class="p">{}</span>
-</span><span id="NaiveBayes-71"><a href="#NaiveBayes-71"><span class="linenos"> 71</span></a>
-</span><span id="NaiveBayes-72"><a href="#NaiveBayes-72"><span class="linenos"> 72</span></a>        <span class="n">features</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="NaiveBayes-73"><a href="#NaiveBayes-73"><span class="linenos"> 73</span></a>        <span class="n">positive_scores</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="NaiveBayes-74"><a href="#NaiveBayes-74"><span class="linenos"> 74</span></a>        <span class="n">compound_scores</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="NaiveBayes-75"><a href="#NaiveBayes-75"><span class="linenos"> 75</span></a>
-</span><span id="NaiveBayes-76"><a href="#NaiveBayes-76"><span class="linenos"> 76</span></a>        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-</span><span id="NaiveBayes-77"><a href="#NaiveBayes-77"><span class="linenos"> 77</span></a>            <span class="n">positive_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sia</span><span class="o">.</span><span class="n">polarity_scores</span><span class="p">(</span><span class="n">word</span><span class="p">)[</span><span class="s2">&quot;pos&quot;</span><span class="p">])</span>
-</span><span id="NaiveBayes-78"><a href="#NaiveBayes-78"><span class="linenos"> 78</span></a>            <span class="n">compound_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sia</span><span class="o">.</span><span class="n">polarity_scores</span><span class="p">(</span><span class="n">word</span><span class="p">)[</span><span class="s2">&quot;compound&quot;</span><span class="p">])</span>
-</span><span id="NaiveBayes-79"><a href="#NaiveBayes-79"><span class="linenos"> 79</span></a>        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;pos_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">positive_scores</span><span class="p">)</span>
-</span><span id="NaiveBayes-80"><a href="#NaiveBayes-80"><span class="linenos"> 80</span></a>        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;comp_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">compound_scores</span><span class="p">)</span>
-</span><span id="NaiveBayes-81"><a href="#NaiveBayes-81"><span class="linenos"> 81</span></a>        <span class="k">return</span> <span class="n">features</span>
-</span><span id="NaiveBayes-82"><a href="#NaiveBayes-82"><span class="linenos"> 82</span></a>    
-</span><span id="NaiveBayes-83"><a href="#NaiveBayes-83"><span class="linenos"> 83</span></a>    <span class="k">def</span> <span class="nf">_trainmodel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="NaiveBayes-84"><a href="#NaiveBayes-84"><span class="linenos"> 84</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="NaiveBayes-85"><a href="#NaiveBayes-85"><span class="linenos"> 85</span></a><span class="sd">        Using NLP&#39;s NaiveBayes probablity classifier, use labeled data to build </span>
-</span><span id="NaiveBayes-86"><a href="#NaiveBayes-86"><span class="linenos"> 86</span></a><span class="sd">        a pkl file.</span>
-</span><span id="NaiveBayes-87"><a href="#NaiveBayes-87"><span class="linenos"> 87</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="NaiveBayes-88"><a href="#NaiveBayes-88"><span class="linenos"> 88</span></a>        <span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="NaiveBayes-89"><a href="#NaiveBayes-89"><span class="linenos"> 89</span></a>        <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_data</span><span class="p">:</span>
-</span><span id="NaiveBayes-90"><a href="#NaiveBayes-90"><span class="linenos"> 90</span></a>            <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">(</span><span class="n">tweet</span><span class="p">),</span> <span class="s1">&#39;p&#39;</span><span class="p">))</span>
-</span><span id="NaiveBayes-91"><a href="#NaiveBayes-91"><span class="linenos"> 91</span></a>
-</span><span id="NaiveBayes-92"><a href="#NaiveBayes-92"><span class="linenos"> 92</span></a>        <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">neg_data</span><span class="p">:</span>
-</span><span id="NaiveBayes-93"><a href="#NaiveBayes-93"><span class="linenos"> 93</span></a>            <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">(</span><span class="n">tweet</span><span class="p">),</span> <span class="s1">&#39;n&#39;</span><span class="p">))</span>
-</span><span id="NaiveBayes-94"><a href="#NaiveBayes-94"><span class="linenos"> 94</span></a>
-</span><span id="NaiveBayes-95"><a href="#NaiveBayes-95"><span class="linenos"> 95</span></a>        <span class="n">shuffle</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
-</span><span id="NaiveBayes-96"><a href="#NaiveBayes-96"><span class="linenos"> 96</span></a>        <span class="n">classifier</span> <span class="o">=</span> <span class="n">NaiveBayesClassifier</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">labeled_featuresets</span><span class="o">=</span><span class="n">features</span><span class="p">[:</span><span class="mi">1500</span><span class="p">])</span>
-</span><span id="NaiveBayes-97"><a href="#NaiveBayes-97"><span class="linenos"> 97</span></a>        <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;backend\ML\models\NaiveBayes.pkl&#39;</span><span class="p">)</span>
-</span><span id="NaiveBayes-98"><a href="#NaiveBayes-98"><span class="linenos"> 98</span></a>
-</span><span id="NaiveBayes-99"><a href="#NaiveBayes-99"><span class="linenos"> 99</span></a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
-</span><span id="NaiveBayes-100"><a href="#NaiveBayes-100"><span class="linenos">100</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="NaiveBayes-101"><a href="#NaiveBayes-101"><span class="linenos">101</span></a><span class="sd">        By using the trained pkl file in models, classify a single tweet</span>
-</span><span id="NaiveBayes-102"><a href="#NaiveBayes-102"><span class="linenos">102</span></a><span class="sd">        Args:</span>
-</span><span id="NaiveBayes-103"><a href="#NaiveBayes-103"><span class="linenos">103</span></a><span class="sd">            tweet (str) : text data inside of tweet.</span>
-</span><span id="NaiveBayes-104"><a href="#NaiveBayes-104"><span class="linenos">104</span></a><span class="sd">        Returns:</span>
-</span><span id="NaiveBayes-105"><a href="#NaiveBayes-105"><span class="linenos">105</span></a><span class="sd">            &#39;p&#39; to indicate positive and &#39;n&#39; to indicate negative</span>
-</span><span id="NaiveBayes-106"><a href="#NaiveBayes-106"><span class="linenos">106</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="NaiveBayes-107"><a href="#NaiveBayes-107"><span class="linenos">107</span></a>        <span class="nb">print</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
-</span><span id="NaiveBayes-108"><a href="#NaiveBayes-108"><span class="linenos">108</span></a>        <span class="n">tweet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
-</span><span id="NaiveBayes-109"><a href="#NaiveBayes-109"><span class="linenos">109</span></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;backend\ML\models\NaiveBayes.pkl&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
-</span><span id="NaiveBayes-110"><a href="#NaiveBayes-110"><span class="linenos">110</span></a>        <span class="k">return</span> <span class="n">result</span>
+</span><span id="NaiveBayes-55"><a href="#NaiveBayes-55"><span class="linenos"> 55</span></a>        <span class="k">return</span> <span class="n">data</span>
+</span><span id="NaiveBayes-56"><a href="#NaiveBayes-56"><span class="linenos"> 56</span></a>    
+</span><span id="NaiveBayes-57"><a href="#NaiveBayes-57"><span class="linenos"> 57</span></a>    <span class="k">def</span> <span class="nf">_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
+</span><span id="NaiveBayes-58"><a href="#NaiveBayes-58"><span class="linenos"> 58</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="NaiveBayes-59"><a href="#NaiveBayes-59"><span class="linenos"> 59</span></a><span class="sd">        Calcs the VADER score (from lexicon data)</span>
+</span><span id="NaiveBayes-60"><a href="#NaiveBayes-60"><span class="linenos"> 60</span></a><span class="sd">        Args:</span>
+</span><span id="NaiveBayes-61"><a href="#NaiveBayes-61"><span class="linenos"> 61</span></a><span class="sd">            tweet(str): tweet data of string</span>
+</span><span id="NaiveBayes-62"><a href="#NaiveBayes-62"><span class="linenos"> 62</span></a><span class="sd">        Returns:</span>
+</span><span id="NaiveBayes-63"><a href="#NaiveBayes-63"><span class="linenos"> 63</span></a><span class="sd">            features(dict): dictionary of pos and comp score as keys, to 0-1 float.</span>
+</span><span id="NaiveBayes-64"><a href="#NaiveBayes-64"><span class="linenos"> 64</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="NaiveBayes-65"><a href="#NaiveBayes-65"><span class="linenos"> 65</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preprocess</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="NaiveBayes-66"><a href="#NaiveBayes-66"><span class="linenos"> 66</span></a>        
+</span><span id="NaiveBayes-67"><a href="#NaiveBayes-67"><span class="linenos"> 67</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
+</span><span id="NaiveBayes-68"><a href="#NaiveBayes-68"><span class="linenos"> 68</span></a>            <span class="k">return</span> <span class="p">{}</span>
+</span><span id="NaiveBayes-69"><a href="#NaiveBayes-69"><span class="linenos"> 69</span></a>
+</span><span id="NaiveBayes-70"><a href="#NaiveBayes-70"><span class="linenos"> 70</span></a>        <span class="n">features</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="NaiveBayes-71"><a href="#NaiveBayes-71"><span class="linenos"> 71</span></a>        <span class="n">positive_scores</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="NaiveBayes-72"><a href="#NaiveBayes-72"><span class="linenos"> 72</span></a>        <span class="n">compound_scores</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="NaiveBayes-73"><a href="#NaiveBayes-73"><span class="linenos"> 73</span></a>
+</span><span id="NaiveBayes-74"><a href="#NaiveBayes-74"><span class="linenos"> 74</span></a>        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+</span><span id="NaiveBayes-75"><a href="#NaiveBayes-75"><span class="linenos"> 75</span></a>            <span class="n">positive_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sia</span><span class="o">.</span><span class="n">polarity_scores</span><span class="p">(</span><span class="n">word</span><span class="p">)[</span><span class="s2">&quot;pos&quot;</span><span class="p">])</span>
+</span><span id="NaiveBayes-76"><a href="#NaiveBayes-76"><span class="linenos"> 76</span></a>            <span class="n">compound_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sia</span><span class="o">.</span><span class="n">polarity_scores</span><span class="p">(</span><span class="n">word</span><span class="p">)[</span><span class="s2">&quot;compound&quot;</span><span class="p">])</span>
+</span><span id="NaiveBayes-77"><a href="#NaiveBayes-77"><span class="linenos"> 77</span></a>        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;pos_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">positive_scores</span><span class="p">)</span>
+</span><span id="NaiveBayes-78"><a href="#NaiveBayes-78"><span class="linenos"> 78</span></a>        <span class="n">features</span><span class="p">[</span><span class="s1">&#39;comp_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">compound_scores</span><span class="p">)</span>
+</span><span id="NaiveBayes-79"><a href="#NaiveBayes-79"><span class="linenos"> 79</span></a>        <span class="k">return</span> <span class="n">features</span>
+</span><span id="NaiveBayes-80"><a href="#NaiveBayes-80"><span class="linenos"> 80</span></a>    
+</span><span id="NaiveBayes-81"><a href="#NaiveBayes-81"><span class="linenos"> 81</span></a>    <span class="k">def</span> <span class="nf">_trainmodel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="NaiveBayes-82"><a href="#NaiveBayes-82"><span class="linenos"> 82</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="NaiveBayes-83"><a href="#NaiveBayes-83"><span class="linenos"> 83</span></a><span class="sd">        Using NLP&#39;s NaiveBayes probablity classifier, use labeled data to build </span>
+</span><span id="NaiveBayes-84"><a href="#NaiveBayes-84"><span class="linenos"> 84</span></a><span class="sd">        a pkl file.</span>
+</span><span id="NaiveBayes-85"><a href="#NaiveBayes-85"><span class="linenos"> 85</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="NaiveBayes-86"><a href="#NaiveBayes-86"><span class="linenos"> 86</span></a>        <span class="n">features</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="NaiveBayes-87"><a href="#NaiveBayes-87"><span class="linenos"> 87</span></a>        <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos_data</span><span class="p">:</span>
+</span><span id="NaiveBayes-88"><a href="#NaiveBayes-88"><span class="linenos"> 88</span></a>            <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">(</span><span class="n">tweet</span><span class="p">),</span> <span class="s1">&#39;p&#39;</span><span class="p">))</span>
+</span><span id="NaiveBayes-89"><a href="#NaiveBayes-89"><span class="linenos"> 89</span></a>
+</span><span id="NaiveBayes-90"><a href="#NaiveBayes-90"><span class="linenos"> 90</span></a>        <span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">neg_data</span><span class="p">:</span>
+</span><span id="NaiveBayes-91"><a href="#NaiveBayes-91"><span class="linenos"> 91</span></a>            <span class="n">features</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">(</span><span class="n">tweet</span><span class="p">),</span> <span class="s1">&#39;n&#39;</span><span class="p">))</span>
+</span><span id="NaiveBayes-92"><a href="#NaiveBayes-92"><span class="linenos"> 92</span></a>
+</span><span id="NaiveBayes-93"><a href="#NaiveBayes-93"><span class="linenos"> 93</span></a>        <span class="n">shuffle</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+</span><span id="NaiveBayes-94"><a href="#NaiveBayes-94"><span class="linenos"> 94</span></a>        <span class="n">classifier</span> <span class="o">=</span> <span class="n">NaiveBayesClassifier</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">labeled_featuresets</span><span class="o">=</span><span class="n">features</span><span class="p">[:</span><span class="mi">1500</span><span class="p">])</span>
+</span><span id="NaiveBayes-95"><a href="#NaiveBayes-95"><span class="linenos"> 95</span></a>        <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">classifier</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;backend\ML\models\NaiveBayes.pkl&#39;</span><span class="p">)</span>
+</span><span id="NaiveBayes-96"><a href="#NaiveBayes-96"><span class="linenos"> 96</span></a>
+</span><span id="NaiveBayes-97"><a href="#NaiveBayes-97"><span class="linenos"> 97</span></a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
+</span><span id="NaiveBayes-98"><a href="#NaiveBayes-98"><span class="linenos"> 98</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="NaiveBayes-99"><a href="#NaiveBayes-99"><span class="linenos"> 99</span></a><span class="sd">        By using the trained pkl file in models, classify a single tweet</span>
+</span><span id="NaiveBayes-100"><a href="#NaiveBayes-100"><span class="linenos">100</span></a><span class="sd">        Args:</span>
+</span><span id="NaiveBayes-101"><a href="#NaiveBayes-101"><span class="linenos">101</span></a><span class="sd">            tweet (str) : text data inside of tweet.</span>
+</span><span id="NaiveBayes-102"><a href="#NaiveBayes-102"><span class="linenos">102</span></a><span class="sd">        Returns:</span>
+</span><span id="NaiveBayes-103"><a href="#NaiveBayes-103"><span class="linenos">103</span></a><span class="sd">            &#39;p&#39; to indicate positive and &#39;n&#39; to indicate negative</span>
+</span><span id="NaiveBayes-104"><a href="#NaiveBayes-104"><span class="linenos">104</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="NaiveBayes-105"><a href="#NaiveBayes-105"><span class="linenos">105</span></a>        <span class="nb">print</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="NaiveBayes-106"><a href="#NaiveBayes-106"><span class="linenos">106</span></a>        <span class="n">tweet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="NaiveBayes-107"><a href="#NaiveBayes-107"><span class="linenos">107</span></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;backend\ML\models\NaiveBayes.pkl&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="NaiveBayes-108"><a href="#NaiveBayes-108"><span class="linenos">108</span></a>        <span class="k">return</span> <span class="n">result</span>
 </span></pre></div>
 
 
@@ -322,18 +303,16 @@ ML<wbr>.NaiveBayes    </h1>
 </span><span id="NaiveBayes.__init__-22"><a href="#NaiveBayes.__init__-22"><span class="linenos">22</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="NaiveBayes.__init__-23"><a href="#NaiveBayes.__init__-23"><span class="linenos">23</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 </span><span id="NaiveBayes.__init__-24"><a href="#NaiveBayes.__init__-24"><span class="linenos">24</span></a>        <span class="c1"># TD: should try to make stopwords static, and data needed for objects static also.</span>
-</span><span id="NaiveBayes.__init__-25"><a href="#NaiveBayes.__init__-25"><span class="linenos">25</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">sia</span> <span class="o">=</span> <span class="n">SentimentIntensityAnalyzer</span><span class="p">()</span>
-</span><span id="NaiveBayes.__init__-26"><a href="#NaiveBayes.__init__-26"><span class="linenos">26</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
+</span><span id="NaiveBayes.__init__-25"><a href="#NaiveBayes.__init__-25"><span class="linenos">25</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_sia</span> <span class="o">=</span> <span class="n">SentimentIntensityAnalyzer</span><span class="p">()</span>
+</span><span id="NaiveBayes.__init__-26"><a href="#NaiveBayes.__init__-26"><span class="linenos">26</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_lemmatizer</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
 </span><span id="NaiveBayes.__init__-27"><a href="#NaiveBayes.__init__-27"><span class="linenos">27</span></a>
-</span><span id="NaiveBayes.__init__-28"><a href="#NaiveBayes.__init__-28"><span class="linenos">28</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">TweetTokenizer</span><span class="p">(</span><span class="n">preserve_case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="NaiveBayes.__init__-28"><a href="#NaiveBayes.__init__-28"><span class="linenos">28</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_tokenizer</span> <span class="o">=</span> <span class="n">TweetTokenizer</span><span class="p">(</span><span class="n">preserve_case</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 </span><span id="NaiveBayes.__init__-29"><a href="#NaiveBayes.__init__-29"><span class="linenos">29</span></a>                                        <span class="n">strip_handles</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 </span><span id="NaiveBayes.__init__-30"><a href="#NaiveBayes.__init__-30"><span class="linenos">30</span></a>                                        <span class="n">reduce_len</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span id="NaiveBayes.__init__-31"><a href="#NaiveBayes.__init__-31"><span class="linenos">31</span></a>        
-</span><span id="NaiveBayes.__init__-32"><a href="#NaiveBayes.__init__-32"><span class="linenos">32</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">TAGMAP</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;V&#39;</span> <span class="p">:</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;J&#39;</span> <span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span> <span class="p">:</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span> <span class="p">:</span> <span class="s1">&#39;r&#39;</span> <span class="p">}</span>
+</span><span id="NaiveBayes.__init__-32"><a href="#NaiveBayes.__init__-32"><span class="linenos">32</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_TAGMAP</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;V&#39;</span> <span class="p">:</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;J&#39;</span> <span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span> <span class="p">:</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span> <span class="p">:</span> <span class="s1">&#39;r&#39;</span> <span class="p">}</span>
 </span><span id="NaiveBayes.__init__-33"><a href="#NaiveBayes.__init__-33"><span class="linenos">33</span></a>
-</span><span id="NaiveBayes.__init__-34"><a href="#NaiveBayes.__init__-34"><span class="linenos">34</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">STOPWORDS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s2">&quot;english&quot;</span><span class="p">))</span>
-</span><span id="NaiveBayes.__init__-35"><a href="#NaiveBayes.__init__-35"><span class="linenos">35</span></a>        
-</span><span id="NaiveBayes.__init__-36"><a href="#NaiveBayes.__init__-36"><span class="linenos">36</span></a>        <span class="n">sia</span> <span class="o">=</span> <span class="n">SentimentIntensityAnalyzer</span><span class="p">()</span>
+</span><span id="NaiveBayes.__init__-34"><a href="#NaiveBayes.__init__-34"><span class="linenos">34</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_STOPWORDS</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s2">&quot;english&quot;</span><span class="p">))</span>
 </span></pre></div>
 
 
@@ -341,61 +320,6 @@ ML<wbr>.NaiveBayes    </h1>
 Builds Vectoriser and stopwords object to be used in  _preprocess.</p>
 </div>
 
-
-                            </div>
-                            <div id="NaiveBayes.sia" class="classattr">
-                                <div class="attr variable">
-            <span class="name">sia</span>
-
-        
-    </div>
-    <a class="headerlink" href="#NaiveBayes.sia"></a>
-    
-    
-
-                            </div>
-                            <div id="NaiveBayes.lemmatizer" class="classattr">
-                                <div class="attr variable">
-            <span class="name">lemmatizer</span>
-
-        
-    </div>
-    <a class="headerlink" href="#NaiveBayes.lemmatizer"></a>
-    
-    
-
-                            </div>
-                            <div id="NaiveBayes.tokenizer" class="classattr">
-                                <div class="attr variable">
-            <span class="name">tokenizer</span>
-
-        
-    </div>
-    <a class="headerlink" href="#NaiveBayes.tokenizer"></a>
-    
-    
-
-                            </div>
-                            <div id="NaiveBayes.TAGMAP" class="classattr">
-                                <div class="attr variable">
-            <span class="name">TAGMAP</span>
-
-        
-    </div>
-    <a class="headerlink" href="#NaiveBayes.TAGMAP"></a>
-    
-    
-
-                            </div>
-                            <div id="NaiveBayes.STOPWORDS" class="classattr">
-                                <div class="attr variable">
-            <span class="name">STOPWORDS</span>
-
-        
-    </div>
-    <a class="headerlink" href="#NaiveBayes.STOPWORDS"></a>
-    
-    
 
                             </div>
                             <div id="NaiveBayes.predict" class="classattr">
@@ -409,18 +333,18 @@ Builds Vectoriser and stopwords object to be used in  _preprocess.</p>
 
     </div>
     <a class="headerlink" href="#NaiveBayes.predict"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="NaiveBayes.predict-99"><a href="#NaiveBayes.predict-99"><span class="linenos"> 99</span></a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
-</span><span id="NaiveBayes.predict-100"><a href="#NaiveBayes.predict-100"><span class="linenos">100</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="NaiveBayes.predict-101"><a href="#NaiveBayes.predict-101"><span class="linenos">101</span></a><span class="sd">        By using the trained pkl file in models, classify a single tweet</span>
-</span><span id="NaiveBayes.predict-102"><a href="#NaiveBayes.predict-102"><span class="linenos">102</span></a><span class="sd">        Args:</span>
-</span><span id="NaiveBayes.predict-103"><a href="#NaiveBayes.predict-103"><span class="linenos">103</span></a><span class="sd">            tweet (str) : text data inside of tweet.</span>
-</span><span id="NaiveBayes.predict-104"><a href="#NaiveBayes.predict-104"><span class="linenos">104</span></a><span class="sd">        Returns:</span>
-</span><span id="NaiveBayes.predict-105"><a href="#NaiveBayes.predict-105"><span class="linenos">105</span></a><span class="sd">            &#39;p&#39; to indicate positive and &#39;n&#39; to indicate negative</span>
-</span><span id="NaiveBayes.predict-106"><a href="#NaiveBayes.predict-106"><span class="linenos">106</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="NaiveBayes.predict-107"><a href="#NaiveBayes.predict-107"><span class="linenos">107</span></a>        <span class="nb">print</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
-</span><span id="NaiveBayes.predict-108"><a href="#NaiveBayes.predict-108"><span class="linenos">108</span></a>        <span class="n">tweet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
-</span><span id="NaiveBayes.predict-109"><a href="#NaiveBayes.predict-109"><span class="linenos">109</span></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;backend\ML\models\NaiveBayes.pkl&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
-</span><span id="NaiveBayes.predict-110"><a href="#NaiveBayes.predict-110"><span class="linenos">110</span></a>        <span class="k">return</span> <span class="n">result</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="NaiveBayes.predict-97"><a href="#NaiveBayes.predict-97"><span class="linenos"> 97</span></a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweet</span><span class="p">):</span>
+</span><span id="NaiveBayes.predict-98"><a href="#NaiveBayes.predict-98"><span class="linenos"> 98</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="NaiveBayes.predict-99"><a href="#NaiveBayes.predict-99"><span class="linenos"> 99</span></a><span class="sd">        By using the trained pkl file in models, classify a single tweet</span>
+</span><span id="NaiveBayes.predict-100"><a href="#NaiveBayes.predict-100"><span class="linenos">100</span></a><span class="sd">        Args:</span>
+</span><span id="NaiveBayes.predict-101"><a href="#NaiveBayes.predict-101"><span class="linenos">101</span></a><span class="sd">            tweet (str) : text data inside of tweet.</span>
+</span><span id="NaiveBayes.predict-102"><a href="#NaiveBayes.predict-102"><span class="linenos">102</span></a><span class="sd">        Returns:</span>
+</span><span id="NaiveBayes.predict-103"><a href="#NaiveBayes.predict-103"><span class="linenos">103</span></a><span class="sd">            &#39;p&#39; to indicate positive and &#39;n&#39; to indicate negative</span>
+</span><span id="NaiveBayes.predict-104"><a href="#NaiveBayes.predict-104"><span class="linenos">104</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="NaiveBayes.predict-105"><a href="#NaiveBayes.predict-105"><span class="linenos">105</span></a>        <span class="nb">print</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="NaiveBayes.predict-106"><a href="#NaiveBayes.predict-106"><span class="linenos">106</span></a>        <span class="n">tweet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_features</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="NaiveBayes.predict-107"><a href="#NaiveBayes.predict-107"><span class="linenos">107</span></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;backend\ML\models\NaiveBayes.pkl&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">classify</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span id="NaiveBayes.predict-108"><a href="#NaiveBayes.predict-108"><span class="linenos">108</span></a>        <span class="k">return</span> <span class="n">result</span>
 </span></pre></div>
 
 
