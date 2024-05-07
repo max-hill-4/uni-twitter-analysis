@@ -56,12 +56,18 @@ get_tweets    </h1>
 
                         <label class="view-source-button" for="mod-get_tweets-view-source"><span>View Source</span></label>
 
-                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos">1</span></a><span class="kn">import</span> <span class="nn">requests</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos">2</span></a><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
-</span><span id="L-3"><a href="#L-3"><span class="linenos">3</span></a><span class="k">async</span> <span class="k">def</span> <span class="nf">get_tweet</span><span class="p">(</span><span class="n">tweet</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
-</span><span id="L-4"><a href="#L-4"><span class="linenos">4</span></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://publish.twitter.com/oembed?url=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">tweet</span><span class="p">)</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos">5</span></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;html&#39;</span><span class="p">]</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos">6</span></a>    <span class="k">return</span> <span class="n">r</span> 
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="kn">import</span> <span class="nn">requests</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="k">async</span> <span class="k">def</span> <span class="nf">get_tweet</span><span class="p">(</span><span class="n">tweet</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="sd">    Uses Twitter&#39;s Oemebed to return tweet data.</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="sd">    Args:</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="sd">        query (str) : The url of the tweet</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="sd">    Returns:</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="sd">        JSON: html data of the embeded tweet.</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://publish.twitter.com/oembed?url=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">tweet</span><span class="p">)</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;html&#39;</span><span class="p">]</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>    <span class="k">return</span> <span class="n">r</span> 
 </span></pre></div>
 
 
@@ -77,14 +83,27 @@ get_tweets    </h1>
 
     </div>
     <a class="headerlink" href="#get_tweet"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="get_tweet-4"><a href="#get_tweet-4"><span class="linenos">4</span></a><span class="k">async</span> <span class="k">def</span> <span class="nf">get_tweet</span><span class="p">(</span><span class="n">tweet</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
-</span><span id="get_tweet-5"><a href="#get_tweet-5"><span class="linenos">5</span></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://publish.twitter.com/oembed?url=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">tweet</span><span class="p">)</span>
-</span><span id="get_tweet-6"><a href="#get_tweet-6"><span class="linenos">6</span></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;html&#39;</span><span class="p">]</span>
-</span><span id="get_tweet-7"><a href="#get_tweet-7"><span class="linenos">7</span></a>    <span class="k">return</span> <span class="n">r</span> 
+            <div class="pdoc-code codehilite"><pre><span></span><span id="get_tweet-3"><a href="#get_tweet-3"><span class="linenos"> 3</span></a><span class="k">async</span> <span class="k">def</span> <span class="nf">get_tweet</span><span class="p">(</span><span class="n">tweet</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+</span><span id="get_tweet-4"><a href="#get_tweet-4"><span class="linenos"> 4</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="get_tweet-5"><a href="#get_tweet-5"><span class="linenos"> 5</span></a><span class="sd">    Uses Twitter&#39;s Oemebed to return tweet data.</span>
+</span><span id="get_tweet-6"><a href="#get_tweet-6"><span class="linenos"> 6</span></a><span class="sd">    Args:</span>
+</span><span id="get_tweet-7"><a href="#get_tweet-7"><span class="linenos"> 7</span></a><span class="sd">        query (str) : The url of the tweet</span>
+</span><span id="get_tweet-8"><a href="#get_tweet-8"><span class="linenos"> 8</span></a><span class="sd">    Returns:</span>
+</span><span id="get_tweet-9"><a href="#get_tweet-9"><span class="linenos"> 9</span></a><span class="sd">        JSON: html data of the embeded tweet.</span>
+</span><span id="get_tweet-10"><a href="#get_tweet-10"><span class="linenos">10</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="get_tweet-11"><a href="#get_tweet-11"><span class="linenos">11</span></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://publish.twitter.com/oembed?url=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">tweet</span><span class="p">)</span>
+</span><span id="get_tweet-12"><a href="#get_tweet-12"><span class="linenos">12</span></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;html&#39;</span><span class="p">]</span>
+</span><span id="get_tweet-13"><a href="#get_tweet-13"><span class="linenos">13</span></a>    <span class="k">return</span> <span class="n">r</span> 
 </span></pre></div>
 
 
-    
+            <div class="docstring"><p>Uses Twitter's Oemebed to return tweet data.
+Args:
+    query (str) : The url of the tweet
+Returns:
+    JSON: html data of the embeded tweet.</p>
+</div>
+
 
                 </section>
     </main>

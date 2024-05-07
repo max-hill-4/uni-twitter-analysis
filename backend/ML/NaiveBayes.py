@@ -16,6 +16,9 @@ import joblib
 
 class NaiveBayes(Model):
     def __init__(self) -> None:
+        """"
+        Builds Vectoriser and stopwords object to be used in  _preprocess.
+        """
         super().__init__()
         # TD: should try to make stopwords static, and data needed for objects static also.
         self.sia = SentimentIntensityAnalyzer()
@@ -32,7 +35,13 @@ class NaiveBayes(Model):
         sia = SentimentIntensityAnalyzer()
     
     def _preprocess(self, tweet):
-
+        """
+        Cleans data before sentiment analysis, including removing stopwords and alphas.
+        Args:
+            tweet(str): tweet data of string
+        Returns:
+            data (list(str)): data that is vectorised and cleaned
+        """
         data = self.tokenizer.tokenize(tweet)
 
         data = [token for token in data if token.isalpha() and token not in self.STOPWORDS]
@@ -47,7 +56,13 @@ class NaiveBayes(Model):
         return data
     
     def _features(self, tweet):
-
+        """
+        Calcs the VADER score (from lexicon data)
+        Args:
+            tweet(str): tweet data of string
+        Returns:
+            features(dict): dictionary of pos and comp score as keys, to 0-1 float.
+        """
         data = self._preprocess(tweet)
         
         if not data:
@@ -65,7 +80,10 @@ class NaiveBayes(Model):
         return features
     
     def _trainmodel(self):
-
+        """
+        Using NLP's NaiveBayes probablity classifier, use labeled data to build 
+        a pkl file.
+        """
         features = []
         for tweet in self.pos_data:
             features.append((self._features(tweet), 'p'))
@@ -78,6 +96,13 @@ class NaiveBayes(Model):
         joblib.dump(classifier, r'backend\ML\models\NaiveBayes.pkl')
 
     async def predict(self, tweet):
+        """
+        By using the trained pkl file in models, classify a single tweet
+        Args:
+            tweet (str) : text data inside of tweet.
+        Returns:
+            'p' to indicate positive and 'n' to indicate negative
+        """
         print(tweet)
         tweet = self._features(tweet)
         result = joblib.load(r'backend\ML\models\NaiveBayes.pkl').classify(tweet)
