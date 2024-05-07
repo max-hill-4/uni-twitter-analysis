@@ -85,7 +85,7 @@ _Below will be an example of how we want users to interact / begin using our pro
 
 Use this space to show useful examples of how a project can be used. 
 
-_For more examples, please refer to the [Documentation](https://github.com/max-hill-4/uni-twitter-analysis)_
+_For more examples, please refer to the [Documentation](https://github.com/max-hill-4/uni-twitter-analysis/tree/main/docs)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
