@@ -125,7 +125,7 @@ Project Link: [Here](https://github.com/max-hill-4/sentiment-tweet-analysis)
 
 
 [license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/max-hill-4/uni-twitter-analysis/blob/main/LICENSE
+[license-url]: https://github.com/max-hill-4/uni-twitter-analysis/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/max-hill-444444444444444444/
 [product-screenshot]: images/screenshot.png
