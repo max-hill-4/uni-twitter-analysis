@@ -6,9 +6,7 @@ from ML import NaiveBayes, NeuralNetwork
 
 @app.route('/')
 def index():
-    """
-    This is for the main route in the flask file
-    """
+    """This is for the main route in the flask file"""
     return render_template('index.html')
 
 @app.route('/search')
