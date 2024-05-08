@@ -1,8 +1,8 @@
-from .model import Model
+from model import Model
 from os import environ
 environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 
-from numpy import mean
+import numpy as np
 import tensorflow as tf
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -41,11 +41,11 @@ class NeuralNetwork(Model):
 
         # Compile the model
         model.compile (loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-
         # Train the model
         model.fit(X_train, y_train, epochs=7, batch_size=16, validation_data=(X_test, y_test))
         model.save(r'backend\ML\models\NeuralNetwork.keras')
-
+        
+        return model.evaluate((X_test, y_test))
     async def predict(self, tweet):
         print(f' predict is recieving: {tweet}')
 
@@ -53,5 +53,5 @@ class NeuralNetwork(Model):
         model = tf.keras.models.load_model(r'backend\ML\models\NeuralNetwork.keras')
 
         values = model.predict(tweet)
-        avg = mean(values)
+        avg = np.mean(values)
         return 'p' if avg > 0.5 else 'n'

@@ -1,7 +1,7 @@
-from NaiveBayes import NaiveBayes
+from NeuralNetwork import NeuralNetwork
 import matplotlib.pyplot as plt
 
-a = NaiveBayes()
+a = NeuralNetwork()
 data = [0.2]
 accuracy = []
 for i in data:
