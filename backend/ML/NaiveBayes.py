@@ -32,18 +32,41 @@ class NaiveBayes(Model):
         sia = SentimentIntensityAnalyzer()
     
     def _preprocess(self, tweet):
+<<<<<<< Updated upstream
 
         data = self.tokenizer.tokenize(tweet)
 
         data = [token for token in data if token.isalpha() and token not in self.STOPWORDS]
 
+=======
+        """
+        Cleans data before sentiment analysis, including removing stopwords and alphas.
+        Args:
+            tweet(str): tweet data of string
+        Returns:
+            data (list(str)): data that is vectorised and cleaned
+        """
+        testing_output = []
+        testing_output.append(tweet)
+        data = self._tokenizer.tokenize(tweet)
+        testing_output.append(data)
+
+        data = [token for token in data if token.isalpha() and token not in self._STOPWORDS]
+        testing_output.append(data)
+>>>>>>> Stashed changes
         # (low) TD: Pull request pos tag (tagset) to work with lemmatize
         data = pos_tag(data)
-    
+
         # (low) TD: refact if data + lemmatize + pos_tag
         
+<<<<<<< Updated upstream
         data = [self.lemmatizer.lemmatize(token, self.TAGMAP.get(pos, 'n')) for token, pos in data]
         
+=======
+        data = [self._lemmatizer.lemmatize(token, self._TAGMAP.get(pos, 'n')) for token, pos in data]
+        testing_output.append(data)
+        print(testing_output)
+>>>>>>> Stashed changes
         return data
     
     def _features(self, tweet):
