@@ -7,4 +7,3 @@ scikit-learn
 numpy
 pdoc
 matplotlib
-unittest
