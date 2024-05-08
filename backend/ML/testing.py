@@ -2,20 +2,18 @@ from NeuralNetwork import NeuralNetwork
 import matplotlib.pyplot as plt
 
 a = NeuralNetwork()
-data = [0.2]
-accuracy = []
-for i in data:
-    accuracy.append(a._trainmodel(i))
-    print(f'finished {i}')
+x = [1,2]
+y = []
 
-"""
-print(data)
-print(accuracy)
-plt.plot(data, accuracy)  
-plt.xlabel("Percetage of train data")
+for epoch in x:
+    y.append(a._trainmodel(epoch)['val_accuracy'][-1])
+
+print(x,y)
+
+plt.plot(x, y)  
+plt.xlabel("Epochs")
 plt.ylabel("Accuracy")
-plt.title("Accuracy against test data!")
+plt.title("Accuracy against amount of Epochs!")
 
 plt.grid(True)
 plt.show()    
-"""

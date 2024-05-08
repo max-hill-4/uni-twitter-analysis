@@ -11,6 +11,8 @@ def index():
 @app.route('/search')
 def search():
     q = request.args.get('query')
+    if q is None:
+        abort(404)
     loop = new_event_loop()
     tweet = loop.run_until_complete(get_tweet(q))
     return render_template('search.html', tweet=tweet)

@@ -10,22 +10,22 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from sklearn.model_selection import train_test_split
 from nltk.corpus import twitter_samples
 
-
 class NeuralNetwork(Model):
     def _preprocess(self, tweets):
         
         # Build vocap map.
         tokenizer = Tokenizer(num_words=5000, oov_token='<OOV>')
         tokenizer.fit_on_texts(self.pos_data + self.neg_data)
-
+        print(len(tokenizer.word_index))
         #Vectorizes every tweet.
         sequences = tokenizer.texts_to_sequences(tweets)
-
+        print(sequences[0])
         # Pads every tweet.
         padded_sequences = pad_sequences(sequences, maxlen=100, truncating='post')
+        print(padded_sequences[0])
         return padded_sequences
         
-    def _trainmodel(self):
+    def _trainmodel(self, epochs:int= 5):
         
         padded_sequences = self._preprocess(self.pos_data + self.neg_data)
         labels = np.concatenate([np.ones(len(self.pos_data)), np.zeros(len(self.neg_data))])
@@ -42,10 +42,10 @@ class NeuralNetwork(Model):
         # Compile the model
         model.compile (loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
         # Train the model
-        model.fit(X_train, y_train, epochs=7, batch_size=16, validation_data=(X_test, y_test))
-        model.save(r'backend\ML\models\NeuralNetwork.keras')
+        h = model.fit(X_train, y_train, epochs=epochs, batch_size=16, validation_data=(X_test, y_test))
         
-        return model.evaluate((X_test, y_test))
+        return h.history
+        
     async def predict(self, tweet):
         print(f' predict is recieving: {tweet}')
 
