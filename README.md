@@ -18,7 +18,7 @@
   <p align="center">
     A Twitter Sentiment Analysis website!
     <br />
-    <a href="https://github.com/max-hill-4/uni-twitter-analysis"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/max-hill-4/uni-twitter-analysis/tree/main/docs"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="http://teamsoftware.max-hill-4.xyz/">View Demo</a>
@@ -85,7 +85,7 @@ _Below will be an example of how we want users to interact / begin using our pro
 
 Use this space to show useful examples of how a project can be used. 
 
-_For more examples, please refer to the [Documentation](https://github.com/max-hill-4/uni-twitter-analysis)_
+_For more examples, please refer to the [Documentation](https://github.com/max-hill-4/uni-twitter-analysis/tree/main/docs)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
