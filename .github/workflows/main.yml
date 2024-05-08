@@ -1,18 +1,18 @@
 name: Run Unit Tests
 
 on:
-  push: # Run on every push to the main branch
-  pull_request: # Also run on pull requests
+  push:
+  pull_request: 
 
 jobs:
   test_job:
-    runs-on: ubuntu-latest # Define the runner OS (e.g., Ubuntu)
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2 # Checkout your code from the repository
-      - name: Install dependencies  # Install required Python packages
+      - uses: actions/checkout@v2 
+      - name: Install dependencies 
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt  # Replace with your actual install command
+          pip install -r requirements.txt  
       - name: Run Tests
         run: |
-          python -m unittest discover backend/ML/testing.py  # Replace 'tests' with your test directory
+          python -m unittest discover backend/ML/testing.py  
