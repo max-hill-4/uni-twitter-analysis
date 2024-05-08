@@ -1,9 +1,10 @@
 .title {
     text-align: center;
     font-family: 'Roboto Mono', monospace;
+    font-size: 80px; 
     }
 .body {
-margin-top: 150px;
+margin-top: 30px;
 margin-bottom: 20px;
 display: flex;
 justify-content: center;
@@ -12,12 +13,17 @@ align-items: center;
 .form-property {
     text-align: center;
     font-family: 'Roboto Mono', monospace;
-    font-size: 17px;
+    font-size: 30px; 
+    padding: 10px;
+    border-radius: 40px;
+    border: 5px solid #007bff; /* Blue border */
+    background-color: white; /* White background */
+    margin-bottom: 10px; /* Added margin bottom */
 }
 .loadingSpinner {
 caret-color: transparent;
-border: 16px solid #f3f3f3; /* Light grey */
-border-top: 16px solid #3498db; /* Blue */
+border: 16px solid white; /* White */
+border-top: 16px solid #007bff; /* Blue */
 border-radius: 50%;
 margin-left: auto;
 margin-right: auto;
@@ -32,9 +38,11 @@ animation: spin 2s linear infinite;
 }
 .container {
     display: flex;
-  }
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
 
-  .middle-divs {
+.middle-divs {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,9 +50,14 @@ animation: spin 2s linear infinite;
 }
 
 .status-box {
-    width: 200px;
-    height: 100px;
-    border: 2px solid black;
+    text-align: center;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 30px; 
+    width: 400px;
+    height: 200px;
+    border: 10px solid #007bff;;
+    border-radius: 40px;
     padding: 10px;
+    background-color: white; /* White background */
     margin: 20px;
-  }
+}

@@ -12,18 +12,30 @@
     
     </head>
     <body style="background-color:rgb(125, 191, 232);">
-        
+        <div>
+            <h1 class="title">Sentiment Analysis</h1>
+        </div>
         
         <div class="container">
             <div id="tweet">{{tweet | safe}}</div>
             <div class="middle-divs">
-
-                <div id="nb" class="status-box">NaiveBayes</div>
-                <div id="nn" class="status-box">NeuralNetwork</div>
-
+    
+                <div id="nb" class="status-box">Naive Bayes 
+                    <br> <!-- Line break -->
+                    <br> <!-- Line break -->
+                    <br> <!-- Line break -->
+                    <span id="nb-sentiment">Loading...</span>
+                </div>
+                <div id="nn" class="status-box">Neural Network                     
+                    <br> <!-- Line break -->
+                    <br> <!-- Line break -->
+                    <br> <!-- Line break -->
+                    <span id="nn-sentiment">Loading...</span>
+                </div>
+    
             </div>
         </div>
-        <script src="{{ url_for('static', filename='script.js') }}" ></script>
-
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+    
     </body>
 </html>
