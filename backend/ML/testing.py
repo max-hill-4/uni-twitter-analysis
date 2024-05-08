@@ -1,19 +1,24 @@
-from NeuralNetwork import NeuralNetwork
-import matplotlib.pyplot as plt
+import unittest
+from unittest.mock import patch
+import joblib
+from NaiveBayes import NaiveBayes
 
-a = NeuralNetwork()
-x = [1,2]
-y = []
 
-for epoch in x:
-    y.append(a._trainmodel(epoch)['val_accuracy'][-1])
+class TestNaiveBayes(unittest.TestCase):
+    
 
-print(x,y)
+    @patch.object(NaiveBayes, "_preprocess")
+    def test__stopword__removal(self, mock_method):
 
-plt.plot(x, y)  
-plt.xlabel("Epochs")
-plt.ylabel("Accuracy")
-plt.title("Accuracy against amount of Epochs!")
+        tweet = "this is a tweet with stopwords"
+        _STOPWORDS = ["a", "the", "is", "with"]
+        data = mock_method(tweet)
+        expected_data = []
+        for word in tweet.split():
+            if word not in _STOPWORDS:
+                expected_data.append(word)
+        self.assertEqual()
 
-plt.grid(True)
-plt.show()    
+
+if __name__ == "__main__":
+    unittest.main()
