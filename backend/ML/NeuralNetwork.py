@@ -16,16 +16,14 @@ class NeuralNetwork(Model):
         # Build vocap map.
         tokenizer = Tokenizer(num_words=5000, oov_token='<OOV>')
         tokenizer.fit_on_texts(self.pos_data + self.neg_data)
-        print(len(tokenizer.word_index))
         #Vectorizes every tweet.
         sequences = tokenizer.texts_to_sequences(tweets)
-        print(sequences[0])
         # Pads every tweet.
         padded_sequences = pad_sequences(sequences, maxlen=100, truncating='post')
         print(padded_sequences[0])
         return padded_sequences
         
-    def _trainmodel(self, epochs:int= 5):
+    def _trainmodel(self, epochs:int= 5, neurons=24):
         
         padded_sequences = self._preprocess(self.pos_data + self.neg_data)
         labels = np.concatenate([np.ones(len(self.pos_data)), np.zeros(len(self.neg_data))])
@@ -35,12 +33,13 @@ class NeuralNetwork(Model):
         model = tf.keras.Sequential([
             tf.keras.layers.Embedding(5000, 16, input_length=100),
             tf.keras.layers.GlobalAveragePooling1D(),
-            tf.keras.layers.Dense(24, activation='relu'),
+            tf.keras.layers.Dense(neurons, activation='relu'),
             tf.keras.layers.Dense(1, activation='sigmoid')
+            
         ])
 
         # Compile the model
-        model.compile (loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy', 'FalsePositives', 'TruePositives', 'TrueNegatives', 'FalseNegatives'])
         # Train the model
         h = model.fit(X_train, y_train, epochs=epochs, batch_size=16, validation_data=(X_test, y_test))
         
