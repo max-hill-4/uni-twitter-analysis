@@ -51,15 +51,15 @@ def neuralnetwork():
         JSON: 'p' or 'n' value dictating sentiment.
     """
     data = request.args.get('query')
-    if data == "": abort(400)
+    if data == "": abort(442)
     try:
         loop = new_event_loop()
         data = loop.run_until_complete(NeuralNetwork.NeuralNetwork().predict(data))
         return jsonify(data), 200
     except:
-        abort(422)
+        abort(400)
 
-@app.errorhandler(404)
+@app.errorhandler(404)  
 def page_not_found(e):
     return render_template('404.html', e=e), 404
 
